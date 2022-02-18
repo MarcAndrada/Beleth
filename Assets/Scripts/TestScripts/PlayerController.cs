@@ -5,15 +5,28 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    [SerializeField]
-    private Camera followCamera;
-    [SerializeField]
-    GameObject Paraguas;
+    
 
+    //inputs
+    private float horizontalInput = 0;
+    private float verticalInput = 0;
+    private Vector3 movementInput;
+    private Vector3 movementDirection;
+
+    //Player Speeds
     [SerializeField]
     private float playerSpeed;
     [SerializeField]
     private float rotationSpeed;
+    private Vector3 playerVelocity;
+    private float currentSpeed;
+    private bool isAccelerating = false;
+    [SerializeField]
+    private float accelSpeed;
+    [SerializeField]
+    private float dragSpeed;
+
+    //Jump
     [SerializeField]
     private float jumpHeight;
     [SerializeField]
@@ -26,20 +39,18 @@ public class PlayerController : MonoBehaviour
     private float gravityGliding;
     [SerializeField]
     private float coyoteTime;
-
-    
-
-    private float horizontalInput = 0;
-    private float verticalInput = 0;
     private bool groundedPlayer;
     private bool doubleJumped = false;
     private bool canCoyote;
-    private Vector3 playerVelocity;
-    private Vector3 movementInput;
-    private Vector3 movementDirection;
 
+
+    //Components
+    [SerializeField]
+    private Camera followCamera;
+    [SerializeField]
+    private GameObject Paraguas;
     private CharacterController controller;
-
+    
 
     private void Start()
     {
@@ -49,17 +60,18 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        horizontalInput = Input.GetAxis("Horizontal");
+        verticalInput = Input.GetAxis("Vertical");
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
+        CheckInputSpeed();
         Jump();
         MovePlayer();
     }
 
-    void MovePlayer()
+    private void MovePlayer()
     {
         if (groundedPlayer)
         {
@@ -77,7 +89,7 @@ public class PlayerController : MonoBehaviour
         // Se coge la direccion en la que va a moverse el personaje en base a los inputs pulsados y los 
         movementDirection = movementInput.normalized;
 
-        controller.Move(movementDirection * playerSpeed * Time.deltaTime);
+        controller.Move(movementDirection * playerSpeed * currentSpeed * Time.deltaTime);
 
         RotatePlayer();
 
@@ -87,17 +99,18 @@ public class PlayerController : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
-    void RotatePlayer() {
+    private void RotatePlayer() {
 
         if (movementDirection != Vector3.zero)
         {
+            // Mira hacia la direccion donde se esta moviendo utilizando un lerp esferico
             Quaternion desiredRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
 
             transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
         }
     }
 
-    void Jump() {
+    private void Jump() {
 
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
@@ -121,6 +134,7 @@ public class PlayerController : MonoBehaviour
 
             if (groundedPlayer || canCoyote)
             {
+                playerVelocity.y = 0;
                 playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
                 canCoyote = false;
             }
@@ -153,6 +167,42 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void CheckInputSpeed() {
+
+
+        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
+        {
+            isAccelerating = true;
+        }
+        else
+        {
+            isAccelerating = false;
+        }
+
+        if (isAccelerating)
+        {
+            if (currentSpeed < 1)
+            {
+                currentSpeed += accelSpeed/1000;
+            }
+            else
+            {
+                currentSpeed = 1;
+            }
+        }
+        else
+        {
+            if (currentSpeed > 0)
+            {
+                currentSpeed -= dragSpeed/1000;
+
+            }
+            else
+            {
+                currentSpeed = 0;
+            }
+        }
+    }
 
     IEnumerator WaitForCoyoteTime() {
 
