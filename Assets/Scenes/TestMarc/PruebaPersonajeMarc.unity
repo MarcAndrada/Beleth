@@ -1242,13 +1242,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeed: 5
   rotationSpeed: 18
-  accelSpeed: 6
-  dragSpeed: 8
+  floorAccel: 6
+  floorBraking: 8
+  airAccel: 1
+  airBraking: 2
+  walkAccelSpeed: 1.5
+  runAccelSpeed: 3
+  airAccelSpeed: 1
   jumpHeight: 2
   doubleJumpHeight: 1.4
   gravityValue: -20
   gravityOnFloor: -20
-  gravityGliding: -1.3
+  gravityGliding: -1.4
+  normalFallSpeed: -20
+  glidingFallSpeed: -3
   coyoteTime: 0.2
   followCamera: {fileID: 1877066627}
   Paraguas: {fileID: 1319946161}
