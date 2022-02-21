@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -108,6 +110,8 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
+
+        Restert();
         CheckIfRunning();
         CheckInputSpeed();
         Jump();
@@ -228,17 +232,21 @@ public class PlayerController : MonoBehaviour
 
     private void CheckIfRunning() {
 
-        // Revisar segun si ha apretado el boton de correr o no empezara a correr o dejara de hacerlo
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (groundedPlayer)
         {
-            currentStateSpeed = runAccelSpeed;
-        }
+            // Revisar segun si ha apretado el boton de correr o no empezara a correr o dejara de hacerlo solo si esta en el suelo
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                currentStateSpeed = runAccelSpeed;
+            }
 
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            currentStateSpeed = walkAccelSpeed;
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                currentStateSpeed = walkAccelSpeed;
 
+            }
         }
+        
     }
 
     private void CheckInputSpeed() {
@@ -323,6 +331,12 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    private void Restert() {
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
 
 }
