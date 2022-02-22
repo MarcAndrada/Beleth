@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,6 +14,11 @@ public class PlayerController : MonoBehaviour
     private float verticalInput = 0;
     private Vector3 movementInput;
     private Vector3 movementDirection;
+    private Vector2 recibedInputs;
+    private InputAction moveAction;
+    private InputAction jumpAction;
+    private InputAction runAction;
+
 
     [Header("Player Movment")]
     [SerializeField]
@@ -76,6 +81,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     [Tooltip("Maxima velocidad de caida mientras se planea")]
     private float glidingFallSpeed;
+    private bool gliding = false;
 
     [SerializeField]
     [Tooltip("El tiempo que dispondra el player para saltar y no tener que hacer el salto pixel perfect")]
@@ -91,30 +97,61 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private GameObject Paraguas;
     private CharacterController controller;
-    
+    private PlayerInput playerInput;
+
 
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        playerInput = GetComponent<PlayerInput>();
+
+        //Movment Events
+        moveAction = playerInput.actions["Move"];
+        moveAction.started += SetMovmentValues;
+        moveAction.performed += SetMovmentValues;
+        moveAction.canceled += SetMovmentValues;
+
+        // Jump Events
+        jumpAction = playerInput.actions["Jump"];
+        jumpAction.started += Jump;
+        jumpAction.performed += SetGliding;
+        jumpAction.canceled += StopGlide;
+
+        // Run Events
+        runAction = playerInput.actions["Run"];
+        runAction.started += SetRunning;
+        runAction.canceled += SetRunning;
+
+        playerInput.actions["Restart"].started += Reset;
+
         //Setear la velocidad inicial
         currentStateSpeed = walkAccelSpeed;
         maxFallSpeed = normalFallSpeed;
 
+
+    }
+
+    private void SetMovmentValues(InputAction.CallbackContext obj)
+    {
+        recibedInputs = moveAction.ReadValue<Vector2>();
     }
 
     private void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        verticalInput = Input.GetAxis("Vertical");
+
+        horizontalInput = recibedInputs.x;
+        verticalInput = recibedInputs.y;
+
+
+
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
 
-        Restert();
-        CheckIfRunning();
-        CheckInputSpeed();
-        Jump();
+        CheckAccelSpeed();
+        CheckIfCanJump();
+        CheckIfGliding();
         MovePlayer();
     }
 
@@ -123,14 +160,14 @@ public class PlayerController : MonoBehaviour
         if (groundedPlayer)
         {
             //movimiento en el suelo
-            movementInput = Quaternion.Euler(0, followCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
+            movementInput = Quaternion.Euler(0, followCamera.transform.eulerAngles.y, 0) * new Vector3(recibedInputs.x, 0, verticalInput);
         }
         else
         {
             //definir movimiento en el aire
             if (horizontalInput != 0 || verticalInput != 0)
             {
-                movementInput = Quaternion.Euler(0, followCamera.transform.eulerAngles.y, 0) * new Vector3(horizontalInput, 0, verticalInput);
+                movementInput = Quaternion.Euler(0, followCamera.transform.eulerAngles.y, 0) * new Vector3(recibedInputs.x, 0, verticalInput);
                 currentStateSpeed = airAccelSpeed; 
             }
         }
@@ -151,7 +188,7 @@ public class PlayerController : MonoBehaviour
         {
             playerVelocity.y = maxFallSpeed;
         }
-        Debug.Log(playerVelocity.y);
+
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
@@ -166,7 +203,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Jump() {
+    private void CheckIfCanJump() {
 
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
@@ -178,6 +215,8 @@ public class PlayerController : MonoBehaviour
             Paraguas.SetActive(false);
             canCoyote = true;
             maxFallSpeed = normalFallSpeed;
+            gliding = false;
+
         }
 
         if (!groundedPlayer && canCoyote)
@@ -186,74 +225,35 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(WaitForCoyoteTime());
         }
 
-        if (Input.GetButtonDown("Jump"))
+
+    }
+    private void CheckIfGliding() {
+
+        //Si el boton de saltar esta presionado 
+        if (playerVelocity.y < 0 && gliding)
         {
-
-            if (groundedPlayer || canCoyote)
-            {
-                // En caso de que este en el suelo o aun este a tiempo de utilizar el coyote time haz el 1r salto
-                playerVelocity.y = 0;
-                playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-                canCoyote = false;
-            }
-            else if (!doubleJumped)
-            {
-                // En caso de que no haya hecho el doble salto que haga el doble salto
-                playerVelocity.y = 0;
-                playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -3.0f * gravityValue);
-                doubleJumped = true;
-            }
-            
+            //En el momento en el que el personaje deje de subir empezara a planear
+            Paraguas.SetActive(true);
+            gravityValue = gravityGliding;
+            maxFallSpeed = glidingFallSpeed;
         }
+    
+    }
+    IEnumerator WaitForCoyoteTime()
+    {
 
-        if (Input.GetButton("Jump"))
-        {
-
-            //Si el boton de saltar esta presionado 
-            if (playerVelocity.y < 0)
-            {
-                //En el momento en el que el personaje deje de subir empezara a planear
-                Paraguas.SetActive(true);
-                gravityValue = gravityGliding;
-                maxFallSpeed = glidingFallSpeed;
-            }
-        }
-
-        if (Input.GetButtonUp("Jump"))
-        {
-            // Si deja de apretar el boton de salto que deje de planear
-            gravityValue = gravityOnFloor;
-            Paraguas.SetActive(false);
-            maxFallSpeed = normalFallSpeed;
-        }
-
+        yield return new WaitForSeconds(coyoteTime);
+        canCoyote = false;
 
     }
 
-    private void CheckIfRunning() {
+ 
 
-        if (groundedPlayer)
-        {
-            // Revisar segun si ha apretado el boton de correr o no empezara a correr o dejara de hacerlo solo si esta en el suelo
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                currentStateSpeed = runAccelSpeed;
-            }
-
-            if (Input.GetKeyUp(KeyCode.LeftShift))
-            {
-                currentStateSpeed = walkAccelSpeed;
-
-            }
-        }
-        
-    }
-
-    private void CheckInputSpeed() {
+    private void CheckAccelSpeed() {
 
         // En esta funcion se revisara la velocidad a la que tiene que ir el personaje segun su estado
 
-        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
+        if (horizontalInput != 0 || verticalInput != 0)
         {
             // En caso de que este presionando algun imput contara como que esta acelerando
             isAccelerating = true;
@@ -324,19 +324,68 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    IEnumerator WaitForCoyoteTime() {
+  
 
-        yield return new WaitForSeconds(coyoteTime);
-        canCoyote = false;
+   
+
+    private void Jump(InputAction.CallbackContext obj)
+    {
+        if (groundedPlayer || canCoyote)
+        {
+            // En caso de que este en el suelo o aun este a tiempo de utilizar el coyote time haz el 1r salto
+            playerVelocity.y = 0;
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+            canCoyote = false;
+        }
+        else if (!doubleJumped)
+        {
+            // En caso de que no haya hecho el doble salto que haga el doble salto
+            playerVelocity.y = 0;
+            playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -3.0f * gravityValue);
+            doubleJumped = true;
+        }
+    }
+    private void SetGliding(InputAction.CallbackContext obj)
+    {
+
+        gliding = true;
+        
+    }
+    private void StopGlide(InputAction.CallbackContext obj)
+    {
+        // Si deja de apretar el boton de salto que deje de planear
+        gravityValue = gravityOnFloor;
+        Paraguas.SetActive(false);
+        maxFallSpeed = normalFallSpeed;
+        gliding = false;
+    }
+
+    private void SetRunning(InputAction.CallbackContext obj)
+    {
+
+        if (groundedPlayer)
+        {
+            // Revisar segun si ha apretado el boton de correr o no empezara a correr o dejara de hacerlo solo si esta en el suelo
+            if (runAction.ReadValue<float>() == 1)
+            {
+                currentStateSpeed = runAccelSpeed;
+            }
+            else
+            {
+                currentStateSpeed = walkAccelSpeed;
+
+            }
+
+
+        }
 
     }
 
-    private void Restert() {
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
+    private void Reset(InputAction.CallbackContext obj)
+    {
+        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);    
+        
     }
 
 }
