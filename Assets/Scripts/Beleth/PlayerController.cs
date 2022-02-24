@@ -86,6 +86,20 @@ public class PlayerController : MonoBehaviour
     private bool groundedPlayer;
     private bool doubleJumped = false;
     private bool canCoyote;
+    private bool onPlatform = false;
+
+    [Header("Attack")]
+
+    [Header("Damaged")]
+
+    [SerializeField]
+    private float knockBackForce;
+    [SerializeField]
+    private float mass;
+    [SerializeField]
+    private bool hitted;
+    private Vector3 impact;
+
 
     [Header("Components & External objects")]
     [SerializeField]
@@ -126,11 +140,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void SetMovmentValues(InputAction.CallbackContext obj)
-    {
-        recibedInputs = moveAction.ReadValue<Vector2>();
-    }
-
     private void Update()
     {
 
@@ -147,7 +156,18 @@ public class PlayerController : MonoBehaviour
         CheckAccelSpeed();
         CheckIfCanJump();
         CheckIfGliding();
-        MovePlayer();
+        if (hitted)
+        {
+            CheckIfHitted();
+        }
+        else
+        {
+            MovePlayer();
+            RotatePlayer();
+        }
+        
+        ApplyGravity();
+
     }
 
     private void MovePlayer()
@@ -172,10 +192,22 @@ public class PlayerController : MonoBehaviour
 
         controller.Move(movementDirection * playerSpeed * currentSpeed * Time.deltaTime);
         
+    }
+    
+    private void RotatePlayer()
+    {
 
-        RotatePlayer();
+        if (movementDirection != Vector3.zero)
+        {
+            // Mira hacia la direccion donde se esta moviendo utilizando un lerp esferico
+            Quaternion desiredRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
 
-       
+            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+        }
+    }
+
+    private void ApplyGravity()
+    {
         // Se aplica la gravedad que le pasemos pero que no supere limite de velocidad de caida
         if (playerVelocity.y > maxFallSpeed)
         {
@@ -186,21 +218,11 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y = maxFallSpeed;
         }
 
-        controller.Move(playerVelocity * Time.deltaTime);
-       
-        
-        
-    }
-
-    private void RotatePlayer() {
-
-        if (movementDirection != Vector3.zero)
+        if (!onPlatform)
         {
-            // Mira hacia la direccion donde se esta moviendo utilizando un lerp esferico
-            Quaternion desiredRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-
-            transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
+            controller.Move(playerVelocity * Time.deltaTime);
         }
+
     }
 
     private void CheckIfCanJump() {
@@ -227,6 +249,7 @@ public class PlayerController : MonoBehaviour
 
 
     }
+
     private void CheckIfGliding() {
 
         //Si el boton de saltar esta presionado 
@@ -239,17 +262,9 @@ public class PlayerController : MonoBehaviour
         }
     
     }
-    IEnumerator WaitForCoyoteTime()
+   
+    private void CheckAccelSpeed()
     {
-
-        yield return new WaitForSeconds(coyoteTime);
-        canCoyote = false;
-
-    }
-
- 
-
-    private void CheckAccelSpeed() {
 
         // En esta funcion se revisara la velocidad a la que tiene que ir el personaje segun su estado
 
@@ -277,14 +292,14 @@ public class PlayerController : MonoBehaviour
                     // Aceleraremos con la velocidad de aceleracion en el suelo
                     currentSpeed += floorAccel / 1000;
                 }
-                else if(currentSpeed > currentStateSpeed)
+                else if (currentSpeed > currentStateSpeed)
                 {
                     // Frenaremos con la velocidad de frenar en el suelo
                     currentSpeed -= floorBraking / 1000;
                 }
                 else
                 {
-                    
+
                     currentSpeed = currentStateSpeed;
                 }
 
@@ -324,10 +339,50 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-  
+    IEnumerator WaitForCoyoteTime()
+    {
 
-   
+        yield return new WaitForSeconds(coyoteTime);
+        canCoyote = false;
 
+    }
+    
+    public void Damaged(Vector3 _hitDirection)
+    {
+        hitted = true;
+        _hitDirection += new Vector3(0, 10, 0);
+        _hitDirection.Normalize();
+        if (_hitDirection.y < 0) _hitDirection.y = -_hitDirection.y; // reflect down force on the ground
+        impact += _hitDirection.normalized * knockBackForce / mass;
+
+
+    }
+
+    private void CheckIfHitted() {
+        
+        if (impact.magnitude > 0.2f)
+        {
+            Debug.Log(impact.magnitude);
+            controller.Move(-impact * Time.deltaTime);
+            
+        }
+        else
+        {
+            hitted = false;
+            impact = new Vector3(0,0,0);
+        }
+
+        // consumes the impact energy each cycle:
+        impact = Vector3.Lerp(transform.position, -impact, 1 * Time.deltaTime);
+    }
+
+
+    // Input Actions
+
+    private void SetMovmentValues(InputAction.CallbackContext obj)
+    {
+        recibedInputs = moveAction.ReadValue<Vector2>();
+    }
     private void Jump(InputAction.CallbackContext obj)
     {
         if (groundedPlayer || canCoyote)
@@ -336,6 +391,7 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y = 0;
             playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
             canCoyote = false;
+            onPlatform = false;
         }
         else if (!doubleJumped)
         {
@@ -343,6 +399,7 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y = 0;
             playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -3.0f * gravityValue);
             doubleJumped = true;
+            onPlatform = false;
         }
     }
     private void SetGliding(InputAction.CallbackContext obj)
@@ -359,7 +416,6 @@ public class PlayerController : MonoBehaviour
         maxFallSpeed = normalFallSpeed;
         gliding = false;
     }
-
     private void SetRunning(InputAction.CallbackContext obj)
     {
 
@@ -380,7 +436,6 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
     private void Reset(InputAction.CallbackContext obj)
     {
         

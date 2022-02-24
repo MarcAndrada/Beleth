@@ -22,6 +22,7 @@ public class PlatformController : MonoBehaviour
     private bool ascending;
     private bool canMove = true;
     private CharacterController cc;
+    private PlayerController playerCont;
 
     // Start is called before the first frame update
     void Start()
@@ -145,8 +146,11 @@ public class PlatformController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player") {
             cc = other.GetComponent<CharacterController>();
+            playerCont = other.GetComponent<PlayerController>();
+            
+        }
     }
     private void OnTriggerStay(Collider other)
     {
@@ -159,7 +163,7 @@ public class PlatformController : MonoBehaviour
             }
             else 
             {
-                cc.Move(new Vector3(rb.velocity.x, 0.01f, rb.velocity.z) * Time.deltaTime);
+                cc.Move(new Vector3(rb.velocity.x, 0.0001f , rb.velocity.z) * Time.deltaTime);
             }
             
         }

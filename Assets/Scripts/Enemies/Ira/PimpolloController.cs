@@ -19,6 +19,7 @@ public class PimpolloController : MonoBehaviour
     private NavMeshAgent navMesh;
     private GameObject player;
     private BoxCollider boxColl;
+    private Vector3 directionAttack;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +41,10 @@ public class PimpolloController : MonoBehaviour
             }
             else
             {
+                if (directionAttack.x == 0)
+                {
+                    directionAttack = transform.position;
+                }
                 isAttacking = true;
                 navMesh.enabled = false;
                 if (attackTranscurse < attackDuration)
@@ -56,7 +61,7 @@ public class PimpolloController : MonoBehaviour
                 if (attackTranscurse >= 1)
                 {
                     //TODO Dañar al player
-
+                    player.GetComponent<PlayerController>().Damaged(directionAttack);
                     Destroy(gameObject);
 
                 }
