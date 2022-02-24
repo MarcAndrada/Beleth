@@ -7,6 +7,7 @@ public class MovingPlatformController : MonoBehaviour
     //Navigation Points of the moving platform
     [SerializeField]
     Vector3[] navDest;
+
     Vector3 nextDest;
     int destIndex;
 
@@ -19,19 +20,24 @@ public class MovingPlatformController : MonoBehaviour
     [SerializeField]
     float delay;    //Time the platform stays in a navDest before it starts to move again
 
-
     private float delayStart;
-
+    Rigidbody rb;
     [SerializeField]
     bool autoMove;
+    CharacterController cc;
 
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
 
         //Initiates the platform to move to the first point
-        if(navDest.Length > 0)
+        if (navDest.Length > 0)
         {
             nextDest = navDest[0];
             destIndex = 0;
@@ -39,7 +45,7 @@ public class MovingPlatformController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(transform.position != nextDest)
         {
@@ -54,11 +60,12 @@ public class MovingPlatformController : MonoBehaviour
     void MovePlatform()
     {
         Vector3 headingTo = nextDest - transform.position;
-        transform.position += (headingTo / headingTo.magnitude) * speed * Time.deltaTime;
+        rb.velocity = (headingTo / headingTo.magnitude) * speed;
+        
 
         if(headingTo.magnitude < tolerance)
         {
-            transform.position = nextDest;
+            rb.position = nextDest;
             delayStart = Time.time;
         }
 
@@ -66,6 +73,7 @@ public class MovingPlatformController : MonoBehaviour
 
     void NextDestination()
     {
+        rb.velocity = new Vector3(0,0,0);
         if (autoMove)
         {
             if(Time.time - delayStart > delay)
@@ -83,18 +91,21 @@ public class MovingPlatformController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
-        {
-            other.transform.parent = transform;
-        }
+        if (other.tag == "Player")
+            cc = other.GetComponent<CharacterController>();
     }
-
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Player" & cc)
+            cc.Move(rb.velocity * Time.deltaTime);
+    }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+
+        if (other.tag == "Player")
         {
-            other.transform.parent = null;
+            other.transform.SetParent(null);
         }
-       
+
     }
 }

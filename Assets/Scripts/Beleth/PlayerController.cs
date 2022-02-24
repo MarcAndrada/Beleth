@@ -7,8 +7,6 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
 
-
-
     //inputs
     private float horizontalInput = 0;
     private float verticalInput = 0;
@@ -82,14 +80,12 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Maxima velocidad de caida mientras se planea")]
     private float glidingFallSpeed;
     private bool gliding = false;
-
     [SerializeField]
     [Tooltip("El tiempo que dispondra el player para saltar y no tener que hacer el salto pixel perfect")]
     private float coyoteTime;
     private bool groundedPlayer;
     private bool doubleJumped = false;
     private bool canCoyote;
-
 
     [Header("Components & External objects")]
     [SerializeField]
@@ -99,13 +95,12 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private PlayerInput playerInput;
 
-
     private void Start()
     {
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
 
-        //Movment Events
+    //Movment Events
         moveAction = playerInput.actions["Move"];
         moveAction.started += SetMovmentValues;
         moveAction.performed += SetMovmentValues;
@@ -174,11 +169,13 @@ public class PlayerController : MonoBehaviour
         // Se coge la direccion en la que va a moverse el personaje en base a los inputs pulsados y los 
         movementDirection = movementInput.normalized;
         // Se le indica al controller que se mueva hacia la direccion indicada y ajustandolo a la velocidad que le queramos aplicar
+
         controller.Move(movementDirection * playerSpeed * currentSpeed * Time.deltaTime);
+        
 
         RotatePlayer();
 
-
+       
         // Se aplica la gravedad que le pasemos pero que no supere limite de velocidad de caida
         if (playerVelocity.y > maxFallSpeed)
         {
@@ -190,6 +187,9 @@ public class PlayerController : MonoBehaviour
         }
 
         controller.Move(playerVelocity * Time.deltaTime);
+       
+        
+        
     }
 
     private void RotatePlayer() {
@@ -206,6 +206,7 @@ public class PlayerController : MonoBehaviour
     private void CheckIfCanJump() {
 
         groundedPlayer = controller.isGrounded;
+
         if (groundedPlayer && playerVelocity.y < 0)
         {
             //Si el player esta en el suelo esto hace que no se caiga por la gravedad y reseteamos los valores del salto (numer de saltos, coyote time ...)
@@ -216,7 +217,6 @@ public class PlayerController : MonoBehaviour
             canCoyote = true;
             maxFallSpeed = normalFallSpeed;
             gliding = false;
-
         }
 
         if (!groundedPlayer && canCoyote)

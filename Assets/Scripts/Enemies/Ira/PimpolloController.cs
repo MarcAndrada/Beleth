@@ -19,7 +19,6 @@ public class PimpolloController : MonoBehaviour
     private NavMeshAgent navMesh;
     private GameObject player;
     private BoxCollider boxColl;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -56,10 +55,12 @@ public class PimpolloController : MonoBehaviour
 
                 if (attackTranscurse >= 1)
                 {
+                    //TODO Dañar al player
+
                     Destroy(gameObject);
+
                 }
 
-                Debug.Log(attackTranscurse);
             }
 
 
