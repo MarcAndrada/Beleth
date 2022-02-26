@@ -11,7 +11,11 @@ public class PimpolloController : MonoBehaviour
     private float distanceToAttack;
     [SerializeField]
     private float attackSpeed;
-
+    [SerializeField]
+    private SphereCollider attackBox;
+    [SerializeField]
+    private float maxTimeChasing;
+    
     private float attackTranscurse = 0;
     private float attackDuration = 0.2f;
     private bool chasePlayer = false;
@@ -33,6 +37,9 @@ public class PimpolloController : MonoBehaviour
     {
         if (chasePlayer)
         {
+
+            StartCoroutine(WaitToExplode());
+
             if (Vector3.Distance(transform.position, player.transform.position) > distanceToAttack && !isAttacking)
             {
                 //Debug.Log(Vector3.Distance(transform.position, player.transform.position));
@@ -53,16 +60,14 @@ public class PimpolloController : MonoBehaviour
                 }
                 else
                 {
-                    attackTranscurse = 1;
+                    attackTranscurse = 0.5f;
                 }
 
                 transform.position = Vector3.Lerp(transform.position, player.transform.position, attackTranscurse);
 
-                if (attackTranscurse >= 1)
+                if (attackTranscurse >= 0.1f)
                 {
-                    //TODO Dañar al player
-                    player.GetComponent<PlayerController>().Damaged(directionAttack);
-                    Destroy(gameObject);
+                    StartCoroutine(SelfDestroy());
 
                 }
 
@@ -82,6 +87,13 @@ public class PimpolloController : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Player" && chasePlayer)
+        {
+            player.GetComponent<BelethHealthController>().Damaged(1);
+        }
+    }
 
     IEnumerator PlayerSeen() {
 
@@ -90,4 +102,33 @@ public class PimpolloController : MonoBehaviour
         yield return new WaitForSeconds(timeToWait);
         chasePlayer = true;
     }
+
+
+    private void Explosion() {
+
+        attackBox.enabled = true;
+
+    }
+
+    private IEnumerator SelfDestroy() {
+
+
+        Explosion();
+
+        yield return new WaitForSeconds(0.1f);
+        
+        Destroy(gameObject);
+
+
+    }
+
+    private IEnumerator WaitToExplode() {
+
+
+        yield return new WaitForSeconds(maxTimeChasing);
+
+        StartCoroutine(SelfDestroy());
+    }
+
+    
 }

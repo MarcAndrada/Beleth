@@ -22,7 +22,7 @@ public class PlatformController : MonoBehaviour
     private bool ascending;
     private bool canMove = true;
     private CharacterController cc;
-    private PlayerController playerCont;
+    private BelethMovementController playerCont;
 
     // Start is called before the first frame update
     void Start()
@@ -148,7 +148,7 @@ public class PlatformController : MonoBehaviour
     {
         if (other.tag == "Player") {
             cc = other.GetComponent<CharacterController>();
-            playerCont = other.GetComponent<PlayerController>();
+            playerCont = other.GetComponent<BelethMovementController>();
             
         }
     }

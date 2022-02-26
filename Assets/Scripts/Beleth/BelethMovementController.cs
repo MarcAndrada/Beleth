@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class BelethMovementController : MonoBehaviour
 {
 
     //inputs
@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private InputAction runAction;
 
 
-    [Header("Player Movment")]
+    [Header("Movment")]
     [SerializeField]
     [Tooltip("Esta es la velocidad base que tendra el personaje")]
     private float playerSpeed;
@@ -88,18 +88,6 @@ public class PlayerController : MonoBehaviour
     private bool canCoyote;
     private bool onPlatform = false;
 
-    [Header("Attack")]
-
-    [Header("Damaged")]
-
-    [SerializeField]
-    private float knockBackForce;
-    [SerializeField]
-    private float mass;
-    [SerializeField]
-    private bool hitted;
-    private Vector3 impact;
-
 
     [Header("Components & External objects")]
     [SerializeField]
@@ -114,7 +102,10 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
 
-    //Movment Events
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        //Movment Events
         moveAction = playerInput.actions["Move"];
         moveAction.started += SetMovmentValues;
         moveAction.performed += SetMovmentValues;
@@ -146,30 +137,17 @@ public class PlayerController : MonoBehaviour
         horizontalInput = recibedInputs.x;
         verticalInput = recibedInputs.y;
 
-
-
-
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
-
         CheckAccelSpeed();
         CheckIfCanJump();
         CheckIfGliding();
-        if (hitted)
-        {
-            CheckIfHitted();
-        }
-        else
-        {
-            MovePlayer();
-            RotatePlayer();
-        }
-        
+        MovePlayer();
+        RotatePlayer();
         ApplyGravity();
 
     }
 
+
+    //Actions
     private void MovePlayer()
     {
         if (groundedPlayer)
@@ -193,7 +171,6 @@ public class PlayerController : MonoBehaviour
         controller.Move(movementDirection * playerSpeed * currentSpeed * Time.deltaTime);
         
     }
-    
     private void RotatePlayer()
     {
 
@@ -205,7 +182,6 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
         }
     }
-
     private void ApplyGravity()
     {
         // Se aplica la gravedad que le pasemos pero que no supere limite de velocidad de caida
@@ -224,7 +200,17 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+   
+    IEnumerator WaitForCoyoteTime()
+    {
 
+        yield return new WaitForSeconds(coyoteTime);
+        canCoyote = false;
+
+    }
+
+
+    //Checkers
     private void CheckIfCanJump() {
 
         groundedPlayer = controller.isGrounded;
@@ -249,7 +235,6 @@ public class PlayerController : MonoBehaviour
 
 
     }
-
     private void CheckIfGliding() {
 
         //Si el boton de saltar esta presionado 
@@ -262,7 +247,6 @@ public class PlayerController : MonoBehaviour
         }
     
     }
-   
     private void CheckAccelSpeed()
     {
 
@@ -337,43 +321,6 @@ public class PlayerController : MonoBehaviour
                 currentSpeed = 0;
             }
         }
-    }
-
-    IEnumerator WaitForCoyoteTime()
-    {
-
-        yield return new WaitForSeconds(coyoteTime);
-        canCoyote = false;
-
-    }
-    
-    public void Damaged(Vector3 _hitDirection)
-    {
-        hitted = true;
-        _hitDirection += new Vector3(0, 10, 0);
-        _hitDirection.Normalize();
-        if (_hitDirection.y < 0) _hitDirection.y = -_hitDirection.y; // reflect down force on the ground
-        impact += _hitDirection.normalized * knockBackForce / mass;
-
-
-    }
-
-    private void CheckIfHitted() {
-        
-        if (impact.magnitude > 0.2f)
-        {
-            Debug.Log(impact.magnitude);
-            controller.Move(-impact * Time.deltaTime);
-            
-        }
-        else
-        {
-            hitted = false;
-            impact = new Vector3(0,0,0);
-        }
-
-        // consumes the impact energy each cycle:
-        impact = Vector3.Lerp(transform.position, -impact, 1 * Time.deltaTime);
     }
 
 

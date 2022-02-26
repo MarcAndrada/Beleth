@@ -6,6 +6,7 @@ public class BlindEnemieController : MonoBehaviour
 {
     [SerializeField]
     private Transform[] placesToGo;
+    [Tooltip("Si esta activado cuando llegue al ultimo punto volvera a empezar desde el 1 si no ira marcha atras \n Ej: El ultimo punto es el 8, en vez de ir al 1 va al 7 despues al 6 ...")]
     [SerializeField]
     private bool restartWhenEnd;
     [SerializeField]
