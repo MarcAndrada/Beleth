@@ -9,10 +9,11 @@ public class PimpolloController : MonoBehaviour
     private float timeToWait;
     [SerializeField]
     private float distanceToAttack;
+    [Tooltip("Velocidad en la que hara el salto hacia el player")]
     [SerializeField]
     private float attackSpeed;
     [SerializeField]
-    private SphereCollider attackBox;
+    private SphereCollider attackCollider;
     [SerializeField]
     private float maxTimeChasing;
     
@@ -80,24 +81,23 @@ public class PimpolloController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && !chasePlayer)
         {
             player = other.gameObject;
             StartCoroutine(PlayerSeen());
         }
-    }
 
-    private void OnTriggerStay(Collider other)
-    {
         if (other.tag == "Player" && chasePlayer)
         {
             player.GetComponent<BelethHealthController>().Damaged(1);
         }
+
     }
 
     IEnumerator PlayerSeen() {
 
         boxColl.enabled = false;
+        attackCollider.enabled = true;
         transform.LookAt(player.transform);
         yield return new WaitForSeconds(timeToWait);
         chasePlayer = true;
@@ -105,8 +105,7 @@ public class PimpolloController : MonoBehaviour
 
 
     private void Explosion() {
-
-        attackBox.enabled = true;
+        // Hacer efectos de explosion
 
     }
 

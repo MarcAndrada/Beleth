@@ -12,13 +12,14 @@ public class BelethHealthController : MonoBehaviour
     [Tooltip("Tiempo de invulnerabilidad despues de que te peguen")]
     private float inmortalTime;
 
-    private bool canBeDamaged;
+    private bool canBeDamaged = true;
 
+    private BelethUIController uiController;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        uiController = GetComponent<BelethUIController>();
     }
 
     // Update is called once per frame
@@ -33,6 +34,7 @@ public class BelethHealthController : MonoBehaviour
         if (canBeDamaged)
         {
             healthPoints -= _damageDeal;
+            Debug.Log("Te isieron " + _damageDeal + " de pupa te quedan " + healthPoints + " de vida");
             // Hacer animacion
             canBeDamaged = false;
             StartCoroutine(WaitForInmortalFrames());
@@ -50,16 +52,21 @@ public class BelethHealthController : MonoBehaviour
 
     private void CheckHP()
     {
+        uiController.SetHealthUI(healthPoints);
+
         if (healthPoints <= 0)
         {
             Die();
         }
     }
 
-    private void Die() { 
-        //Hacer la animacio
+    private void Die() {
+        //Hacer la animacion de muerte
         //Mostrar menu de reiniciar nivel
-        //
+
+        //Desactivar el movimiento
+        GetComponent<BelethMovementController>().SetCanMove(false);
+        Debug.Log("Has muerto");
     }
 
 }

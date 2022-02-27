@@ -15,15 +15,17 @@ public class BlindEnemieController : MonoBehaviour
     private float cdDuration;
     [SerializeField]
     private GameObject testMeshScale;
+    [SerializeField]
+    private float maxScale;
 
-
-    private int index = 0;
     private NavMeshAgent agent;
+    private int index = 0;
     private bool ascending = true;
     private bool canAttack = true;
     private float attackProcess = 1;
-    private GameObject player;
     private bool isAttacking = false;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -91,13 +93,13 @@ public class BlindEnemieController : MonoBehaviour
             if (canAttack)
             {
                 agent.destination = transform.position;
-                if (attackProcess < 5)
+                if (attackProcess < maxScale)
                 {
                     attackProcess += attackSpeed * Time.deltaTime;
                 }
                 else
                 {
-                    attackProcess = 5;
+                    attackProcess = maxScale;
                     canAttack = false;
                 }
 
@@ -124,12 +126,13 @@ public class BlindEnemieController : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && !isAttacking)
         {
-            player = other.gameObject;
             isAttacking = true;
+            other.gameObject.GetComponent<BelethHealthController>().Damaged(1);
+
         }
     }
 }

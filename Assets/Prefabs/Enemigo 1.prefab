@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 344138040673508133}
   - component: {fileID: 344138040673508186}
   - component: {fileID: 344138040673508187}
+  - component: {fileID: 983240090}
   m_Layer: 0
   m_Name: Cylinder
   m_TagString: Untagged
@@ -82,6 +83,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!135 &983240090
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344138040673508134}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!1 &344138042170247730
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +221,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 20
+  m_Speed: 10
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 1000
@@ -216,7 +230,7 @@ NavMeshAgent:
   m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 0.9
-  m_BaseOffset: 0.455
+  m_BaseOffset: 0.45
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &344138042589724706
@@ -231,9 +245,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48898ab4872503e4ba938598a693079f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToWait: 1
-  distanceToAttack: 3
+  timeToWait: 0.2
+  distanceToAttack: 4
   attackSpeed: 0.5
+  attackBox: {fileID: 983240090}
+  maxTimeChasing: 10
 --- !u!65 &344138042589724705
 BoxCollider:
   m_ObjectHideFlags: 0

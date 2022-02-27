@@ -16,7 +16,7 @@ public class BelethMovementController : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction runAction;
-
+    private bool canMove = true;
 
     [Header("Movment")]
     [SerializeField]
@@ -119,8 +119,8 @@ public class BelethMovementController : MonoBehaviour
 
         // Run Events
         runAction = playerInput.actions["Run"];
-        runAction.started += SetRunning;
-        runAction.canceled += SetRunning;
+        runAction.started += _ => SetRunning();
+        runAction.canceled += _ => SetRunning();
 
         playerInput.actions["Restart"].started += Reset;
 
@@ -139,9 +139,12 @@ public class BelethMovementController : MonoBehaviour
 
         CheckAccelSpeed();
         CheckIfCanJump();
-        CheckIfGliding();
-        MovePlayer();
-        RotatePlayer();
+        if (canMove)
+        {
+            CheckIfGliding();
+            MovePlayer();
+            RotatePlayer();
+        } 
         ApplyGravity();
 
     }
@@ -201,6 +204,7 @@ public class BelethMovementController : MonoBehaviour
 
     }
    
+    //Timers
     IEnumerator WaitForCoyoteTime()
     {
 
@@ -209,15 +213,15 @@ public class BelethMovementController : MonoBehaviour
 
     }
 
-
     //Checkers
     private void CheckIfCanJump() {
 
+        // Detecta si esta tocando el suelo
         groundedPlayer = controller.isGrounded;
 
+        //Si el player esta en el suelo esto hace que no se caiga por la gravedad y reseteamos los valores del salto (cantidad de saltos, coyote time ...)
         if (groundedPlayer && playerVelocity.y < 0)
         {
-            //Si el player esta en el suelo esto hace que no se caiga por la gravedad y reseteamos los valores del salto (numer de saltos, coyote time ...)
             playerVelocity.y = 0f;
             doubleJumped = false;
             gravityValue = gravityOnFloor;
@@ -227,24 +231,32 @@ public class BelethMovementController : MonoBehaviour
             gliding = false;
         }
 
+
+        // Si no esta tocando el suelo espera el tiempo indicado par que aun pueda hacer el primer salto
         if (!groundedPlayer && canCoyote)
         {
-            // Si no esta tocando el suelo espera el tiempo indicado par que aun pueda hacer el primer salto
             StartCoroutine(WaitForCoyoteTime());
         }
 
+        // En caso de estar tocando el suelo y que acabemos de tocar el suelo despues de saltar hacer que se ponga la velocidad de movimiento normal
+        if (groundedPlayer && currentStateSpeed == airAccelSpeed)
+        {
+            SetRunning();
+        }
 
     }
     private void CheckIfGliding() {
 
-        //Si el boton de saltar esta presionado 
+        //Si esta cayendo y esta planeando 
         if (playerVelocity.y < 0 && gliding)
         {
             //En el momento en el que el personaje deje de subir empezara a planear
             Paraguas.SetActive(true);
             gravityValue = gravityGliding;
             maxFallSpeed = glidingFallSpeed;
-        }
+
+        } 
+
     
     }
     private void CheckAccelSpeed()
@@ -325,29 +337,32 @@ public class BelethMovementController : MonoBehaviour
 
 
     // Input Actions
-
     private void SetMovmentValues(InputAction.CallbackContext obj)
     {
         recibedInputs = moveAction.ReadValue<Vector2>();
     }
     private void Jump(InputAction.CallbackContext obj)
     {
-        if (groundedPlayer || canCoyote)
+        if (canMove)
         {
-            // En caso de que este en el suelo o aun este a tiempo de utilizar el coyote time haz el 1r salto
-            playerVelocity.y = 0;
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-            canCoyote = false;
-            onPlatform = false;
+            if (groundedPlayer || canCoyote)
+            {
+                // En caso de que este en el suelo o aun este a tiempo de utilizar el coyote time haz el 1r salto
+                playerVelocity.y = 0;
+                playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+                canCoyote = false;
+                onPlatform = false;
+            }
+            else if (!doubleJumped)
+            {
+                // En caso de que no haya hecho el doble salto que haga el doble salto
+                playerVelocity.y = 0;
+                playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -3.0f * gravityValue);
+                doubleJumped = true;
+                onPlatform = false;
+            }
         }
-        else if (!doubleJumped)
-        {
-            // En caso de que no haya hecho el doble salto que haga el doble salto
-            playerVelocity.y = 0;
-            playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -3.0f * gravityValue);
-            doubleJumped = true;
-            onPlatform = false;
-        }
+        
     }
     private void SetGliding(InputAction.CallbackContext obj)
     {
@@ -362,8 +377,9 @@ public class BelethMovementController : MonoBehaviour
         Paraguas.SetActive(false);
         maxFallSpeed = normalFallSpeed;
         gliding = false;
+
     }
-    private void SetRunning(InputAction.CallbackContext obj)
+    private void SetRunning()
     {
 
         if (groundedPlayer)
@@ -389,5 +405,13 @@ public class BelethMovementController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);    
         
     }
+
+
+    //Setters
+    public void SetCanMove(bool _CanMove) {
+        canMove = _CanMove;
+    }
+
+
 
 }

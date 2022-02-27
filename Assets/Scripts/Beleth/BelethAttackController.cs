@@ -21,8 +21,4 @@ public class BelethAttackController : MonoBehaviour
         
     }
 
-    public static void SetRunning() {
-        
-    }
-
 }
