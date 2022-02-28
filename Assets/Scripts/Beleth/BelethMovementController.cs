@@ -8,8 +8,6 @@ public class BelethMovementController : MonoBehaviour
 {
 
     //inputs
-    private float horizontalInput = 0;
-    private float verticalInput = 0;
     private Vector3 movementInput;
     private Vector3 movementDirection;
     private Vector2 recibedInputs;
@@ -96,11 +94,17 @@ public class BelethMovementController : MonoBehaviour
     private GameObject Paraguas;
     private CharacterController controller;
     private PlayerInput playerInput;
+    private BelethAnimController animController;
 
     private void Start()
     {
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
+        animController = GetComponent<BelethAnimController>();
+
+        //Setear valor a las animaciones
+        animController.SetSpeedValue(currentSpeed);
+        animController.SetGliding(gliding);
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -134,9 +138,6 @@ public class BelethMovementController : MonoBehaviour
     private void Update()
     {
 
-        horizontalInput = recibedInputs.x;
-        verticalInput = recibedInputs.y;
-
         CheckAccelSpeed();
         CheckIfCanJump();
         if (canMove)
@@ -156,14 +157,14 @@ public class BelethMovementController : MonoBehaviour
         if (groundedPlayer)
         {
             //movimiento en el suelo
-            movementInput = Quaternion.Euler(0, followCamera.transform.eulerAngles.y, 0) * new Vector3(recibedInputs.x, 0, verticalInput);
+            movementInput = Quaternion.Euler(0, followCamera.transform.eulerAngles.y, 0) * new Vector3(recibedInputs.x, 0, recibedInputs.y);
         }
         else
         {
             //definir movimiento en el aire
-            if (horizontalInput != 0 || verticalInput != 0)
+            if (recibedInputs.x != 0 || recibedInputs.y != 0)
             {
-                movementInput = Quaternion.Euler(0, followCamera.transform.eulerAngles.y, 0) * new Vector3(recibedInputs.x, 0, verticalInput);
+                movementInput = Quaternion.Euler(0, followCamera.transform.eulerAngles.y, 0) * new Vector3(recibedInputs.x, 0, recibedInputs.y);
                 currentStateSpeed = airAccelSpeed; 
             }
         }
@@ -172,7 +173,9 @@ public class BelethMovementController : MonoBehaviour
         // Se le indica al controller que se mueva hacia la direccion indicada y ajustandolo a la velocidad que le queramos aplicar
 
         controller.Move(movementDirection * playerSpeed * currentSpeed * Time.deltaTime);
-        
+
+        animController.SetSpeedValue(currentSpeed);
+
     }
     private void RotatePlayer()
     {
@@ -181,7 +184,6 @@ public class BelethMovementController : MonoBehaviour
         {
             // Mira hacia la direccion donde se esta moviendo utilizando un lerp esferico
             Quaternion desiredRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
-
             transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
         }
     }
@@ -229,6 +231,10 @@ public class BelethMovementController : MonoBehaviour
             canCoyote = true;
             maxFallSpeed = normalFallSpeed;
             gliding = false;
+            // Setear el valor de la animacion de planear
+            animController.SetGliding(gliding);
+
+
         }
 
 
@@ -264,7 +270,7 @@ public class BelethMovementController : MonoBehaviour
 
         // En esta funcion se revisara la velocidad a la que tiene que ir el personaje segun su estado
 
-        if (horizontalInput != 0 || verticalInput != 0)
+        if (recibedInputs.x != 0 || recibedInputs.y != 0)
         {
             // En caso de que este presionando algun imput contara como que esta acelerando
             isAccelerating = true;
@@ -275,6 +281,8 @@ public class BelethMovementController : MonoBehaviour
             isAccelerating = false;
         }
 
+        // Decir si esta pulsando algun input o no
+        animController.SetMovmentInput(isAccelerating);
 
         if (isAccelerating)
         {
@@ -352,6 +360,8 @@ public class BelethMovementController : MonoBehaviour
                 playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
                 canCoyote = false;
                 onPlatform = false;
+                animController.JumpTrigger();
+
             }
             else if (!doubleJumped)
             {
@@ -360,6 +370,7 @@ public class BelethMovementController : MonoBehaviour
                 playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -3.0f * gravityValue);
                 doubleJumped = true;
                 onPlatform = false;
+                animController.JumpTrigger();
             }
         }
         
@@ -368,7 +379,8 @@ public class BelethMovementController : MonoBehaviour
     {
 
         gliding = true;
-        
+        animController.SetGliding(gliding);
+
     }
     private void StopGlide(InputAction.CallbackContext obj)
     {
@@ -377,6 +389,8 @@ public class BelethMovementController : MonoBehaviour
         Paraguas.SetActive(false);
         maxFallSpeed = normalFallSpeed;
         gliding = false;
+        animController.SetGliding(gliding);
+
 
     }
     private void SetRunning()
