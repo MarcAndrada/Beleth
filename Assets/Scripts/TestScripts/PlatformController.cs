@@ -23,6 +23,7 @@ public class PlatformController : MonoBehaviour
     private bool canMove = true;
     private CharacterController cc;
     private BelethMovementController playerCont;
+    private BelethAnimController animController;
 
     // Start is called before the first frame update
     void Start()
@@ -149,7 +150,9 @@ public class PlatformController : MonoBehaviour
         if (other.tag == "Player") {
             cc = other.GetComponent<CharacterController>();
             playerCont = other.GetComponent<BelethMovementController>();
-            
+            animController = other.GetComponent<BelethAnimController>();
+            animController.SetOnPlatform(true);
+
         }
     }
     private void OnTriggerStay(Collider other)
@@ -173,6 +176,8 @@ public class PlatformController : MonoBehaviour
 
         if (other.tag == "Player")
         {
+            animController.SetOnPlatform(false);
+
         }
 
     }

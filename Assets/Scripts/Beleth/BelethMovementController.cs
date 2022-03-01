@@ -27,6 +27,7 @@ public class BelethMovementController : MonoBehaviour
     private Vector3 playerVelocity;
     [Tooltip("Saber si el personaje se esta pulsando algun input de movimiento , esto se usa para la aceleracion o la deceleracion")]
     private bool isAccelerating = false;
+    [SerializeField]
     [Tooltip("Variable que contiene el valor actual del multiplicador para hacer la aceleracion y deceleracion ")]
     private float currentSpeed;
     [SerializeField]
@@ -41,6 +42,7 @@ public class BelethMovementController : MonoBehaviour
     [SerializeField]
     [Tooltip("Velocidad en la que el personaje decelera en el aire")]
     private float airBraking;
+    [SerializeField]
     [Tooltip("Este es el multiplicador de velocidad y aceleracion el cual ira cambiando segun el estado en el que este (corriendo saltando ...)")]
     private float currentStateSpeed;
     [SerializeField]
@@ -81,10 +83,10 @@ public class BelethMovementController : MonoBehaviour
     [SerializeField]
     [Tooltip("El tiempo que dispondra el player para saltar y no tener que hacer el salto pixel perfect")]
     private float coyoteTime;
+    [SerializeField]
     private bool groundedPlayer;
     private bool doubleJumped = false;
     private bool canCoyote;
-    private bool onPlatform = false;
 
 
     [Header("Components & External objects")]
@@ -199,10 +201,8 @@ public class BelethMovementController : MonoBehaviour
             playerVelocity.y = maxFallSpeed;
         }
 
-        if (!onPlatform)
-        {
-            controller.Move(playerVelocity * Time.deltaTime);
-        }
+        controller.Move(playerVelocity * Time.deltaTime);
+        
 
     }
    
@@ -359,8 +359,8 @@ public class BelethMovementController : MonoBehaviour
                 playerVelocity.y = 0;
                 playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
                 canCoyote = false;
-                onPlatform = false;
                 animController.JumpTrigger();
+                animController.SetOnPlatform(false);
 
             }
             else if (!doubleJumped)
@@ -369,8 +369,9 @@ public class BelethMovementController : MonoBehaviour
                 playerVelocity.y = 0;
                 playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -3.0f * gravityValue);
                 doubleJumped = true;
-                onPlatform = false;
                 animController.JumpTrigger();
+                animController.SetOnPlatform(false);
+
             }
         }
         
@@ -425,7 +426,6 @@ public class BelethMovementController : MonoBehaviour
     public void SetCanMove(bool _CanMove) {
         canMove = _CanMove;
     }
-
 
 
 }

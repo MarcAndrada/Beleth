@@ -12,6 +12,7 @@ public class BelethAnimController : MonoBehaviour
     {
         animator = GetComponentInChildren<Animator>();
         charController = GetComponent<CharacterController>();
+        animator.SetBool("OnFloor", true);
     }
 
     // Update is called once per frame
@@ -21,8 +22,15 @@ public class BelethAnimController : MonoBehaviour
     }
 
     private void SetOnAir() {
-
-        animator.SetBool("OnAir", charController.isGrounded);
+        if (!charController.isGrounded)
+        {
+            animator.ResetTrigger("Jump");
+        }
+        animator.SetBool("OnFloor", charController.isGrounded);
+    }
+    public void SetOnPlatform(bool _isOnPlatform)
+    {
+        animator.SetBool("OnPlatform", _isOnPlatform);
     }
 
     public void SetMovmentInput(bool _movingInputPressed) {
@@ -32,6 +40,7 @@ public class BelethAnimController : MonoBehaviour
         animator.SetFloat("Speed", _playerSpeed);
 
     }
+
     public void JumpTrigger() {
 
         animator.SetTrigger("Jump");
