@@ -42,18 +42,19 @@ public class BelethMovementController : MonoBehaviour
     [SerializeField]
     [Tooltip("Velocidad en la que el personaje decelera en el aire")]
     private float airBraking;
-    [SerializeField]
     [Tooltip("Este es el multiplicador de velocidad y aceleracion el cual ira cambiando segun el estado en el que este (corriendo saltando ...)")]
     private float currentStateSpeed;
     [SerializeField]
     [Tooltip("Valor al que va a ajustarse el multiplicador de velocidad mientras anda")]
-    private float walkAccelSpeed;
+    private float walkSpeed;
     [SerializeField]
     [Tooltip("Valor al que va a ajustarse el multiplicador de velocidad mientras corre")]
-    private float runAccelSpeed;
+    private float runSpeed;
     [SerializeField]
     [Tooltip("Valor al que va a ajustarse el multiplicador de velocidad mientras esta volando")]
-    private float airAccelSpeed;
+    private float airSpeed;
+    [SerializeField]
+    private float airSpeedOffset;
 
     [Header("Jump")]
     [SerializeField]
@@ -64,7 +65,6 @@ public class BelethMovementController : MonoBehaviour
     private float doubleJumpHeight;
     [SerializeField]
     private float jumpImpulse;
-    [SerializeField]
     [Tooltip("Valor con el que se haran los calculos de la gravedad")]
     private float gravityValue;
     [SerializeField]
@@ -85,7 +85,6 @@ public class BelethMovementController : MonoBehaviour
     [SerializeField]
     [Tooltip("El tiempo que dispondra el player para saltar y no tener que hacer el salto pixel perfect")]
     private float coyoteTime;
-    [SerializeField]
     private bool groundedPlayer;
     private bool doubleJumped = false;
     private bool canCoyote;
@@ -94,15 +93,14 @@ public class BelethMovementController : MonoBehaviour
     [Header("Components & External objects")]
     [SerializeField]
     private Camera followCamera;
-    [SerializeField]
-    private GameObject Paraguas;
-    private CharacterController controller;
+    private CharacterController charController;
     private PlayerInput playerInput;
     private BelethAnimController animController;
-
+    private float attackBraking;
+    private bool isAttacking = false;
     private void Start()
     {
-        controller = GetComponent<CharacterController>();
+        charController = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
         animController = GetComponent<BelethAnimController>();
 
@@ -133,7 +131,7 @@ public class BelethMovementController : MonoBehaviour
         playerInput.actions["Restart"].started += Reset;
 
         //Setear la velocidad inicial
-        currentStateSpeed = walkAccelSpeed;
+        currentStateSpeed = walkSpeed;
         maxFallSpeed = normalFallSpeed;
 
 
@@ -149,6 +147,10 @@ public class BelethMovementController : MonoBehaviour
             CheckIfGliding();
             MovePlayer();
             RotatePlayer();
+        }
+        else if(isAttacking)
+        {
+            MoveWhileAttacking();
         } 
         ApplyGravity();
 
@@ -169,16 +171,20 @@ public class BelethMovementController : MonoBehaviour
             if (recibedInputs.x != 0 || recibedInputs.y != 0)
             {
                 movementInput = Quaternion.Euler(0, followCamera.transform.eulerAngles.y, 0) * new Vector3(recibedInputs.x, 0, recibedInputs.y);
-                currentStateSpeed = airAccelSpeed; 
+                currentStateSpeed = airSpeed; 
             }
         }
         // Se coge la direccion en la que va a moverse el personaje en base a los inputs pulsados y los 
         movementDirection = movementInput.normalized;
         // Se le indica al controller que se mueva hacia la direccion indicada y ajustandolo a la velocidad que le queramos aplicar
 
-        controller.Move(movementDirection * playerSpeed * currentSpeed * Time.deltaTime);
+        charController.Move(movementDirection * playerSpeed * currentSpeed * Time.deltaTime);
 
         animController.SetSpeedValue(currentSpeed);
+
+    }
+    private void MoveWhileAttacking() {
+        charController.Move(movementDirection * playerSpeed * currentSpeed * Time.deltaTime);
 
     }
     private void RotatePlayer()
@@ -203,7 +209,7 @@ public class BelethMovementController : MonoBehaviour
             playerVelocity.y = maxFallSpeed;
         }
 
-        controller.Move(playerVelocity * Time.deltaTime);
+        charController.Move(playerVelocity * Time.deltaTime);
         
 
     }
@@ -221,7 +227,7 @@ public class BelethMovementController : MonoBehaviour
     private void CheckIfCanJump() {
 
         // Detecta si esta tocando el suelo
-        groundedPlayer = controller.isGrounded;
+        groundedPlayer = charController.isGrounded;
 
         //Si el player esta en el suelo esto hace que no se caiga por la gravedad y reseteamos los valores del salto (cantidad de saltos, coyote time ...)
         if (groundedPlayer && playerVelocity.y < 0)
@@ -229,7 +235,6 @@ public class BelethMovementController : MonoBehaviour
             playerVelocity.y = 0f;
             doubleJumped = false;
             gravityValue = gravityOnFloor;
-            Paraguas.SetActive(false);
             canCoyote = true;
             maxFallSpeed = normalFallSpeed;
             gliding = false;
@@ -247,7 +252,7 @@ public class BelethMovementController : MonoBehaviour
         }
 
         // En caso de estar tocando el suelo y que acabemos de tocar el suelo despues de saltar hacer que se ponga la velocidad de movimiento normal
-        if (groundedPlayer && currentStateSpeed == airAccelSpeed)
+        if (groundedPlayer && currentStateSpeed == airSpeed && canMove)
         {
             SetRunning();
         }
@@ -259,7 +264,6 @@ public class BelethMovementController : MonoBehaviour
         if (playerVelocity.y < 0 && gliding)
         {
             //En el momento en el que el personaje deje de subir empezara a planear
-            Paraguas.SetActive(true);
             gravityValue = gravityGliding;
             maxFallSpeed = glidingFallSpeed;
 
@@ -269,85 +273,100 @@ public class BelethMovementController : MonoBehaviour
     }
     private void CheckAccelSpeed()
     {
-
-        // En esta funcion se revisara la velocidad a la que tiene que ir el personaje segun su estado
-
-        if (recibedInputs.x != 0 || recibedInputs.y != 0)
-        {
-            // En caso de que este presionando algun imput contara como que esta acelerando
-            isAccelerating = true;
-        }
-        else
-        {
-            // En caso de que no presione ningun input contara como que esta decelerando
-            isAccelerating = false;
-        }
-
-        // Decir si esta pulsando algun input o no
-        animController.SetMovmentInput(isAccelerating);
-
-        if (isAccelerating)
+        if (!isAttacking)
         {
 
-            //En caso de que esta acelerando revisaremos si tiene que hacelerar o frenar para ajustar el multiplicador al valor del estado actual
-            if (groundedPlayer)
+            // En esta funcion se revisara la velocidad a la que tiene que ir el personaje segun su estado
+
+            if (recibedInputs.x != 0 || recibedInputs.y != 0)
             {
-                // Si estamos en el suelo
-                if (currentSpeed < currentStateSpeed)
+                // En caso de que este presionando algun imput contara como que esta acelerando
+                isAccelerating = true;
+            }
+            else
+            {
+                // En caso de que no presione ningun input contara como que esta decelerando
+                isAccelerating = false;
+            }
+
+            // Decir si esta pulsando algun input o no
+            animController.SetMovmentInput(isAccelerating);
+
+            if (isAccelerating)
+            {
+
+                //En caso de que esta acelerando revisaremos si tiene que hacelerar o frenar para ajustar el multiplicador al valor del estado actual
+                if (groundedPlayer)
                 {
-                    // Aceleraremos con la velocidad de aceleracion en el suelo
-                    currentSpeed += floorAccel / 1000;
-                }
-                else if (currentSpeed > currentStateSpeed)
-                {
-                    // Frenaremos con la velocidad de frenar en el suelo
-                    currentSpeed -= floorBraking / 1000;
+                    // Si estamos en el suelo
+                    if (currentSpeed < currentStateSpeed)
+                    {
+                        // Aceleraremos con la velocidad de aceleracion en el suelo
+                        currentSpeed += floorAccel / 1000;
+                    }
+                    else if (currentSpeed > currentStateSpeed)
+                    {
+                        // Frenaremos con la velocidad de frenar en el suelo
+                        currentSpeed -= floorBraking / 1000;
+                    }
+                    else
+                    {
+
+                        currentSpeed = currentStateSpeed;
+                    }
+
                 }
                 else
                 {
+                    if (currentSpeed > currentStateSpeed)
+                    {
+                        currentSpeed -= airBraking / 1000;
+                    }
+                    else if (currentSpeed < currentStateSpeed)
+                    {
+                        currentSpeed += airAccel / 1000;
+                    }
+                    else
+                    {
+                        currentSpeed = currentStateSpeed;
+                    }
 
-                    currentSpeed = currentStateSpeed;
                 }
+
 
             }
             else
             {
-                if (currentSpeed > currentStateSpeed)
+                if (currentSpeed > 0)
                 {
-                    currentSpeed -= airBraking / 1000;
-                }
-                else if (currentSpeed < currentStateSpeed)
-                {
-                    currentSpeed += airAccel / 1000;
-                }
-                else 
-                {
-                    currentSpeed = currentStateSpeed;
-                }
+                    if (groundedPlayer)
+                    {
+                        currentSpeed -= floorBraking / 1000;
+                    }
+                    else
+                    {
+                        currentSpeed -= airBraking / 1000;
+                    }
 
-            }
-
-
-        }
-        else
-        {
-            if (currentSpeed > 0)
-            {
-                if (groundedPlayer)
-                {
-                    currentSpeed -= floorBraking / 1000;
                 }
                 else
                 {
-                    currentSpeed -= airBraking / 1000;
+                    currentSpeed = 0;
                 }
-
+            }
+        }else
+        {
+            if (currentSpeed > 0)
+            {
+                currentSpeed -= attackBraking / 1000;
             }
             else
             {
                 currentSpeed = 0;
             }
+
         }
+        
     }
 
 
@@ -367,6 +386,22 @@ public class BelethMovementController : MonoBehaviour
                 playerVelocity.y += Mathf.Sqrt(jumpHeight * -jumpImpulse * gravityValue);
                 canCoyote = false;
                 animController.JumpTrigger();
+                if (currentSpeed < runSpeed - airSpeedOffset && currentSpeed > airSpeedOffset)
+                {
+                    airSpeed = currentSpeed;
+                }
+                else if (currentSpeed >= runSpeed - airSpeedOffset)
+                {
+                    airSpeed = currentSpeed - airSpeedOffset;
+                }
+                else if (currentSpeed < airSpeedOffset / 2)
+                {
+                    airSpeed = airSpeedOffset / 2;
+                }
+                else
+                {
+                    airSpeed = currentSpeed;
+                }
 
             }
             else if (!doubleJumped)
@@ -392,7 +427,6 @@ public class BelethMovementController : MonoBehaviour
     {
         // Si deja de apretar el boton de salto que deje de planear
         gravityValue = gravityOnFloor;
-        Paraguas.SetActive(false);
         maxFallSpeed = normalFallSpeed;
         gliding = false;
         animController.SetGliding(gliding);
@@ -407,11 +441,11 @@ public class BelethMovementController : MonoBehaviour
             // Revisar segun si ha apretado el boton de correr o no empezara a correr o dejara de hacerlo solo si esta en el suelo
             if (runAction.ReadValue<float>() == 1)
             {
-                currentStateSpeed = runAccelSpeed;
+                currentStateSpeed = runSpeed;
             }
             else
             {
-                currentStateSpeed = walkAccelSpeed;
+                currentStateSpeed = walkSpeed;
 
             }
 
@@ -441,5 +475,18 @@ public class BelethMovementController : MonoBehaviour
 
 
     }
+
+    public IEnumerator DoAttack(float _attackBraking, float _timeToWait) {
+
+        canMove = false;
+        attackBraking = _attackBraking;
+        isAttacking = true;
+        currentSpeed = 4;
+        yield return new WaitForSeconds(_timeToWait);
+        isAttacking = false;
+        canMove = true;
+
+    }
+
 
 }

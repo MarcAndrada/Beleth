@@ -69,6 +69,12 @@ public class BelethAnimController : MonoBehaviour
 
     }
 
-    
+    public void ResetAttackTrigger()
+    {
+        animator.ResetTrigger("Attack");
+
+    }
+
+
 
 }
