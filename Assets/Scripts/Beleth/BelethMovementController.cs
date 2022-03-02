@@ -314,10 +314,15 @@ public class BelethMovementController : MonoBehaviour
                 {
                     currentSpeed -= airBraking / 1000;
                 }
-                else
+                else if (currentSpeed < currentStateSpeed)
+                {
+                    currentSpeed += airAccel / 1000;
+                }
+                else 
                 {
                     currentSpeed = currentStateSpeed;
                 }
+
             }
 
 
@@ -357,7 +362,7 @@ public class BelethMovementController : MonoBehaviour
             {
                 // En caso de que este en el suelo o aun este a tiempo de utilizar el coyote time haz el 1r salto
                 playerVelocity.y = 0;
-                playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+                playerVelocity.y += Mathf.Sqrt(jumpHeight * -5.0f * gravityValue);
                 canCoyote = false;
                 animController.JumpTrigger();
                 animController.SetOnPlatform(false);
@@ -367,7 +372,7 @@ public class BelethMovementController : MonoBehaviour
             {
                 // En caso de que no haya hecho el doble salto que haga el doble salto
                 playerVelocity.y = 0;
-                playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -3.0f * gravityValue);
+                playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -5.0f * gravityValue);
                 doubleJumped = true;
                 animController.JumpTrigger();
                 animController.SetOnPlatform(false);
