@@ -432,5 +432,14 @@ public class BelethMovementController : MonoBehaviour
         canMove = _CanMove;
     }
 
+    //Extern Actions
+
+    public void AddImpulse(float _impulseForce) {
+
+        //Añadir un impulso con la fuerza que te pasen
+        playerVelocity.y += Mathf.Sqrt(_impulseForce * gravityValue);
+
+
+    }
 
 }

@@ -62,6 +62,13 @@ public class BelethAnimController : MonoBehaviour
         animator.SetTrigger("Damaged");
         
     }
+
+    public void AttackTrigger() {
+
+        animator.SetTrigger("Attack");
+
+    }
+
     
 
 }
