@@ -63,6 +63,8 @@ public class BelethMovementController : MonoBehaviour
     [Tooltip("Altura del doble salto")]
     private float doubleJumpHeight;
     [SerializeField]
+    private float jumpImpulse;
+    [SerializeField]
     [Tooltip("Valor con el que se haran los calculos de la gravedad")]
     private float gravityValue;
     [SerializeField]
@@ -362,20 +364,18 @@ public class BelethMovementController : MonoBehaviour
             {
                 // En caso de que este en el suelo o aun este a tiempo de utilizar el coyote time haz el 1r salto
                 playerVelocity.y = 0;
-                playerVelocity.y += Mathf.Sqrt(jumpHeight * -5.0f * gravityValue);
+                playerVelocity.y += Mathf.Sqrt(jumpHeight * -jumpImpulse * gravityValue);
                 canCoyote = false;
                 animController.JumpTrigger();
-                animController.SetOnPlatform(false);
 
             }
             else if (!doubleJumped)
             {
                 // En caso de que no haya hecho el doble salto que haga el doble salto
                 playerVelocity.y = 0;
-                playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -5.0f * gravityValue);
+                playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -jumpImpulse * gravityValue);
                 doubleJumped = true;
                 animController.JumpTrigger();
-                animController.SetOnPlatform(false);
 
             }
         }
