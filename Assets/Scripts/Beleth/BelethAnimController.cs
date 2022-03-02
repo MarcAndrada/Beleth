@@ -7,6 +7,9 @@ public class BelethAnimController : MonoBehaviour
 
     private Animator animator;
     private CharacterController charController;
+
+    private bool touchedFloor = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,9 +25,14 @@ public class BelethAnimController : MonoBehaviour
     }
 
     private void SetOnAir() {
-        if (!charController.isGrounded)
+        if (charController.isGrounded && !touchedFloor)
         {
             animator.ResetTrigger("Jump");
+            touchedFloor = true;
+        }
+        else if (!charController.isGrounded)
+        {
+            touchedFloor = true;
         }
         animator.SetBool("OnFloor", charController.isGrounded);
     }
@@ -46,6 +54,7 @@ public class BelethAnimController : MonoBehaviour
         animator.SetTrigger("Jump");
     
     }
+
     public void SetGliding(bool _isGliding) {
         animator.SetBool("Gliding", _isGliding);
     }
