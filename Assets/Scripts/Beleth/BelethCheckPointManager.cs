@@ -29,17 +29,14 @@ public class BelethCheckPointManager : MonoBehaviour
         lastRespawn = transform.position;
     }
 
-
+    // Update is called once per frame
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
             GoLastCheckPoint();
         }
-    }
-    // Update is called once per frame
-    void FixedUpdate()
-    {
+
         if (canSaveRespawnPoint && charController.isGrounded)
         {
             StartCoroutine(WaitForSetNewPoint());
@@ -57,7 +54,9 @@ public class BelethCheckPointManager : MonoBehaviour
         }
 
 
+
     }
+    
 
     public void SetNewRespawn(Vector3 _newRecoverZonePos) {
         lastRespawn = _newRecoverZonePos;
@@ -65,7 +64,9 @@ public class BelethCheckPointManager : MonoBehaviour
     }
 
     public void GoLastRespawn() {
+        charController.enabled = false;
         transform.position = lastRespawn;
+        charController.enabled = true;
     }
 
     public void SetNewCheckPoint(Vector3 _newCheckPointPos) {
@@ -76,8 +77,9 @@ public class BelethCheckPointManager : MonoBehaviour
 
     public void GoLastCheckPoint()
     {
+        charController.enabled = false;
         transform.position = lastCheckPoint;
-
+        charController.enabled = true;
 
     }
 

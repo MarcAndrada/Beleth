@@ -16,7 +16,7 @@ public class PimpolloController : MonoBehaviour
     private SphereCollider attackCollider;
     [SerializeField]
     private float maxTimeChasing;
-    
+
     private float attackTranscurse = 0;
     private float attackDuration = 0.2f;
     private bool chasePlayer = false;
@@ -24,12 +24,13 @@ public class PimpolloController : MonoBehaviour
     private NavMeshAgent navMesh;
     private GameObject player;
     private BoxCollider boxColl;
-    private Vector3 directionAttack;
+
     // Start is called before the first frame update
     void Start()
     {
         navMesh = GetComponent<NavMeshAgent>();
         boxColl = GetComponent<BoxCollider>();
+
     }
 
 
@@ -41,7 +42,7 @@ public class PimpolloController : MonoBehaviour
 
             StartCoroutine(WaitToExplode());
 
-            if (Vector3.Distance(transform.position, player.transform.position) > distanceToAttack && !isAttacking)
+            if (Vector3.Distance(transform.position, player.transform.position) > distanceToAttack && !isAttacking && navMesh.enabled == true)
             {
                 //Debug.Log(Vector3.Distance(transform.position, player.transform.position));
                 navMesh.destination = player.transform.position;
@@ -49,12 +50,10 @@ public class PimpolloController : MonoBehaviour
             }
             else
             {
-                if (directionAttack.x == 0)
-                {
-                    directionAttack = transform.position;
-                }
+                attackCollider.enabled = true;
                 isAttacking = true;
                 navMesh.enabled = false;
+
                 if (attackTranscurse < attackDuration)
                 {
                     attackTranscurse += attackSpeed * Time.deltaTime;
@@ -68,7 +67,7 @@ public class PimpolloController : MonoBehaviour
 
                 if (attackTranscurse >= 0.1f)
                 {
-                    StartCoroutine(SelfDestroy());
+                    SelfDestroy();
 
                 }
 
@@ -78,6 +77,41 @@ public class PimpolloController : MonoBehaviour
         }
     }
 
+
+   
+
+    IEnumerator PlayerSeen()
+    {
+
+        boxColl.enabled = false;
+        transform.LookAt(player.transform);
+        yield return new WaitForSeconds(timeToWait);
+        chasePlayer = true;
+    }
+
+
+    private void Explosion()
+    {
+        // Hacer efectos de explosion
+
+    }
+
+    private void SelfDestroy()
+    {
+        Explosion();
+        Destroy(gameObject);
+
+
+    }
+
+    private IEnumerator WaitToExplode()
+    {
+
+
+        yield return new WaitForSeconds(maxTimeChasing);
+
+        SelfDestroy();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -92,42 +126,16 @@ public class PimpolloController : MonoBehaviour
             player.GetComponent<BelethHealthController>().Damaged(1);
         }
 
-    }
-
-    IEnumerator PlayerSeen() {
-
-        boxColl.enabled = false;
-        attackCollider.enabled = true;
-        transform.LookAt(player.transform);
-        yield return new WaitForSeconds(timeToWait);
-        chasePlayer = true;
-    }
+        if (other.tag == "Trident" && chasePlayer)
+        {
+            Debug.Log("Me iso pupa");
+            SelfDestroy();
 
 
-    private void Explosion() {
-        // Hacer efectos de explosion
-
-    }
-
-    private IEnumerator SelfDestroy() {
-
-
-        Explosion();
-
-        yield return new WaitForSeconds(0.1f);
-        
-        Destroy(gameObject);
+        }
 
 
     }
 
-    private IEnumerator WaitToExplode() {
 
-
-        yield return new WaitForSeconds(maxTimeChasing);
-
-        StartCoroutine(SelfDestroy());
-    }
-
-    
 }

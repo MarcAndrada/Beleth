@@ -391,17 +391,14 @@ public class BelethMovementController : MonoBehaviour
                 playerVelocity.y += Mathf.Sqrt(jumpHeight * -jumpImpulse * gravityValue);
                 canCoyote = false;
                 animController.JumpTrigger();
-                if (currentSpeed < runSpeed - airSpeedOffset && currentSpeed > airSpeedOffset)
-                {
-                    airSpeed = currentSpeed;
-                }
-                else if (currentSpeed >= runSpeed - airSpeedOffset)
+
+               if (currentSpeed >= runSpeed - airSpeedOffset)
                 {
                     airSpeed = currentSpeed - airSpeedOffset;
                 }
-                else if (currentSpeed < airSpeedOffset / 2)
+                else if (currentSpeed < airSpeedOffset)
                 {
-                    airSpeed = airSpeedOffset / 2;
+                    airSpeed = airSpeedOffset;
                 }
                 else
                 {
