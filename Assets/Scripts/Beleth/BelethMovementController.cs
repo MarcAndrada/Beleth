@@ -96,6 +96,7 @@ public class BelethMovementController : MonoBehaviour
     private CharacterController charController;
     private PlayerInput playerInput;
     private BelethAnimController animController;
+    private BelethCheckPointManager checkPointManager;
     private float attackBraking;
     private bool isAttacking = false;
     private void Start()
@@ -103,6 +104,7 @@ public class BelethMovementController : MonoBehaviour
         charController = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
         animController = GetComponent<BelethAnimController>();
+        checkPointManager = GetComponent<BelethCheckPointManager>();
 
         //Setear valor a las animaciones
         animController.SetSpeedValue(currentSpeed);
@@ -127,8 +129,6 @@ public class BelethMovementController : MonoBehaviour
         runAction = playerInput.actions["Run"];
         runAction.started += _ => SetRunning();
         runAction.canceled += _ => SetRunning();
-
-        playerInput.actions["Restart"].started += Reset;
 
         //Setear la velocidad inicial
         currentStateSpeed = walkSpeed;
@@ -381,6 +381,11 @@ public class BelethMovementController : MonoBehaviour
         {
             if (groundedPlayer || canCoyote)
             {
+                if (groundedPlayer)
+                {
+                    checkPointManager.SetNewRespawn(transform.position);
+                }
+
                 // En caso de que este en el suelo o aun este a tiempo de utilizar el coyote time haz el 1r salto
                 playerVelocity.y = 0;
                 playerVelocity.y += Mathf.Sqrt(jumpHeight * -jumpImpulse * gravityValue);
@@ -453,12 +458,6 @@ public class BelethMovementController : MonoBehaviour
         }
 
     }
-    private void Reset(InputAction.CallbackContext obj)
-    {
-        
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);    
-        
-    }
 
 
     //Setters
@@ -466,8 +465,8 @@ public class BelethMovementController : MonoBehaviour
         canMove = _CanMove;
     }
 
-    //Extern Actions
 
+    //Extern Actions
     public void AddImpulse(float _impulseForce) {
 
         //Añadir un impulso con la fuerza que te pasen

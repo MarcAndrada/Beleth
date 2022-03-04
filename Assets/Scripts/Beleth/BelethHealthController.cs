@@ -16,11 +16,15 @@ public class BelethHealthController : MonoBehaviour
 
     private BelethUIController uiController;
     private BelethAnimController animController;
+    private BelethCheckPointManager checkPointManager;
+    private BelethMovementController charController;
     // Start is called before the first frame update
     void Start()
     {
         uiController = GetComponent<BelethUIController>();
         animController = GetComponent<BelethAnimController>();
+        checkPointManager = GetComponent<BelethCheckPointManager>();
+        charController = GetComponent<BelethMovementController>();
     }
 
     // Update is called once per frame
@@ -29,13 +33,12 @@ public class BelethHealthController : MonoBehaviour
         
     }
 
-
     public void Damaged(int _damageDeal)
     {
         if (canBeDamaged)
         {
             healthPoints -= _damageDeal;
-            Debug.Log("Te isieron " + _damageDeal + " de pupa te quedan " + healthPoints + " de vida");
+            //Debug.Log("Te isieron " + _damageDeal + " de pupa te quedan " + healthPoints + " de vida");
             // Hacer animacion
             animController.DamageTrigger();
             canBeDamaged = false;
@@ -67,8 +70,22 @@ public class BelethHealthController : MonoBehaviour
         //Mostrar menu de reiniciar nivel
 
         //Desactivar el movimiento
-        GetComponent<BelethMovementController>().SetCanMove(false);
+        charController.SetCanMove(false);
+        StartCoroutine(Respawn());
         Debug.Log("Has muerto");
+    }
+
+    IEnumerator Respawn() {
+
+        
+        yield return new WaitForSeconds(2);
+        charController.SetCanMove(true);
+        checkPointManager.GoLastCheckPoint();
+        healthPoints = 6;
+    }
+
+    public int GetHealthPoints() { 
+        return healthPoints;
     }
 
 }

@@ -52,14 +52,15 @@ public class BelethAttackController : MonoBehaviour
         {
             //Hacer la animacion
             animController.AttackTrigger();
+            //Congelar el movimiento durante el ataque
             StartCoroutine(movementController.DoAttack(attackDecelSpeed, attackDuration));
+            //Empezar el CD del personaje
             StartCoroutine(WaitAttackCD());
 
         }
 
 
     }
-
 
     private IEnumerator WaitAttackCD() {
         
