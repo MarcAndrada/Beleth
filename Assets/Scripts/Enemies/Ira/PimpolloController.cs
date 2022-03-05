@@ -13,12 +13,15 @@ public class PimpolloController : MonoBehaviour
     [SerializeField]
     private float attackSpeed;
     [SerializeField]
-    private SphereCollider attackCollider;
-    [SerializeField]
     private float maxTimeChasing;
 
+    [SerializeField]
+    private SphereCollider attackCollider;
+    [SerializeField]
+    private GameObject explosion;
+    
     private float attackTranscurse = 0;
-    private float attackDuration = 0.2f;
+    private float attackDuration = 0.15f;
     private bool chasePlayer = false;
     private bool isAttacking = false;
     private NavMeshAgent navMesh;
@@ -60,16 +63,11 @@ public class PimpolloController : MonoBehaviour
                 }
                 else
                 {
-                    attackTranscurse = 0.5f;
-                }
-
-                transform.position = Vector3.Lerp(transform.position, player.transform.position, attackTranscurse);
-
-                if (attackTranscurse >= 0.1f)
-                {
                     SelfDestroy();
-
                 }
+
+                transform.position = Vector3.LerpUnclamped(transform.position, player.transform.position, attackTranscurse);
+
 
             }
 
@@ -92,15 +90,16 @@ public class PimpolloController : MonoBehaviour
 
     private void Explosion()
     {
-        // Hacer efectos de explosion
-
+        // Instanciar la explosion
+        Instantiate(explosion, transform.position, transform.rotation);
+        Debug.Log("Exploto");
     }
 
     private void SelfDestroy()
     {
+        
         Explosion();
         Destroy(gameObject);
-
 
     }
 
@@ -119,11 +118,6 @@ public class PimpolloController : MonoBehaviour
         {
             player = other.gameObject;
             StartCoroutine(PlayerSeen());
-        }
-
-        if (other.tag == "Player" && chasePlayer)
-        {
-            player.GetComponent<BelethHealthController>().Damaged(1);
         }
 
         if (other.tag == "Trident" && chasePlayer)

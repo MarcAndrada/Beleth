@@ -44,7 +44,7 @@ public class BelethCheckPointManager : MonoBehaviour
 
         if (transform.position.y < maxFallDistance)
         {
-            healthController.Damaged(voidFallDamage);
+            healthController.GetDamage(voidFallDamage);
 
             if (healthController.GetHealthPoints() > 0)
             {

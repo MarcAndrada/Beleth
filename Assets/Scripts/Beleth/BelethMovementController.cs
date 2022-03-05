@@ -106,6 +106,8 @@ public class BelethMovementController : MonoBehaviour
         animController = GetComponent<BelethAnimController>();
         checkPointManager = GetComponent<BelethCheckPointManager>();
 
+        gravityValue = gravityOnFloor;
+
         //Setear valor a las animaciones
         animController.SetSpeedValue(currentSpeed);
         animController.SetGliding(gliding);
@@ -392,18 +394,8 @@ public class BelethMovementController : MonoBehaviour
                 canCoyote = false;
                 animController.JumpTrigger();
 
-               if (currentSpeed >= runSpeed - airSpeedOffset)
-                {
-                    airSpeed = currentSpeed - airSpeedOffset;
-                }
-                else if (currentSpeed < airSpeedOffset)
-                {
-                    airSpeed = airSpeedOffset;
-                }
-                else
-                {
-                    airSpeed = currentSpeed;
-                }
+
+                CheckCurrentSpeedAfterJump();
 
             }
             else if (!doubleJumped)
@@ -481,6 +473,24 @@ public class BelethMovementController : MonoBehaviour
         yield return new WaitForSeconds(_timeToWait);
         isAttacking = false;
         canMove = true;
+
+    }
+
+    //Others
+    private void CheckCurrentSpeedAfterJump() {
+
+        if (currentSpeed >= runSpeed - airSpeedOffset)
+        {
+            airSpeed = currentSpeed - airSpeedOffset / 2;
+        }
+        else if (currentSpeed < airSpeedOffset)
+        {
+            airSpeed = airSpeedOffset;
+        }
+        else
+        {
+            airSpeed = currentSpeed;
+        }
 
     }
 

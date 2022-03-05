@@ -131,8 +131,18 @@ public class BlindEnemieController : MonoBehaviour
         if (other.tag == "Player" && !isAttacking)
         {
             isAttacking = true;
-            other.gameObject.GetComponent<BelethHealthController>().Damaged(1);
+            other.gameObject.GetComponent<BelethHealthController>().GetDamage(1);
 
         }
     }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Trident")
+        {
+
+        }
+    }
+
 }
