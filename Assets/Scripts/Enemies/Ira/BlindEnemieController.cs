@@ -17,6 +17,13 @@ public class BlindEnemieController : MonoBehaviour
     private GameObject testMeshScale;
     [SerializeField]
     private float maxScale;
+    [SerializeField]
+    private MeshRenderer mesh;
+    [SerializeField]
+    private Material normalMaterial;
+    [SerializeField]
+    private Material wrathMaterial;
+
 
     private NavMeshAgent agent;
     private int index = 0;
@@ -30,6 +37,7 @@ public class BlindEnemieController : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
         MoveNextPlace();
     }
 
@@ -86,7 +94,7 @@ public class BlindEnemieController : MonoBehaviour
     }
 
     private void CheckAttack() {
-       
+
         if (isAttacking)
         {
             agent.SetDestination(transform.position);
@@ -103,7 +111,7 @@ public class BlindEnemieController : MonoBehaviour
                     canAttack = false;
                 }
 
-                
+
             }
             else
             {
@@ -125,6 +133,7 @@ public class BlindEnemieController : MonoBehaviour
 
     }
 
+    
 
     private void OnTriggerStay(Collider other)
     {
@@ -137,12 +146,6 @@ public class BlindEnemieController : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Trident")
-        {
 
-        }
-    }
 
 }

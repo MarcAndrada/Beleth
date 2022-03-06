@@ -26,13 +26,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1606830340}
-  m_LocalRotation: {x: 0.5358754, y: -0.53113365, z: -0.4675555, w: 0.460572}
-  m_LocalPosition: {x: -0.28, y: -0.15, z: 2.18}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
+  m_LocalPosition: {x: -0.14, y: -0.15, z: 2.04}
   m_LocalScale: {x: 0.2, y: 3.3944077, z: 0.2}
   m_Children: []
   m_Father: {fileID: 9018718597870283109}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: -179.825, y: 82.037, z: 89.339}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 90}
 --- !u!33 &1606830344
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -95,7 +95,7 @@ CapsuleCollider:
   m_Radius: 26.85083
   m_Height: 5.24
   m_Direction: 1
-  m_Center: {x: -0.0000033372341, y: 0.76, z: -12.851006}
+  m_Center: {x: 0, y: 0.76, z: 0}
 --- !u!1 &5390926321720790361
 GameObject:
   m_ObjectHideFlags: 0
@@ -911,6 +911,7 @@ GameObject:
   - component: {fileID: 340152384012302129}
   - component: {fileID: 5999545943778985284}
   - component: {fileID: 86581075410112192}
+  - component: {fileID: 4285065741715994290}
   - component: {fileID: 1643709173727738123}
   - component: {fileID: 7986495146437007437}
   - component: {fileID: 5299328551421674110}
@@ -951,7 +952,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 3.1
-  m_Radius: 0.25
+  m_Radius: 0.35
   m_SlopeLimit: 30
   m_StepOffset: 0.01
   m_SkinWidth: 0.0001
@@ -970,16 +971,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpeed: 5
-  rotationSpeed: 30
+  floorRotationSpeed: 25
+  airRotationSpeed: 3
   currentSpeed: 0
   floorAccel: 8
-  floorBraking: 7
-  airAccel: 2
+  floorBraking: 18
+  airAccel: 6
   airBraking: 6
   walkSpeed: 3
   runSpeed: 5.5
   airSpeed: 0
-  airSpeedOffset: 2
+  minAirSpeed: 1.5
+  maxAirSpeed: 2.5
   jumpHeight: 3
   doubleJumpHeight: 3
   jumpImpulse: 2
@@ -1030,7 +1033,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackCD: 0.7
   attackDuration: 0.55
-  attackDecelSpeed: 15
+  attackDecelSpeed: 9
+  followCamera: {fileID: 8252404588007831829}
+  canAttack: 1
+--- !u!114 &4285065741715994290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8252404587919447208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b69bf65ec5eeba645b222b274869f057, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   followCamera: {fileID: 8252404588007831829}
 --- !u!114 &1643709173727738123
 MonoBehaviour:
@@ -1128,7 +1145,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8252404588007831829}
-  m_LocalRotation: {x: 0.0206789, y: 0.756463, z: -0.023945386, w: 0.65327084}
+  m_LocalRotation: {x: 0.0206789, y: 0.756463, z: -0.023945382, w: 0.65327084}
   m_LocalPosition: {x: 15.423185, y: 2.73, z: -37.317616}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1244,7 +1261,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8252404588284891791}
-  m_LocalRotation: {x: 0.008824207, y: 0.7567729, z: -0.010218096, w: 0.6535385}
+  m_LocalRotation: {x: 0.008824205, y: 0.7567729, z: -0.010218095, w: 0.6535385}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2542,3 +2559,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trident: {fileID: 1606830340}
+  wrathParticles: {fileID: 4294642805738057078, guid: c1072237fb0f3334eaf12163ea00cb3c, type: 3}

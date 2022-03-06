@@ -40,34 +40,21 @@ public class PimpolloController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (chasePlayer)
         {
 
-            StartCoroutine(WaitToExplode());
+            //Si no esta lo suficiente mente cerca del jugador perseguira al player en caso que este lo sufucientemente cerca este le atacara
 
             if (Vector3.Distance(transform.position, player.transform.position) > distanceToAttack && !isAttacking && navMesh.enabled == true)
             {
-                //Debug.Log(Vector3.Distance(transform.position, player.transform.position));
                 navMesh.destination = player.transform.position;
 
             }
             else
             {
-                attackCollider.enabled = true;
-                isAttacking = true;
-                navMesh.enabled = false;
 
-                if (attackTranscurse < attackDuration)
-                {
-                    attackTranscurse += attackSpeed * Time.deltaTime;
-                }
-                else
-                {
-                    SelfDestroy();
-                }
-
-                transform.position = Vector3.LerpUnclamped(transform.position, player.transform.position, attackTranscurse);
-
+                AttackPlayer();
 
             }
 
@@ -80,24 +67,43 @@ public class PimpolloController : MonoBehaviour
 
     IEnumerator PlayerSeen()
     {
+        //Desactiva la colision que detecta si el player esta en el area y tras esperar un tiempo empieza a perseguir al player
 
         boxColl.enabled = false;
         transform.LookAt(player.transform);
         yield return new WaitForSeconds(timeToWait);
         chasePlayer = true;
+        StartCoroutine(WaitToExplode());
+
     }
 
+    private void AttackPlayer() {
+
+        attackCollider.enabled = true;
+        isAttacking = true;
+        navMesh.enabled = false;
+
+        if (attackTranscurse < attackDuration)
+        {
+            attackTranscurse += attackSpeed * Time.deltaTime;
+        }
+        else
+        {
+            SelfDestroy();
+        }
+
+        transform.position = Vector3.LerpUnclamped(transform.position, player.transform.position, attackTranscurse);
+    }
 
     private void Explosion()
     {
-        // Instanciar la explosion
+        // Instanciar las particulas de la explosion
         Instantiate(explosion, transform.position, transform.rotation);
-        Debug.Log("Exploto");
     }
 
     private void SelfDestroy()
     {
-        
+        // Instancia las particulas de explosion y se autodestruye
         Explosion();
         Destroy(gameObject);
 
@@ -105,7 +111,7 @@ public class PimpolloController : MonoBehaviour
 
     private IEnumerator WaitToExplode()
     {
-
+        // Tras empezar a perseguir al jugador si no lo alcanza en el tiempo que tiene este se autidestruira
 
         yield return new WaitForSeconds(maxTimeChasing);
 
@@ -116,13 +122,15 @@ public class PimpolloController : MonoBehaviour
     {
         if (other.tag == "Player" && !chasePlayer)
         {
+            //En caso de que el player entre en la zona de interaccion empezara a perseguirle
             player = other.gameObject;
             StartCoroutine(PlayerSeen());
         }
 
         if (other.tag == "Trident" && chasePlayer)
         {
-            Debug.Log("Me iso pupa");
+            // Si es golpeado por el tridente del player el enemigo se autodestruira
+
             SelfDestroy();
 
 

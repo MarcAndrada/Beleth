@@ -52,13 +52,29 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "WrathAttack",
+                    "type": "Button",
+                    "id": "96e3ae18-0734-418f-9dc2-3b1687c35f53",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "WrathActive",
+                    "type": "Button",
+                    "id": "cf98824a-c12c-4be6-b75a-96e417ffdd4f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
                 {
                     "name": "WASD",
                     "id": "efd9b520-d86e-491f-9630-c817b3f26c7d",
-                    "path": "2DVector(mode=1)",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -261,6 +277,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1fd84208-4d62-4313-9673-59384a022fb2",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WrathAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ddb468c7-72e0-489c-aeff-55adbbddc343",
+                    "path": "<Keyboard>/t",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WrathActive",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

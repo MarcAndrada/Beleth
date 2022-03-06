@@ -6,7 +6,8 @@ public class TridentController : MonoBehaviour
 {
     [SerializeField]
     private GameObject trident;
-
+    [SerializeField]
+    private ParticleSystem wrathParticles;
 
     private CapsuleCollider tridentCollider;
     // Start is called before the first frame update
@@ -15,19 +16,21 @@ public class TridentController : MonoBehaviour
         tridentCollider = trident.GetComponent<CapsuleCollider>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void StartTridentAttack() {
         tridentCollider.enabled = true;
+        if (trident.tag == "Wrath")
+        {
+            Instantiate(wrathParticles, trident.transform.position, Quaternion.Euler(-transform.forward));
+        }
     }
 
     public void EndTridentAttack()
     {
         tridentCollider.enabled = false;
+    }
+
+    public void ChangeTridentTag(string _newTag) {
+        trident.tag = _newTag;
     }
 
 }

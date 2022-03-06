@@ -23,13 +23,20 @@ public class ExplosionController : MonoBehaviour
 
         yield return new WaitForSeconds(0.4f);
         explosionColl.enabled = false;
+        StartCoroutine(WaitForDestroy());
+    }
+
+    IEnumerator WaitForDestroy() {
+
+        yield return new WaitForSeconds(2);
+        Destroy(gameObject);
+            
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            Debug.Log("Toma daño puto");
             other.GetComponent<BelethHealthController>().GetDamage(1);
         }
     }
