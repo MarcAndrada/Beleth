@@ -495,7 +495,7 @@ public class BelethMovementController : MonoBehaviour
 
     }
 
-    public IEnumerator DoAttack(float _attackBraking, float _timeToWait) {
+    public IEnumerator DoAttack(float _attackBraking, float _timeToWait, float _newSpeed) {
 
         /* Para hacer el ataque:
          * Primero se congela el movimiento
@@ -506,7 +506,7 @@ public class BelethMovementController : MonoBehaviour
         canMove = false;
         attackBraking = _attackBraking;
         isAttacking = true;
-        currentSpeed = 2;
+        //currentSpeed = _newSpeed;
         yield return new WaitForSeconds(_timeToWait);
 
         // Despues de que acabe la duracion del ataque se desbloquea el movimiento

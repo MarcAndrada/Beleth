@@ -16,6 +16,7 @@ public class BelethAnimController : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         charController = GetComponent<CharacterController>();
         animator.SetBool("OnFloor", true);
+
     }
 
     // Update is called once per frame
@@ -54,13 +55,17 @@ public class BelethAnimController : MonoBehaviour
         animator.SetTrigger("Jump");
     
     }
-
     public void SetGliding(bool _isGliding) {
         animator.SetBool("Gliding", _isGliding);
     }
+
     public void DamageTrigger() {
         animator.SetTrigger("Damaged");
         
+    }
+    public void SetHealthValue(int _currentHP) {
+        animator.SetInteger("Health", _currentHP);
+
     }
 
     public void AttackTrigger() {
@@ -68,7 +73,6 @@ public class BelethAnimController : MonoBehaviour
         animator.SetTrigger("Attack");
 
     }
-
     public void ResetAttackTrigger()
     {
         animator.ResetTrigger("Attack");

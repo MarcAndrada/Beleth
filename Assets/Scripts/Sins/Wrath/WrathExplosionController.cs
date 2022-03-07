@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class WrathExplosionController : MonoBehaviour
 {
-    [SerializeField]
-    bool wrathActive;
+    //[SerializeField]
+    //bool wrathActive = false;
     [SerializeField]
     float timeToExplode;
     [SerializeField]
@@ -31,7 +31,6 @@ public class WrathExplosionController : MonoBehaviour
         explosionController = GetComponent<WrathExplosionController>();
         rigidB = GetComponentInChildren<Rigidbody>();
         normalMaterial = mesh.material;
-        wrathActive = false;
 
     }
 

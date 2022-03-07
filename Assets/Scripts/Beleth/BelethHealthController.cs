@@ -28,7 +28,6 @@ public class BelethHealthController : MonoBehaviour
         checkPointManager = GetComponent<BelethCheckPointManager>();
         charController = GetComponent<BelethMovementController>();
 
-        healthPoints = maxHealthPoints;
     }
 
     // Update is called once per frame
@@ -44,6 +43,7 @@ public class BelethHealthController : MonoBehaviour
             healthPoints -= _damageDeal;
             Debug.Log("Te isieron " + _damageDeal + " de pupa te quedan " + healthPoints + " de vida");
             // Hacer animacion
+            animController.SetHealthValue(healthPoints);
             animController.DamageTrigger();
             canBeDamaged = false;
             StartCoroutine(WaitForInmortalFrames());

@@ -8,12 +8,20 @@ public class TridentController : MonoBehaviour
     private GameObject trident;
     [SerializeField]
     private ParticleSystem wrathParticles;
+    [SerializeField]
+    private Transform handSocket;
+    [SerializeField]
+    private Transform backSocket;
 
     private CapsuleCollider tridentCollider;
     // Start is called before the first frame update
     void Start()
     {
         tridentCollider = trident.GetComponent<CapsuleCollider>();
+    }
+
+    private void Update() {
+    
     }
 
     public void StartTridentAttack() {
@@ -32,5 +40,15 @@ public class TridentController : MonoBehaviour
     public void ChangeTridentTag(string _newTag) {
         trident.tag = _newTag;
     }
+
+    public void SetTridentOnHand() {
+        trident.transform.SetParent(handSocket);
+    }
+
+    public void SetTridentOnBack() {
+        trident.transform.SetParent(handSocket);
+
+    }
+
 
 }
