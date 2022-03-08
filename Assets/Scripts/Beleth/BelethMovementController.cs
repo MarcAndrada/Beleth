@@ -59,6 +59,10 @@ public class BelethMovementController : MonoBehaviour
     private float minAirSpeed;
     [SerializeField]
     private float maxAirSpeed;
+    [SerializeField]
+    private float minGlidingSpeed;
+    [SerializeField]
+    private float maxGlidingSpeed;
 
     [Header("Jump")]
     [SerializeField]
@@ -255,6 +259,11 @@ public class BelethMovementController : MonoBehaviour
             gliding = false;
             // Setear el valor de la animacion de planear
             animController.SetGliding(gliding);
+            if (airSpeed > 0)
+            {
+                airSpeed = 0;
+                currentSpeed = 2;
+            }
 
 
         }
@@ -426,7 +435,7 @@ public class BelethMovementController : MonoBehaviour
                 canCoyote = false;
                 animController.JumpTrigger();
 
-                CheckCurrentSpeedAfterJump();
+                CheckCurrentSpeedAfterJump(0);
 
             }
             else if (!doubleJumped)
@@ -446,7 +455,7 @@ public class BelethMovementController : MonoBehaviour
         //Cuando apriete el boton empieza a planear
         gliding = true;
         animController.SetGliding(gliding);
-
+        CheckCurrentSpeedAfterJump(1);
     }
     private void StopGlide(InputAction.CallbackContext obj)
     {
@@ -455,7 +464,7 @@ public class BelethMovementController : MonoBehaviour
         maxFallSpeed = normalFallSpeed;
         gliding = false;
         animController.SetGliding(gliding);
-
+        CheckCurrentSpeedAfterJump(0);
 
     }
     private void SetRunning()
@@ -519,18 +528,34 @@ public class BelethMovementController : MonoBehaviour
 
     }
 
+
     //Others
-    private void CheckCurrentSpeedAfterJump() {
+    private void CheckCurrentSpeedAfterJump(int _typeOfVelocity) {
+
+        float minSpeedToCheck = 0;
+        float maxSpeedToCheck = 0;
 
         //Seguna la velocidad en la que vaya antes de saltar se limitara si es mucha o muy poca
-
-        if (currentSpeed > maxAirSpeed)
+        switch (_typeOfVelocity)
         {
-            airSpeed = maxAirSpeed;
+            case 0:
+                minSpeedToCheck = minAirSpeed;
+                maxSpeedToCheck = maxAirSpeed;
+                break;
+            case 1:
+                minSpeedToCheck = minGlidingSpeed;
+                maxSpeedToCheck = maxGlidingSpeed;
+                break;
+            default:
+                break;
         }
-        else if (currentSpeed < minAirSpeed)
+        if (currentSpeed > maxSpeedToCheck)
         {
-            airSpeed = minAirSpeed;
+            airSpeed = maxSpeedToCheck;
+        }
+        else if (currentSpeed < minSpeedToCheck)
+        {
+            airSpeed = minSpeedToCheck;
         }
         else
         {

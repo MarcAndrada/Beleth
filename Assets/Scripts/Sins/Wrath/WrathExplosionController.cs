@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class WrathExplosionController : MonoBehaviour
 {
-    //[SerializeField]
-    //bool wrathActive = false;
+    [SerializeField]
+    bool moveHimself;
     [SerializeField]
     float timeToExplode;
     [SerializeField]
@@ -20,13 +20,11 @@ public class WrathExplosionController : MonoBehaviour
     private Material wrathMaterial;
 
     private WrathExplosionController explosionController;
-    private BlindEnemieController blindEnemie;
     private MeshRenderer mesh;
     private Rigidbody rigidB;
 
     void Start()
     {
-        blindEnemie = GetComponent<BlindEnemieController>();
         mesh = GetComponentInChildren<MeshRenderer>();
         explosionController = GetComponent<WrathExplosionController>();
         rigidB = GetComponentInChildren<Rigidbody>();
@@ -65,7 +63,7 @@ public class WrathExplosionController : MonoBehaviour
 
             Rigidbody rb = hit.GetComponent<Rigidbody>();
 
-            if (rb != null && rb != rigidB)
+            if (rb != null && rb != rigidB || rb != null && moveHimself)
             {
                 rb.AddExplosionForce(strenght, explosionPosition, radius, upStrenght, ForceMode.Impulse);
             }
