@@ -65,6 +65,8 @@ public class BelethAttackController : MonoBehaviour
                     break;
             }
 
+            tridentController.SetTridentPos(0);
+
             //Hacer la animacion
             animController.AttackTrigger();
             //Congelar el movimiento durante un tiempo mientras hace el ataque
@@ -72,6 +74,7 @@ public class BelethAttackController : MonoBehaviour
             //Empezar el CD del ataque
             StartCoroutine(WaitAttackCD());
 
+            tridentController.ResetTridentPosTimer();
         }
 
 

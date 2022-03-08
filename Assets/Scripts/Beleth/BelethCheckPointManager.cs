@@ -32,11 +32,6 @@ public class BelethCheckPointManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            GoLastCheckPoint();
-        }
-
         if (canSaveRespawnPoint && charController.isGrounded)
         {
             StartCoroutine(WaitForSetNewPoint());
@@ -44,7 +39,7 @@ public class BelethCheckPointManager : MonoBehaviour
 
         if (transform.position.y < maxFallDistance)
         {
-            healthController.GetDamage(voidFallDamage);
+            healthController.GetDamage(voidFallDamage, false);
 
             if (healthController.GetHealthPoints() > 0)
             {

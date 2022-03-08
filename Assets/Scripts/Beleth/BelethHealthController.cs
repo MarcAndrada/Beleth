@@ -19,14 +19,14 @@ public class BelethHealthController : MonoBehaviour
     private BelethUIController uiController;
     private BelethAnimController animController;
     private BelethCheckPointManager checkPointManager;
-    private BelethMovementController charController;
+    private BelethMovementController movementController;
     // Start is called before the first frame update
     void Start()
     {
         uiController = GetComponent<BelethUIController>();
         animController = GetComponent<BelethAnimController>();
         checkPointManager = GetComponent<BelethCheckPointManager>();
-        charController = GetComponent<BelethMovementController>();
+        movementController = GetComponent<BelethMovementController>();
 
     }
 
@@ -36,7 +36,7 @@ public class BelethHealthController : MonoBehaviour
         
     }
 
-    public void GetDamage(int _damageDeal)
+    public void GetDamage(int _damageDeal, bool _doHurtAnim)
     {
         if (canBeDamaged)
         {
@@ -44,10 +44,14 @@ public class BelethHealthController : MonoBehaviour
             Debug.Log("Te isieron " + _damageDeal + " de pupa te quedan " + healthPoints + " de vida");
             // Hacer animacion
             animController.SetHealthValue(healthPoints);
-            animController.DamageTrigger();
+            if (_doHurtAnim || healthPoints <= 0)
+            {
+                animController.DamageTrigger();
+            }
+            movementController.SetCanMove(false);
+            movementController.SetCurrentSpeed(0);
             canBeDamaged = false;
             StartCoroutine(WaitForInmortalFrames());
-
             CheckHP();
         }
     }
@@ -65,7 +69,11 @@ public class BelethHealthController : MonoBehaviour
 
         if (healthPoints <= 0)
         {
-            Die();
+            StartCoroutine(DieAndRespawn());
+        }
+        else
+        {
+            StartCoroutine(WaitToMoveAgain());
         }
     }
 
@@ -74,22 +82,28 @@ public class BelethHealthController : MonoBehaviour
         //Mostrar menu de reiniciar nivel
 
         //Desactivar el movimiento
-        charController.SetCanMove(false);
-        StartCoroutine(Respawn());
         Debug.Log("Has muerto");
     }
 
-    IEnumerator Respawn() {
+    IEnumerator DieAndRespawn() {
 
-        
+        movementController.SetCanMove(false);
         yield return new WaitForSeconds(2);
-        charController.SetCanMove(true);
+        movementController.SetCanMove(true);
         checkPointManager.GoLastCheckPoint();
         healthPoints = maxHealthPoints;
+        animController.SetHealthValue(healthPoints);
     }
 
     public int GetHealthPoints() { 
         return healthPoints;
     }
 
+    private IEnumerator WaitToMoveAgain() { 
+
+        yield return new WaitForSeconds (0.5f);
+        
+        movementController.SetCanMove(true);
+
+    }
 }

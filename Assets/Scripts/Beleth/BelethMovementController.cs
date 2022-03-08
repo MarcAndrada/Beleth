@@ -484,6 +484,10 @@ public class BelethMovementController : MonoBehaviour
     public void SetCanMove(bool _CanMove) {
         canMove = _CanMove;
     }
+    public void SetCurrentSpeed(float _newCurrentSpeed)
+    {
+        currentSpeed = _newCurrentSpeed;
+    }
 
 
     //Extern Actions
