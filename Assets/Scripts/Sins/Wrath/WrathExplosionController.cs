@@ -14,6 +14,8 @@ public class WrathExplosionController : MonoBehaviour
     float strenght;
     [SerializeField]
     float upStrenght;
+    [SerializeField]
+    private float playerImpulse;
 
     private Material normalMaterial;
     [SerializeField]
@@ -60,7 +62,10 @@ public class WrathExplosionController : MonoBehaviour
 
         foreach(Collider hit in colliders)
         {
-
+            if (hit.gameObject.tag == "Player" && playerImpulse > 0)
+            {
+                hit.gameObject.GetComponentInChildren<BelethMovementController>().AddImpulse(playerImpulse);
+            }
             Rigidbody rb = hit.GetComponent<Rigidbody>();
 
             if (rb != null && rb != rigidB || rb != null && moveHimself)

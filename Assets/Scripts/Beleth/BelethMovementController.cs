@@ -262,7 +262,10 @@ public class BelethMovementController : MonoBehaviour
             if (airSpeed > 0)
             {
                 airSpeed = 0;
-                currentSpeed = 2;
+                if (currentSpeed > 2)
+                {
+                    currentSpeed = 2;
+                }
             }
 
 
@@ -272,11 +275,12 @@ public class BelethMovementController : MonoBehaviour
         // Si no esta tocando el suelo espera el tiempo indicado par que aun pueda hacer el primer salto
         if (!groundedPlayer && canCoyote)
         {
+            CheckCurrentSpeedOnAir(0);
             StartCoroutine(WaitForCoyoteTime());
         }
 
         // En caso de estar tocando el suelo y que acabemos de tocar el suelo despues de saltar hacer que se ponga la velocidad de movimiento normal
-        if (groundedPlayer && currentStateSpeed == airSpeed && canMove)
+        if (groundedPlayer && canMove)
         {
             SetRunning();
         }
@@ -435,7 +439,7 @@ public class BelethMovementController : MonoBehaviour
                 canCoyote = false;
                 animController.JumpTrigger();
 
-                CheckCurrentSpeedAfterJump(0);
+                CheckCurrentSpeedOnAir(0);
 
             }
             else if (!doubleJumped)
@@ -455,7 +459,7 @@ public class BelethMovementController : MonoBehaviour
         //Cuando apriete el boton empieza a planear
         gliding = true;
         animController.SetGliding(gliding);
-        CheckCurrentSpeedAfterJump(1);
+        CheckCurrentSpeedOnAir(1);
     }
     private void StopGlide(InputAction.CallbackContext obj)
     {
@@ -464,7 +468,7 @@ public class BelethMovementController : MonoBehaviour
         maxFallSpeed = normalFallSpeed;
         gliding = false;
         animController.SetGliding(gliding);
-        CheckCurrentSpeedAfterJump(0);
+        CheckCurrentSpeedOnAir(0);
 
     }
     private void SetRunning()
@@ -503,8 +507,7 @@ public class BelethMovementController : MonoBehaviour
     public void AddImpulse(float _impulseForce) {
 
         //A�adir un impulso con la fuerza que te pasen
-        playerVelocity.y += Mathf.Sqrt(_impulseForce * gravityValue);
-
+        playerVelocity.y = Mathf.Sqrt(_impulseForce * -jumpImpulse * gravityValue);
 
     }
 
@@ -530,7 +533,7 @@ public class BelethMovementController : MonoBehaviour
 
 
     //Others
-    private void CheckCurrentSpeedAfterJump(int _typeOfVelocity) {
+    private void CheckCurrentSpeedOnAir(int _typeOfVelocity) {
 
         float minSpeedToCheck = 0;
         float maxSpeedToCheck = 0;

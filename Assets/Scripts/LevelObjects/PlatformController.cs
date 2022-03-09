@@ -14,6 +14,9 @@ public class PlatformController : MonoBehaviour
     private float maxPointDist;
     [SerializeField]
     private float timeToWaitAtPoint;
+    [SerializeField]
+    [Tooltip("Si esta activado cuando llegue al ultimo punto volvera a empezar desde el 1 si no ira marcha atras \n Ej: El ultimo punto es el 8, en vez de ir al 1 va al 7 despues al 6 ...")]
+    private bool restartWhenEnd;
 
     private int index = 0;
     private Rigidbody rb;
@@ -120,24 +123,36 @@ public class PlatformController : MonoBehaviour
 
     private void GoNextPoint() {
 
-        if (ascending)
+        if (restartWhenEnd)
         {
             index++;
-
-            if (index == placeToGo.Length - 1)
+            if (index > placeToGo.Length - 1)
             {
-                ascending = false;
+                index = 0;
             }
-
-
         }
         else
         {
-            index--;
 
-            if (index == 0)
+            if (ascending)
             {
-                ascending = true;
+                index++;
+
+                if (index == placeToGo.Length - 1)
+                {
+                    ascending = false;
+                }
+
+
+            }
+            else
+            {
+                index--;
+
+                if (index == 0)
+                {
+                    ascending = true;
+                }
             }
         }
     }
@@ -166,9 +181,10 @@ public class PlatformController : MonoBehaviour
             }
             else 
             {
-                cc.Move(new Vector3(rb.velocity.x, 0.0001f , rb.velocity.z) * Time.deltaTime);
+                cc.Move(new Vector3(rb.velocity.x, 0.0001f, rb.velocity.z) * Time.deltaTime);
             }
-            
+            //
+
         }
     }
     private void OnTriggerExit(Collider other)
