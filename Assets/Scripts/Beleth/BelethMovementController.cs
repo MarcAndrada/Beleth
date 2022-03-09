@@ -266,6 +266,10 @@ public class BelethMovementController : MonoBehaviour
                 {
                     currentSpeed = 2;
                 }
+                else
+                {
+                    currentSpeed /= 2;
+                }
             }
 
 
@@ -330,12 +334,12 @@ public class BelethMovementController : MonoBehaviour
                     if (currentSpeed < currentStateSpeed)
                     {
                         //Acelerarar
-                        currentSpeed += floorAccel / 1000;
+                        currentSpeed += floorAccel * Time.deltaTime;
                     }
                     else if (currentSpeed > currentStateSpeed)
                     {
                         //Frenar
-                        currentSpeed -= floorBraking / 1000;
+                        currentSpeed -= floorBraking * Time.deltaTime;
                     }
                     else
                     {
@@ -350,13 +354,13 @@ public class BelethMovementController : MonoBehaviour
                     if (currentSpeed < currentStateSpeed)
                     {
                         //Acelerarar
-                        currentSpeed += airAccel / 1000;
+                        currentSpeed += airAccel * Time.deltaTime;
                         
                     }
                     else if (currentSpeed > currentStateSpeed)
                     {
                         //Frenar
-                        currentSpeed -= airBraking / 1000;
+                        currentSpeed -= airBraking * Time.deltaTime;
                     }
                     else
                     {
@@ -375,11 +379,11 @@ public class BelethMovementController : MonoBehaviour
                 {
                     if (groundedPlayer)
                     {
-                        currentSpeed -= floorBraking / 1000;
+                        currentSpeed -= floorBraking * Time.deltaTime;
                     }
                     else
                     {
-                        currentSpeed -= airBraking / 1000;
+                        currentSpeed -= airBraking * Time.deltaTime;
                     }
 
                 }
@@ -394,7 +398,7 @@ public class BelethMovementController : MonoBehaviour
 
             if (currentSpeed > 0)
             {
-                currentSpeed -= attackBraking / 1000;
+                currentSpeed -= attackBraking * Time.deltaTime;
             }
             else
             {

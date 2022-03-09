@@ -150,7 +150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2114982650}
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -0.105, y: -0.17, z: 1.35}
+  m_LocalPosition: {x: -0.11, y: -0.17, z: 2.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9018718597870283109}
@@ -226,7 +226,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9107998978559298370}
   m_Layer: 6
-  m_Name: Beleth
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1102,13 +1102,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 3.3
+  m_Height: 3.2
   m_Radius: 0.35
   m_SlopeLimit: 30
   m_StepOffset: 0
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0
-  m_Center: {x: 0, y: -0.05, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8252404587919447211
 MonoBehaviour:
   m_ObjectHideFlags: 0
