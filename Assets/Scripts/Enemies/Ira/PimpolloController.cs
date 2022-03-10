@@ -26,13 +26,13 @@ public class PimpolloController : MonoBehaviour
     private bool isAttacking = false;
     private NavMeshAgent navMesh;
     private GameObject player;
-    private BoxCollider boxColl;
+    [SerializeField]
+    private SphereCollider detectionColl;
 
     // Start is called before the first frame update
     void Start()
     {
         navMesh = GetComponent<NavMeshAgent>();
-        boxColl = GetComponent<BoxCollider>();
 
     }
 
@@ -69,7 +69,7 @@ public class PimpolloController : MonoBehaviour
     {
         //Desactiva la colision que detecta si el player esta en el area y tras esperar un tiempo empieza a perseguir al player
 
-        boxColl.enabled = false;
+        detectionColl.enabled = false;
         transform.LookAt(player.transform);
         yield return new WaitForSeconds(timeToWait);
         chasePlayer = true;

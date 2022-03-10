@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 4520321474974798534}
   - component: {fileID: 4520321474974798553}
   - component: {fileID: 4520321474974798535}
+  - component: {fileID: 883517630}
+  - component: {fileID: 883517627}
   m_Layer: 0
   m_Name: NavAgent
   m_TagString: Untagged
@@ -27,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4520321474974798555}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -21.02, y: -1.48, z: -50.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4520321476706735689}
@@ -73,9 +75,13 @@ MonoBehaviour:
   - {fileID: 4520321476889099702}
   - {fileID: 4520321476663224653}
   restartWhenEnd: 1
-  attackSpeed: 15
+  attackSpeed: 25
   cdDuration: 2
   testMeshScale: {fileID: 4520321476706735688}
+  maxScale: 6
+  mesh: {fileID: 4520321476706735735}
+  normalMaterial: {fileID: 2100000, guid: 9f223f9fe1a09684ebaacb7f3e804acc, type: 2}
+  wrathMaterial: {fileID: 2100000, guid: 7df87cf6cc46b8343848214fc1c6b208, type: 2}
 --- !u!135 &4520321474974798535
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -87,8 +93,43 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 1.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &883517630
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4520321474974798555}
+  serializedVersion: 2
+  m_Mass: 999999
+  m_Drag: 10
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &883517627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4520321474974798555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f38d9467846c2114eb8e059ccf6fccf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveHimself: 0
+  timeToExplode: 0
+  radius: 10
+  strenght: 50
+  upStrenght: 30
+  playerImpulse: 0
+  wrathMaterial: {fileID: 2100000, guid: 7df87cf6cc46b8343848214fc1c6b208, type: 2}
 --- !u!1 &4520321475133663765
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +235,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4520321475328056849}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.49, y: 0, z: 0}
+  m_LocalPosition: {x: -42.31, y: -0.1, z: -18.95}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4520321476468167102}
@@ -223,7 +264,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4520321476468167089}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -8.5, y: -1.29, z: -82.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -258,7 +299,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4520321476663224652}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.65, y: 0, z: 18.17}
+  m_LocalPosition: {x: -22.43, y: 0.43, z: -25.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4520321476468167102}
@@ -325,7 +366,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7df87cf6cc46b8343848214fc1c6b208, type: 2}
+  - {fileID: 2100000, guid: 9f223f9fe1a09684ebaacb7f3e804acc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -355,7 +396,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4520321476706735688}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -384,7 +425,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4520321476889099657}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.73, y: 0, z: 12.65}
+  m_LocalPosition: {x: -33.09, y: -0.100000024, z: -28.29}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4520321476468167102}

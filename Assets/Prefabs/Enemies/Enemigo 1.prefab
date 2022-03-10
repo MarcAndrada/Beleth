@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 344138042589724707}
   - component: {fileID: 344138042589724716}
   - component: {fileID: 344138042589724706}
-  - component: {fileID: 344138042589724705}
   - component: {fileID: 357633610}
   - component: {fileID: 1826977572}
+  - component: {fileID: 2082943486}
   m_Layer: 7
   m_Name: Enemigo 1
   m_TagString: Untagged
@@ -46,10 +46,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 10
+  m_Speed: 35
   m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 1000
+  m_AngularSpeed: 5000
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
@@ -73,22 +73,10 @@ MonoBehaviour:
   timeToWait: 0.5
   distanceToAttack: 3
   attackSpeed: 0.6
-  maxTimeChasing: 10
+  maxTimeChasing: 4
   attackCollider: {fileID: 357633610}
   explosion: {fileID: 1641133234739373391, guid: 6f175afcbee612143b6743bfde90921c, type: 3}
---- !u!65 &344138042589724705
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 344138042589724717}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 30, y: 3.553123, z: 30}
-  m_Center: {x: 0, y: 1.3765616, z: 0}
+  detectionColl: {fileID: 2082943486}
 --- !u!135 &357633610
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -118,6 +106,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &2082943486
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344138042589724717}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 15.484464
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4625500630744247319
 PrefabInstance:
   m_ObjectHideFlags: 0

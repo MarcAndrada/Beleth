@@ -7,7 +7,7 @@ public class WrathBossStateController : MonoBehaviour
 {
     public enum BossFase { NONE, FASE_1, FASE_2, FASE_3 };
     public enum BossState {NONE, CHASING, ATTACKING, DEAD };
-    public enum BossAttacks {NONE, LAVA_CIRCLE, ENEMIE_CIRCLE, BRAUM_R, BRAND_W, ROCK_RAIN };
+    public enum BossAttacks {NONE, LAVA_CIRCLE, ENEMIE_CIRCLE, BRAKE_FLOOR, FIRE_COLUMN, ROCK_RAIN };
 
     private BossFase currentFase = BossFase.NONE;
     private BossState currentState = BossState.NONE;
@@ -18,7 +18,6 @@ public class WrathBossStateController : MonoBehaviour
 
 
     private float currentHP;
-    private bool isChasing = false;
 
     private GameObject player;
     private NavMeshAgent navAgent;
@@ -31,8 +30,7 @@ public class WrathBossStateController : MonoBehaviour
         player = GameObject.Find("Beleth");
         currentHP = maxHP;
 
-        currentState = BossState.CHASING;
-        CheckCurrentState();
+        //ChangeCurrentState(BossState.CHASING);
     }
 
     // Update is called once per frame
@@ -41,20 +39,20 @@ public class WrathBossStateController : MonoBehaviour
         DoCurrentAction();
     }
 
-
-    //Check things
-    private void CheckCurrentState() {
+    //Checkers
+    private void ChangeCurrentState(BossState _newState) {
+        //Esta es la funcion que se utiliza para cambiar el estado del boss, en ella ya se setea todo lo necesario para cambiar ese estado
+        currentState = _newState;
 
         switch (currentState)
         {
             case BossState.NONE:
                 break;
             case BossState.CHASING:
-                isChasing = true;
                 ChasePlayer();
                 break;
             case BossState.ATTACKING:
-                DoRandomAttack();
+                ChooseRandomAttack();
                 break;
             case BossState.DEAD:
                 Die();
@@ -65,16 +63,38 @@ public class WrathBossStateController : MonoBehaviour
 
     }
     private void DoCurrentAction() {
-    
+
+        // Aqui esta definido que hara de forma continua en cada estado
+
+        switch (currentState)
+        {
+            case BossState.NONE:
+                break;
+            case BossState.CHASING:
+                ChasePlayer();
+                break;
+            case BossState.ATTACKING:
+                break;
+            case BossState.DEAD:
+                break;
+            default:
+                break;
+        }
+
+
+
     }
+
 
     //Boss Actions
     private void ChasePlayer() {
         navAgent.SetDestination(player.transform.position);
     }
-    private void DoRandomAttack() {
+    private void ChooseRandomAttack() {
 
-        switch (Random.Range(0, 6))
+        int nextAttack = Random.Range(0, 6);
+
+        switch (nextAttack)
         {
             case 0:
                 currentAttacks = BossAttacks.LAVA_CIRCLE;
@@ -83,10 +103,10 @@ public class WrathBossStateController : MonoBehaviour
                 currentAttacks = BossAttacks.ENEMIE_CIRCLE;
                 break;
             case 2:
-                currentAttacks = BossAttacks.BRAUM_R;
+                currentAttacks = BossAttacks.BRAKE_FLOOR;
                 break;
             case 3:
-                currentAttacks = BossAttacks.BRAND_W;
+                currentAttacks = BossAttacks.FIRE_COLUMN;
                 break;
             case 4:
                 currentAttacks = BossAttacks.ROCK_RAIN;
@@ -107,10 +127,10 @@ public class WrathBossStateController : MonoBehaviour
             case BossAttacks.ENEMIE_CIRCLE:
 
                 break;
-            case BossAttacks.BRAUM_R:
+            case BossAttacks.BRAKE_FLOOR:
 
                 break;
-            case BossAttacks.BRAND_W:
+            case BossAttacks.FIRE_COLUMN:
 
                 break;
             case BossAttacks.ROCK_RAIN:
@@ -122,6 +142,24 @@ public class WrathBossStateController : MonoBehaviour
         
     }
     private void Die() {
+    
+    }
+
+
+    //Boss Attacks
+    private void LavaCircleAttack() {
+    
+    }
+    private void EnemieCircleAttack() { 
+    
+    }
+    private void BrakeFloorAttack() {
+    
+    }
+    private void FireColumnAttack() { 
+    
+    }
+    private void RockRainAttack() { 
     
     }
 
@@ -153,19 +191,13 @@ public class WrathBossStateController : MonoBehaviour
             case BossFase.FASE_3:
                 if (currentHP <= 0) {
                     currentState = BossState.DEAD;
-                    CheckCurrentState();
+                    ChangeCurrentState(BossState.DEAD);
                 }
 
                 break;
             default:
                 break;
         }
-
-    }
-    public void SetBossState(BossState _nextState) {
-
-        currentState = _nextState;
-        CheckCurrentState();
 
     }
 

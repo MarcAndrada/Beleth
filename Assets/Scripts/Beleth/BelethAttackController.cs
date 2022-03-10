@@ -12,8 +12,6 @@ public class BelethAttackController : MonoBehaviour
     [SerializeField]
     private float attackDuration;
     [SerializeField]
-    private float attackStarterSpeed;
-    [SerializeField]
     private float attackDecelSpeed;
 
     [SerializeField]
@@ -70,7 +68,7 @@ public class BelethAttackController : MonoBehaviour
             //Hacer la animacion
             animController.AttackTrigger();
             //Congelar el movimiento durante un tiempo mientras hace el ataque
-            StartCoroutine(movementController.DoAttack(attackDecelSpeed, attackDuration, attackStarterSpeed));
+            StartCoroutine(movementController.DoAttack(attackDecelSpeed, attackDuration));
             //Empezar el CD del ataque
             StartCoroutine(WaitAttackCD());
 
