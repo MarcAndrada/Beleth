@@ -20,6 +20,10 @@ public class ParticleController : MonoBehaviour
     [SerializeField] ParticleSystem JumpTrailDust;
     [SerializeField] Transform Socket;
 
+    [Header("Fall")]
+    [SerializeField] ParticleSystem FallDust;
+
+
     public void WalkLeftDustFbx()
     {
         //Instantiate(WalkDust, LeftAnkle.position, LeftAnkle.rotation);
@@ -58,5 +62,10 @@ public class ParticleController : MonoBehaviour
     public void JumpTrailDustFbx()
     {
 
+    }
+
+    public void FallDustFbx()
+    {
+        Instantiate(FallDust, Ankles.position, Ankles.rotation);
     }
 }

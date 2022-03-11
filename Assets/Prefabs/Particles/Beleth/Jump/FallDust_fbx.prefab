@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6674675898005796685}
   - component: {fileID: 6674675898005796684}
   m_Layer: 0
-  m_Name: ExteriorJumpDust_fbx
+  m_Name: FallDust_fbx
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,8 +168,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0.5
+      scalar: 0.1
+      minScalar: 0.1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -284,8 +284,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 45
-      minScalar: 35
+      scalar: 10
+      minScalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -606,7 +606,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -0.4
+      scalar: -0.1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -665,7 +665,7 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0, y: 0.7, z: 0}
+    m_Position: {x: 0, y: 0.6, z: 0}
     m_Rotation: {x: -90, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
@@ -1041,20 +1041,20 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 6.196079
-          outSlope: 6.196079
+          inSlope: 9.793911
+          outSlope: 9.793911
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0.03797468
+          outWeight: 0.034533493
         - serializedVersion: 3
-          time: 1
-          value: 0
-          inSlope: -0.324969
-          outSlope: -0.324969
+          time: 0.69573975
+          value: 0.01008606
+          inSlope: 0.43281668
+          outSlope: 0.43281668
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.16455704
+          inWeight: 0.18945132
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -1599,7 +1599,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -2
+      scalar: -1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2024,7 +2024,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 2
-      minScalar: 0
+      minScalar: 1.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
