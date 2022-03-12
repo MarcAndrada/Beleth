@@ -23,6 +23,10 @@ public class ParticleController : MonoBehaviour
     [Header("Fall")]
     [SerializeField] ParticleSystem FallDust;
 
+    [Header("Attack")]
+    [SerializeField] GameObject AttackVFX;
+
+
 
     public void WalkLeftDustFbx()
     {
@@ -67,5 +71,23 @@ public class ParticleController : MonoBehaviour
     public void FallDustFbx()
     {
         Instantiate(FallDust, Ankles.position, Ankles.rotation);
+    }
+
+    public void ActivateAttack()
+    {
+        AttackVFX.SetActive(true);
+        StartCoroutine(Wait());
+
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(0.4f);
+        DesactivateAttack();
+    }
+
+    private void DesactivateAttack()
+    {
+        AttackVFX.SetActive(false);
     }
 }
