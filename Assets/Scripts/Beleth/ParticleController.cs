@@ -24,7 +24,12 @@ public class ParticleController : MonoBehaviour
     [SerializeField] ParticleSystem FallDust;
 
     [Header("Attack")]
-    [SerializeField] GameObject AttackVFX;
+    [SerializeField] ParticleSystem AttackVFX;
+    [SerializeField] Transform HandSocket;
+
+    [Header("Damage")]
+    [SerializeField] ParticleSystem DamageVFX;
+    [SerializeField] Transform CapSocket;
 
 
 
@@ -75,19 +80,23 @@ public class ParticleController : MonoBehaviour
 
     public void ActivateAttack()
     {
-        AttackVFX.SetActive(true);
-        StartCoroutine(Wait());
+        //Instantiate(AttackVFX, HandSocket.position, HandSocket.rotation);
 
     }
 
-    IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(0.4f);
-        DesactivateAttack();
-    }
+    //IEnumerator Wait()
+    //{
+    //    yield return new WaitForSeconds(0.4f);
+    //    DesactivateAttack();
+    //}
+    //
+    //private void DesactivateAttack()
+    //{
+    //    AttackVFX.SetActive(false);
+    //}
 
-    private void DesactivateAttack()
+    public void DamageDustFbx()
     {
-        AttackVFX.SetActive(false);
+        Instantiate(DamageVFX, CapSocket.position, CapSocket.rotation);
     }
 }
