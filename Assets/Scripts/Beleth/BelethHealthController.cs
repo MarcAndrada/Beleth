@@ -14,11 +14,6 @@ public class BelethHealthController : MonoBehaviour
     [Tooltip("Tiempo de invulnerabilidad despues de que te peguen")]
     private float inmortalTime;
 
-    [Header("DeathCanvas")]
-    [SerializeField] Canvas canvas;
-    [SerializeField] Animator BossAnimator;
-    [SerializeField] Animator FillAnimator;
-
     private bool canBeDamaged = true;
 
     private BelethUIController uiController;
@@ -62,9 +57,8 @@ public class BelethHealthController : MonoBehaviour
         }
     }
 
-    IEnumerator WaitForInmortalFrames() {
-
-
+    IEnumerator WaitForInmortalFrames() 
+    {
         yield return new WaitForSeconds(inmortalTime);
         canBeDamaged = true;
     }
@@ -94,9 +88,6 @@ public class BelethHealthController : MonoBehaviour
     IEnumerator DieAndRespawn() {
 
         movementController.SetCanMove(false);
-
-        ActivateBossAnimation();
-
         yield return new WaitForSeconds(3);
         movementController.SetCanMove(true);
         checkPointManager.GoLastCheckPoint();
@@ -113,27 +104,5 @@ public class BelethHealthController : MonoBehaviour
         yield return new WaitForSeconds (0.5f);
         
         movementController.SetCanMove(true);
-
-    }
-
-    public void ActivateFillAnimation()
-    {
-        FillAnimator.SetBool("canMove", true);
-        FillAnimator.SetBool("canIdle", false);
-    }
-
-    public void ActivateBossAnimation()
-    {
-        BossAnimator.SetBool("canMove", true);
-        BossAnimator.SetBool("canIdle", false);
-    }
-
-    public void GoIdleAgain()
-    {
-        BossAnimator.SetBool("canMove", false);
-        BossAnimator.SetBool("canIdle", true);
-
-        FillAnimator.SetBool("canMove", false);
-        FillAnimator.SetBool("canIdle", true);
     }
 }
