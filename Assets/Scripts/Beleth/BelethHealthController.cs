@@ -28,6 +28,8 @@ public class BelethHealthController : MonoBehaviour
         checkPointManager = GetComponent<BelethCheckPointManager>();
         movementController = GetComponent<BelethMovementController>();
 
+        healthPoints = maxHealthPoints; 
+
     }
 
     // Update is called once per frame
