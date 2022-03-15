@@ -28,12 +28,12 @@ public class PimpolloController : MonoBehaviour
     private GameObject player;
     [SerializeField]
     private SphereCollider detectionColl;
-
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
         navMesh = GetComponent<NavMeshAgent>();
-
+        animator = GetComponentInChildren<Animator>();
     }
 
 
@@ -72,6 +72,7 @@ public class PimpolloController : MonoBehaviour
         detectionColl.enabled = false;
         transform.LookAt(player.transform);
         yield return new WaitForSeconds(timeToWait);
+        animator.SetTrigger("Chase");
         chasePlayer = true;
         StartCoroutine(WaitToExplode());
 

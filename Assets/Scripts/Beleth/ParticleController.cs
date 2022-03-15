@@ -23,16 +23,14 @@ public class ParticleController : MonoBehaviour
     [Header("Fall")]
     [SerializeField] ParticleSystem FallDust;
 
+    [Header("Attack")]
+    [SerializeField] ParticleSystem AttackVFX;
+    [SerializeField] Transform HandSocket;
 
-    public void WalkLeftDustFbx()
-    {
-        //Instantiate(WalkDust, LeftAnkle.position, LeftAnkle.rotation);
-    }
+    [Header("Damage")]
+    [SerializeField] ParticleSystem DamageVFX;
+    [SerializeField] Transform CapSocket;
 
-    public void WalkRightDustFbx()
-    {
-        //Instantiate(WalkDust, RightAnkle.position, RightAnkle.rotation);
-    }
 
     public void RunLeftDustFbx()
     {
@@ -59,13 +57,30 @@ public class ParticleController : MonoBehaviour
         Instantiate(InteriorJumpDust, new Vector3(Ankles.position.x, Ankles.position.y + 1f, Ankles.position.z), Ankles.rotation);
     }
 
-    public void JumpTrailDustFbx()
-    {
-
-    }
-
     public void FallDustFbx()
     {
         Instantiate(FallDust, Ankles.position, Ankles.rotation);
+    }
+
+    public void ActivateAttack()
+    {
+        //Instantiate(AttackVFX, HandSocket.position, HandSocket.rotation);
+
+    }
+
+    //IEnumerator Wait()
+    //{
+    //    yield return new WaitForSeconds(0.4f);
+    //    DesactivateAttack();
+    //}
+    //
+    //private void DesactivateAttack()
+    //{
+    //    AttackVFX.SetActive(false);
+    //}
+
+    public void DamageDustFbx()
+    {
+        Instantiate(DamageVFX, CapSocket.position, CapSocket.rotation);
     }
 }

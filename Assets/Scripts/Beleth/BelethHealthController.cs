@@ -28,6 +28,7 @@ public class BelethHealthController : MonoBehaviour
         checkPointManager = GetComponent<BelethCheckPointManager>();
         movementController = GetComponent<BelethMovementController>();
 
+        healthPoints = maxHealthPoints;
     }
 
     // Update is called once per frame
@@ -56,9 +57,8 @@ public class BelethHealthController : MonoBehaviour
         }
     }
 
-    IEnumerator WaitForInmortalFrames() {
-
-
+    IEnumerator WaitForInmortalFrames() 
+    {
         yield return new WaitForSeconds(inmortalTime);
         canBeDamaged = true;
     }
@@ -69,7 +69,7 @@ public class BelethHealthController : MonoBehaviour
 
         if (healthPoints <= 0)
         {
-            StartCoroutine(DieAndRespawn());
+            Die();
         }
         else
         {
@@ -78,17 +78,21 @@ public class BelethHealthController : MonoBehaviour
     }
 
     private void Die() {
+
+        movementController.SetCanMove(false);
+
         //Hacer la animacion de muerte
         //Mostrar menu de reiniciar nivel
 
         //Desactivar el movimiento
         Debug.Log("Has muerto");
+        StartCoroutine(Respawn());
+    
     }
 
-    IEnumerator DieAndRespawn() {
+    private IEnumerator Respawn() {
 
-        movementController.SetCanMove(false);
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         movementController.SetCanMove(true);
         checkPointManager.GoLastCheckPoint();
         healthPoints = maxHealthPoints;
@@ -104,6 +108,5 @@ public class BelethHealthController : MonoBehaviour
         yield return new WaitForSeconds (0.5f);
         
         movementController.SetCanMove(true);
-
     }
 }
