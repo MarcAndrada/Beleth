@@ -32,17 +32,6 @@ public class ParticleController : MonoBehaviour
     [SerializeField] Transform CapSocket;
 
 
-
-    public void WalkLeftDustFbx()
-    {
-        //Instantiate(WalkDust, LeftAnkle.position, LeftAnkle.rotation);
-    }
-
-    public void WalkRightDustFbx()
-    {
-        //Instantiate(WalkDust, RightAnkle.position, RightAnkle.rotation);
-    }
-
     public void RunLeftDustFbx()
     {
         Instantiate(KirbyDust, LeftAnkle.position, LeftAnkle.rotation); 
@@ -66,11 +55,6 @@ public class ParticleController : MonoBehaviour
     public void DobleJumpDustFbx()
     {
         Instantiate(InteriorJumpDust, new Vector3(Ankles.position.x, Ankles.position.y + 1f, Ankles.position.z), Ankles.rotation);
-    }
-
-    public void JumpTrailDustFbx()
-    {
-
     }
 
     public void FallDustFbx()
