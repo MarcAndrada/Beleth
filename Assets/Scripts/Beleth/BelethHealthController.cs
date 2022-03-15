@@ -69,7 +69,7 @@ public class BelethHealthController : MonoBehaviour
 
         if (healthPoints <= 0)
         {
-            StartCoroutine(DieAndRespawn());
+            Die();
         }
         else
         {
@@ -78,16 +78,20 @@ public class BelethHealthController : MonoBehaviour
     }
 
     private void Die() {
+
+        movementController.SetCanMove(false);
+
         //Hacer la animacion de muerte
         //Mostrar menu de reiniciar nivel
 
         //Desactivar el movimiento
         Debug.Log("Has muerto");
+        StartCoroutine(Respawn());
+    
     }
 
-    IEnumerator DieAndRespawn() {
+    private IEnumerator Respawn() {
 
-        movementController.SetCanMove(false);
         yield return new WaitForSeconds(3);
         movementController.SetCanMove(true);
         checkPointManager.GoLastCheckPoint();
