@@ -68,6 +68,12 @@ public class WrathExplosionController : MonoBehaviour
             }
             Rigidbody rb = hit.GetComponent<Rigidbody>();
 
+            if(hit.gameObject.tag == "Breakable")
+            {
+                hit.gameObject.GetComponent<BrokenWallController>().Break();
+
+            }
+
             if (rb != null && rb != rigidB || rb != null && moveHimself)
             {
                 rb.AddExplosionForce(strenght, explosionPosition, radius, upStrenght, ForceMode.Impulse);
