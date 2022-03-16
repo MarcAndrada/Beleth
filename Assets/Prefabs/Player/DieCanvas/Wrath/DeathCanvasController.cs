@@ -37,11 +37,9 @@ public class DeathCanvasController : MonoBehaviour
 
         FillAnimator.SetBool("canMove", false);
         FillAnimator.SetBool("canIdle", true);
-
-        GoFadeIn();
     }
 
-    private void GoFadeIn()
+    public void GoFadeIn()
     {
         PanelAnimator.SetBool("canIn", true);
         GoFadeOut();

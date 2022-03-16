@@ -101,18 +101,22 @@ public class PimpolloController : MonoBehaviour
         Instantiate(firstExplosion, transform.position, transform.rotation);
         animator.SetBool("getHit", true);
 
-        //Hacer que vaya parriba tambien
-        transform.GetComponent<Rigidbody>().AddForce(player.transform.forward * 10.0f, ForceMode.Impulse);
+        
     }
-
+    
     private void SelfDestroy()
     {
         // Instancia las particulas de explosion y se autodestruye
         Explosion();
-        
-        //activar esto al pasar 0.5 segundos
-        //Destroy(gameObject);
 
+        //activar esto al pasar 0.5 segundos
+        StartCoroutine(Destroy());
+    }
+
+    private IEnumerator Destroy()
+    {
+        yield return new WaitForSeconds(.5f);
+        Destroy(gameObject);
     }
 
     private IEnumerator WaitToExplode()
@@ -137,6 +141,7 @@ public class PimpolloController : MonoBehaviour
         {
             // Si es golpeado por el tridente del player el enemigo se autodestruira
 
+            transform.GetComponent<Rigidbody>().AddForce(other.transform.forward * 10.0f, ForceMode.Impulse);
             SelfDestroy();
 
 
