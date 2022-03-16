@@ -4,36 +4,47 @@ using UnityEngine;
 using UnityEngine.AI;
 public class PimpolloController : MonoBehaviour
 {
+    [SerializeField]
+    private float knockBackForce;
 
+    [Header("Movement")]
     [SerializeField]
     private float timeToWait;
+    [SerializeField]
+    private SphereCollider detectionColl;
+    [SerializeField]
+    private float maxTimeChasing;
+    
+    [Header("Attack")]
     [SerializeField]
     private float distanceToAttack;
     [Tooltip("Velocidad en la que hara el salto hacia el player")]
     [SerializeField]
     private float attackSpeed;
     [SerializeField]
-    private float maxTimeChasing;
-
+    private float maxAttackPercent;
     [SerializeField]
     private SphereCollider attackCollider;
     [SerializeField]
     private ParticleSystem firstExplosion;
+   
     
     private float attackTranscurse = 0;
-    private float attackDuration = 0.15f;
     private bool chasePlayer = false;
     private bool isAttacking = false;
+    private bool destroying = false;
+
     private NavMeshAgent navMesh;
     private GameObject player;
-    [SerializeField]
-    private SphereCollider detectionColl;
+   
     private Animator animator;
+    private Rigidbody rb;
     // Start is called before the first frame update
     void Start()
     {
         navMesh = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
+        rb = GetComponent<Rigidbody>();
     }
 
 
@@ -46,9 +57,12 @@ public class PimpolloController : MonoBehaviour
 
             //Si no esta lo suficiente mente cerca del jugador perseguira al player en caso que este lo sufucientemente cerca este le atacara
 
-            if (Vector3.Distance(transform.position, player.transform.position) > distanceToAttack && !isAttacking && navMesh.enabled == true)
+            if (Vector3.Distance(transform.position, player.transform.position) > distanceToAttack && !isAttacking)
             {
-                navMesh.destination = player.transform.position;
+                if (navMesh.enabled == true)
+                {
+                    navMesh.destination = player.transform.position;
+                }
 
             }
             else
@@ -60,6 +74,8 @@ public class PimpolloController : MonoBehaviour
 
 
         }
+   
+    
     }
 
 
@@ -84,39 +100,28 @@ public class PimpolloController : MonoBehaviour
         isAttacking = true;
         navMesh.enabled = false;
 
-        if (attackTranscurse < attackDuration)
+        if (attackTranscurse < maxAttackPercent)
         {
             attackTranscurse += attackSpeed * Time.deltaTime;
         }
         else
         {
-            SelfDestroy();
+            if (!destroying)
+            {
+                SelfDestroy();
+                StartCoroutine(WaitToDestroy(0));
+            }
         }
 
         transform.position = Vector3.LerpUnclamped(transform.position, player.transform.position, attackTranscurse);
     }
 
-    private void Explosion()
-    {
-        Instantiate(firstExplosion, transform.position, transform.rotation);
-        animator.SetBool("getHit", true);
-
-        
-    }
-    
     private void SelfDestroy()
     {
         // Instancia las particulas de explosion y se autodestruye
-        Explosion();
-
+        Instantiate(firstExplosion, transform.position, transform.rotation);
+        destroying = true;
         //activar esto al pasar 0.5 segundos
-        StartCoroutine(Destroy());
-    }
-
-    private IEnumerator Destroy()
-    {
-        yield return new WaitForSeconds(.5f);
-        Destroy(gameObject);
     }
 
     private IEnumerator WaitToExplode()
@@ -126,6 +131,13 @@ public class PimpolloController : MonoBehaviour
         yield return new WaitForSeconds(maxTimeChasing);
 
         SelfDestroy();
+    }
+
+    private IEnumerator WaitToDestroy(float _timeToWait) {
+        
+        yield return new WaitForSeconds(_timeToWait);
+        Destroy(gameObject);
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -143,6 +155,12 @@ public class PimpolloController : MonoBehaviour
 
             transform.GetComponent<Rigidbody>().AddForce(other.transform.forward * 10.0f, ForceMode.Impulse);
             SelfDestroy();
+            StartCoroutine(WaitToDestroy(0.5f));
+            animator.SetBool("getHit", true);
+            navMesh.enabled = false;
+            //Hacer que vaya parriba tambien
+            rb.isKinematic = false;
+            rb.AddForce(player.transform.forward * knockBackForce + transform.up * knockBackForce, ForceMode.Impulse);
 
 
         }

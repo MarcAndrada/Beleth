@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class DeathCanvasController : MonoBehaviour
 {
-    [SerializeField] BelethHealthController healthController;
+    BelethHealthController healthController;
     [SerializeField] Animator BossAnimator;
     [SerializeField] Animator FillAnimator;
     [SerializeField] Animator PanelAnimator;
 
+
+    private void Start()
+    {
+        healthController = FindObjectOfType<BelethHealthController>();
+    }
     // Update is called once per frame
     void Update()
     {

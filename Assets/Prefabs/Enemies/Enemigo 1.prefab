@@ -46,7 +46,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 35
+  m_Speed: 20
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 5000
@@ -71,12 +71,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeToWait: 0.5
-  distanceToAttack: 3
-  attackSpeed: 0.6
-  maxTimeChasing: 4
-  attackCollider: {fileID: 357633610}
-  explosion: {fileID: 6674675898005796691, guid: 4c9683349080160479e1d2378f4a0035, type: 3}
   detectionColl: {fileID: 2082943486}
+  maxTimeChasing: 4
+  distanceToAttack: 3
+  attackSpeed: 0.7
+  maxAttackPercent: 0.15
+  attackCollider: {fileID: 357633610}
+  firstExplosion: {fileID: 6674675898005796685, guid: 4c9683349080160479e1d2378f4a0035, type: 3}
 --- !u!135 &357633610
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -102,7 +103,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0

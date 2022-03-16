@@ -15,7 +15,7 @@ public class BelethHealthController : MonoBehaviour
     private float inmortalTime;
 
     private bool canBeDamaged = true;
-
+    private bool isAlive = true;
     private BelethUIController uiController;
     private BelethAnimController animController;
     private BelethCheckPointManager checkPointManager;
@@ -69,7 +69,10 @@ public class BelethHealthController : MonoBehaviour
 
         if (healthPoints <= 0)
         {
-            Die();
+            if (isAlive)
+            {
+                Die();
+            }
         }
         else
         {
@@ -80,7 +83,7 @@ public class BelethHealthController : MonoBehaviour
     private void Die() {
 
         movementController.SetCanMove(false);
-
+        isAlive = false;
         //Hacer la animacion de muerte
         //Mostrar menu de reiniciar nivel
 
@@ -97,6 +100,7 @@ public class BelethHealthController : MonoBehaviour
         checkPointManager.GoLastCheckPoint();
         healthPoints = maxHealthPoints;
         animController.SetHealthValue(healthPoints);
+        isAlive = true;
     }
 
     public int GetHealthPoints() { 

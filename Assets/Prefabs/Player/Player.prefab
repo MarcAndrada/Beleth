@@ -395,7 +395,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8252404586581513976}
-  m_LocalRotation: {x: 0.031632073, y: -0.020226285, z: 0.0006402508, w: 0.99929476}
+  m_LocalRotation: {x: -0.0050558248, y: 0.98665535, z: -0.031231973, w: -0.15971953}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -472,7 +472,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8252404586868977888}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.00071, y: 44, z: -99.97362}
+  m_LocalPosition: {x: -15.50016, y: 44, z: -61.011433}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8252404587704736879}
@@ -933,7 +933,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8252404587704736877}
-  m_LocalRotation: {x: 0.074361, y: -0.02018034, z: 0.0015051061, w: 0.9970261}
+  m_LocalRotation: {x: -0.011885282, y: 0.98441535, z: -0.07342046, w: -0.15935689}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1069,8 +1069,8 @@ CharacterController:
   serializedVersion: 2
   m_Height: 3.2
   m_Radius: 0.35
-  m_SlopeLimit: 30
-  m_StepOffset: 0
+  m_SlopeLimit: 60
+  m_StepOffset: 0.01
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
@@ -1135,7 +1135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealthPoints: 6
-  healthPoints: 2
+  healthPoints: 1
   inmortalTime: 2.5
 --- !u!114 &86581075410112192
 MonoBehaviour:
@@ -1149,8 +1149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c690d3f01bd7244bba17237b0ac798c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackCD: 0.7
-  attackDuration: 0.5
+  attackCD: 0.15
+  attackDuration: 0.1
   attackDecelSpeed: 7.5
   followCamera: {fileID: 8252404588007831829}
   canAttack: 1
@@ -1249,6 +1249,7 @@ GameObject:
   - component: {fileID: 8252404588007831831}
   - component: {fileID: 8252404588007831830}
   - component: {fileID: 8252404588007831826}
+  - component: {fileID: 45309515}
   m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1263,8 +1264,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8252404588007831829}
-  m_LocalRotation: {x: 0.03163208, y: -0.020226285, z: 0.0006402512, w: 0.99929476}
-  m_LocalPosition: {x: -21.00071, y: 44, z: -99.97362}
+  m_LocalRotation: {x: -0.0050558294, y: 0.9866553, z: -0.03123198, w: -0.15971951}
+  m_LocalPosition: {x: -15.50016, y: 44, z: -61.011433}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9107998978559298370}
@@ -1355,6 +1356,38 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &45309515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8252404588007831829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &8252404588284891791
 GameObject:
   m_ObjectHideFlags: 3
@@ -1379,7 +1412,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8252404588284891791}
-  m_LocalRotation: {x: 0.0134982085, y: -0.020234566, z: 0.0002732112, w: 0.9997041}
+  m_LocalRotation: {x: -0.002157448, y: 0.98705953, z: -0.013327479, w: -0.1597849}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1655,7 +1688,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 2113417510830710077}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.05
   m_Height: 0.18
   m_Direction: 2
