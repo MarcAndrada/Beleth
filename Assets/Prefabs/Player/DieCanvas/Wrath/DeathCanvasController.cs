@@ -7,6 +7,7 @@ public class DeathCanvasController : MonoBehaviour
     [SerializeField] BelethHealthController healthController;
     [SerializeField] Animator BossAnimator;
     [SerializeField] Animator FillAnimator;
+    [SerializeField] Animator PanelAnimator;
 
     // Update is called once per frame
     void Update()
@@ -36,5 +37,25 @@ public class DeathCanvasController : MonoBehaviour
 
         FillAnimator.SetBool("canMove", false);
         FillAnimator.SetBool("canIdle", true);
+
+        GoFadeIn();
+    }
+
+    private void GoFadeIn()
+    {
+        PanelAnimator.SetBool("canIn", true);
+        GoFadeOut();
+    }
+
+    private void GoFadeOut()
+    {
+        PanelAnimator.SetBool("canOut", true);
+        RestartAll();
+    }
+
+    private void RestartAll()
+    {
+        PanelAnimator.SetBool("canIn", false);
+        PanelAnimator.SetBool("canOut", false);
     }
 }

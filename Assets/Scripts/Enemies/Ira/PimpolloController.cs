@@ -18,7 +18,7 @@ public class PimpolloController : MonoBehaviour
     [SerializeField]
     private SphereCollider attackCollider;
     [SerializeField]
-    private GameObject explosion;
+    private ParticleSystem firstExplosion;
     
     private float attackTranscurse = 0;
     private float attackDuration = 0.15f;
@@ -98,15 +98,20 @@ public class PimpolloController : MonoBehaviour
 
     private void Explosion()
     {
-        // Instanciar las particulas de la explosion
-        Instantiate(explosion, transform.position, transform.rotation);
+        Instantiate(firstExplosion, transform.position, transform.rotation);
+        animator.SetBool("getHit", true);
+
+        //Hacer que vaya parriba tambien
+        transform.GetComponent<Rigidbody>().AddForce(player.transform.forward * 10.0f, ForceMode.Impulse);
     }
 
     private void SelfDestroy()
     {
         // Instancia las particulas de explosion y se autodestruye
         Explosion();
-        Destroy(gameObject);
+        
+        //activar esto al pasar 0.5 segundos
+        //Destroy(gameObject);
 
     }
 
