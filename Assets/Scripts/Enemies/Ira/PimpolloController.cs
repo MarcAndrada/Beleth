@@ -5,7 +5,9 @@ using UnityEngine.AI;
 public class PimpolloController : MonoBehaviour
 {
     [SerializeField]
-    private float knockBackForce;
+    private float knockBackForce = 6;
+    [SerializeField]
+    private float knockUpForce = 0.5f;
 
     [Header("Movement")]
     [SerializeField]
@@ -25,10 +27,15 @@ public class PimpolloController : MonoBehaviour
     private float maxAttackPercent;
     [SerializeField]
     private SphereCollider attackCollider;
+
+    [Header("Particles")]
     [SerializeField]
-    private ParticleSystem firstExplosion;
+    private ParticleSystem exclamationVfx;
+    [SerializeField]
+    private Transform exclamationSocket;
+    [SerializeField]
+    private ParticleSystem dieExplosionVfx;
    
-    
     private float attackTranscurse = 0;
     private bool chasePlayer = false;
     private bool isAttacking = false;
@@ -39,6 +46,7 @@ public class PimpolloController : MonoBehaviour
    
     private Animator animator;
     private Rigidbody rb;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,35 +59,22 @@ public class PimpolloController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (chasePlayer)
         {
-
             //Si no esta lo suficiente mente cerca del jugador perseguira al player en caso que este lo sufucientemente cerca este le atacara
-
             if (Vector3.Distance(transform.position, player.transform.position) > distanceToAttack && !isAttacking)
             {
                 if (navMesh.enabled == true)
                 {
                     navMesh.destination = player.transform.position;
                 }
-
             }
             else
             {
-
                 AttackPlayer();
-
             }
-
-
         }
-   
-    
     }
-
-
-   
 
     IEnumerator PlayerSeen()
     {
@@ -87,11 +82,11 @@ public class PimpolloController : MonoBehaviour
 
         detectionColl.enabled = false;
         transform.LookAt(player.transform);
+        Instantiate(exclamationVfx, exclamationSocket.position, exclamationSocket.rotation);
         yield return new WaitForSeconds(timeToWait);
         animator.SetTrigger("Chase");
         chasePlayer = true;
         StartCoroutine(WaitToExplode());
-
     }
 
     private void AttackPlayer() {
@@ -119,25 +114,28 @@ public class PimpolloController : MonoBehaviour
     private void SelfDestroy()
     {
         // Instancia las particulas de explosion y se autodestruye
-        Instantiate(firstExplosion, transform.position, transform.rotation);
+        Instantiate(dieExplosionVfx, transform.position, transform.rotation);
         destroying = true;
-        //activar esto al pasar 0.5 segundos
+    }
+
+    private void GotDestroyed()
+    {
+        // Instancia las particulas de explosion y se autodestruye
+        //Instantiate(firstExplosion, transform.position, transform.rotation);
+        destroying = true;
     }
 
     private IEnumerator WaitToExplode()
     {
         // Tras empezar a perseguir al jugador si no lo alcanza en el tiempo que tiene este se autidestruira
-
         yield return new WaitForSeconds(maxTimeChasing);
-
         SelfDestroy();
     }
 
-    private IEnumerator WaitToDestroy(float _timeToWait) {
-        
+    private IEnumerator WaitToDestroy(float _timeToWait) 
+    {
         yield return new WaitForSeconds(_timeToWait);
         Destroy(gameObject);
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -153,20 +151,15 @@ public class PimpolloController : MonoBehaviour
         {
             // Si es golpeado por el tridente del player el enemigo se autodestruira
 
-            transform.GetComponent<Rigidbody>().AddForce(other.transform.forward * 10.0f, ForceMode.Impulse);
-            SelfDestroy();
-            StartCoroutine(WaitToDestroy(0.5f));
+            GotDestroyed();
+            
             animator.SetBool("getHit", true);
             navMesh.enabled = false;
             //Hacer que vaya parriba tambien
             rb.isKinematic = false;
-            rb.AddForce(player.transform.forward * knockBackForce + transform.up * knockBackForce, ForceMode.Impulse);
+            rb.AddForce(player.transform.forward * knockBackForce + transform.up * knockUpForce, ForceMode.Impulse);
 
-
+            StartCoroutine(WaitToDestroy(1f));
         }
-
-
     }
-
-
 }
