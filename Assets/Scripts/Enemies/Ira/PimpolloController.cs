@@ -159,7 +159,7 @@ public class PimpolloController : MonoBehaviour
             rb.isKinematic = false;
             rb.AddForce(player.transform.forward * knockBackForce + transform.up * knockUpForce, ForceMode.Impulse);
 
-            StartCoroutine(WaitToDestroy(1f));
+            StartCoroutine(WaitToDestroy(1.1f));
         }
     }
 }
