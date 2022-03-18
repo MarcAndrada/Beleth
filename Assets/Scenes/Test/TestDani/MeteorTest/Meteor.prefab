@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1944540135520179765}
   - component: {fileID: 1332532191530554689}
   - component: {fileID: -122981825603007150}
+  - component: {fileID: 8544901219386274782}
   m_Layer: 0
   m_Name: Meteor
   m_TagString: Untagged
@@ -128,3 +129,17 @@ MonoBehaviour:
   fallingSpeed: 3
   rotationSpeed: 2
   collisionMarkPrefab: {fileID: 4717163802789012087, guid: 1cb42577bc529bb4ca8ddfc19a3ede6d, type: 3}
+--- !u!114 &8544901219386274782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5952174810769810554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20f254c735a52ef4d893c006e772cda6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  brokenWall: {fileID: 5955764633137073346, guid: 73a6e2d7bf9678047942190aff7a913a, type: 3}
+  timeToDestroy: 2

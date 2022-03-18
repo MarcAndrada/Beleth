@@ -12,14 +12,20 @@ public class FallingrockController : MonoBehaviour
     GameObject collisionMarkPrefab;
     Rigidbody rb;
     GameObject collisionMark;
- 
+    BrokenWallController breakeControll;
 
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        breakeControll = GetComponent<BrokenWallController>();
+        rb = GetComponent<Rigidbody>();
+
+    }
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        
         rb.velocity = Vector3.up * fallingSpeed * -1;
+      
 
         RaycastHit hit;
 
@@ -45,7 +51,11 @@ public class FallingrockController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(gameObject);
+        if (collision.gameObject.tag == "Scenario")
+        {
+            breakeControll.Break();
+            Destroy(gameObject);
+        }
     }
 
 

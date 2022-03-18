@@ -7,7 +7,8 @@ public class BrokenWallController : MonoBehaviour
 
     [SerializeField]
     GameObject brokenWall;
-
+    [SerializeField]
+    float timeToDestroy;
     Rigidbody rb;
     // Start is called before the first frame update
     void Start()
@@ -37,8 +38,9 @@ public class BrokenWallController : MonoBehaviour
 
     public void Break()
     {
-        Instantiate(brokenWall, transform.position, transform.rotation);
-        Destroy(gameObject);
+     GameObject broken= Instantiate(brokenWall, transform.position, transform.rotation);
+        Destroy(broken, timeToDestroy);
+      Destroy(gameObject);
 
     }
 }
