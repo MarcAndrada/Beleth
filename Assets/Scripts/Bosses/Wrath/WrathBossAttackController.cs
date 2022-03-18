@@ -21,6 +21,10 @@ public class WrathBossAttackController : MonoBehaviour
 
     private Vector3 posToEmerge;
 
+    [Header("Lava Circle")]
+    [SerializeField]
+    private float lavaCircle_Duration;
+
     [Header("Enemie Circle")]
     [SerializeField]
     private float enemieCircle_Duration;
@@ -78,7 +82,6 @@ public class WrathBossAttackController : MonoBehaviour
             }
         }
     }
-
     private void CheckIfMovingY() 
     {
         if (movingOnY)
@@ -188,18 +191,39 @@ public class WrathBossAttackController : MonoBehaviour
             }
         }
     }
-
-
+    
     public void GoBelowFloor() {
         movingOnY = true;
     }
-
     public void GoToStarterPos() {
         resetPosition = true;
         GoBelowFloor();
     }
+    public bool InCenter() 
+    {
+        return transform.position == starterPos;
+    }
+
+
+    public void LavaCircleAttack() 
+    {
+        isAttacking = true;
+        timeToWait = lavaCircle_Duration;
+        timeWatied = 0;
+        //Accion del ataque
+    }
 
     public void EnemieCircleAttack()
+    {
+
+        isAttacking = true;
+        timeToWait = enemieCircle_Duration;
+        timeWatied = 0;
+        //Accion del ataque
+
+    }
+   
+    public void BrakeFloorAttack()
     {
 
         isAttacking = true;
@@ -209,8 +233,8 @@ public class WrathBossAttackController : MonoBehaviour
 
     }
 
-
-    public void BrakeFloorAttack() {
+    public void BrakeFloorAttackV2()
+    {
 
         isAttacking = true;
         timeToWait = brakeFloor_Duration;
@@ -219,7 +243,6 @@ public class WrathBossAttackController : MonoBehaviour
 
     }
 
-    
 
 
 

@@ -91,6 +91,7 @@ public class PimpolloController : MonoBehaviour
 
     private void AttackPlayer() {
 
+        transform.LookAt(player.transform, Vector3.up);
         attackCollider.enabled = true;
         isAttacking = true;
         navMesh.enabled = false;
@@ -104,7 +105,7 @@ public class PimpolloController : MonoBehaviour
             if (!destroying)
             {
                 SelfDestroy();
-                StartCoroutine(WaitToDestroy(0));
+                Destroy(gameObject);
             }
         }
 
@@ -118,18 +119,12 @@ public class PimpolloController : MonoBehaviour
         destroying = true;
     }
 
-    private void GotDestroyed()
-    {
-        // Instancia las particulas de explosion y se autodestruye
-        //Instantiate(firstExplosion, transform.position, transform.rotation);
-        destroying = true;
-    }
-
     private IEnumerator WaitToExplode()
     {
         // Tras empezar a perseguir al jugador si no lo alcanza en el tiempo que tiene este se autidestruira
         yield return new WaitForSeconds(maxTimeChasing);
         SelfDestroy();
+        StartCoroutine(WaitToDestroy(0));
     }
 
     private IEnumerator WaitToDestroy(float _timeToWait) 
@@ -151,7 +146,6 @@ public class PimpolloController : MonoBehaviour
         {
             // Si es golpeado por el tridente del player el enemigo se autodestruira
 
-            GotDestroyed();
             
             animator.SetBool("getHit", true);
             navMesh.enabled = false;
@@ -160,6 +154,7 @@ public class PimpolloController : MonoBehaviour
             rb.AddForce(player.transform.forward * knockBackForce + transform.up * knockUpForce, ForceMode.Impulse);
 
             StartCoroutine(WaitToDestroy(1.1f));
+
         }
     }
 }
