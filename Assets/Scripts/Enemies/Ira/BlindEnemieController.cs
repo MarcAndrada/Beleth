@@ -140,7 +140,7 @@ public class BlindEnemieController : MonoBehaviour
         if (other.tag == "Player" && !isAttacking)
         {
             isAttacking = true;
-            other.gameObject.GetComponent<BelethHealthController>().GetDamage(1 , true);
+            other.gameObject.GetComponent<BelethHealthController>().GetDamage(1);
 
         }
     }

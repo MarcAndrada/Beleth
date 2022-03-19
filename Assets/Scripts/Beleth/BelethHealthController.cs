@@ -37,7 +37,7 @@ public class BelethHealthController : MonoBehaviour
         
     }
 
-    public void GetDamage(int _damageDeal, bool _doHurtAnim)
+    public void GetDamage(int _damageDeal, bool _doHurtAnim = true)
     {
         if (canBeDamaged)
         {

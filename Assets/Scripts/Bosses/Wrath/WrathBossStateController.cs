@@ -76,6 +76,12 @@ public class WrathBossStateController : MonoBehaviour
             StartCoroutine(StartFight());
         
         }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            currentHP -= 33;
+        }
+
     }
 
     private void CheckCurrentFase() 
@@ -279,6 +285,7 @@ public class WrathBossStateController : MonoBehaviour
                 else
                 {
                     currentAction = BossActions.BRAKE_FLOOR;
+                    attacksDone = 0;
                 }
                     
                 break;

@@ -37,7 +37,7 @@ public class ExplosionController : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            other.GetComponent<BelethHealthController>().GetDamage(1, true);
+            other.GetComponent<BelethHealthController>().GetDamage(1);
         }
     }
 }

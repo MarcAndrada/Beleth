@@ -23,17 +23,24 @@ public class WrathBossAttackController : MonoBehaviour
 
     [Header("Lava Circle")]
     [SerializeField]
+    private GameObject lavaCircle_Attack;
+    [SerializeField]
     private float lavaCircle_Duration;
 
     [Header("Enemie Circle")]
     [SerializeField]
     private float enemieCircle_Duration;
+    [SerializeField]
+    private float enemieCircle_Offset;
+
 
     [Header("Brake Floor")]
     [SerializeField]
+    private GameObject brakeFloor_Attack;
+    [SerializeField]
     private float brakeFloor_Duration;
-
-
+    [SerializeField]
+    private float brakeFloorV2_Angle;
 
 
     private float timeWatied = 0;
@@ -211,6 +218,7 @@ public class WrathBossAttackController : MonoBehaviour
         timeToWait = lavaCircle_Duration;
         timeWatied = 0;
         //Accion del ataque
+        Instantiate(lavaCircle_Attack, transform.position, Quaternion.Euler(-90,0,0));
     }
 
     public void EnemieCircleAttack()
@@ -221,6 +229,8 @@ public class WrathBossAttackController : MonoBehaviour
         timeWatied = 0;
         //Accion del ataque
 
+
+
     }
    
     public void BrakeFloorAttack()
@@ -230,6 +240,7 @@ public class WrathBossAttackController : MonoBehaviour
         timeToWait = brakeFloor_Duration;
         timeWatied = 0;
         //Accion del ataque
+        Instantiate(brakeFloor_Attack, transform.position, transform.rotation);
 
     }
 
@@ -240,6 +251,10 @@ public class WrathBossAttackController : MonoBehaviour
         timeToWait = brakeFloor_Duration;
         timeWatied = 0;
         //Accion del ataque
+        Instantiate(brakeFloor_Attack, transform.position, transform.rotation);
+        Instantiate(brakeFloor_Attack, transform.position, transform.rotation * Quaternion.Euler(0, brakeFloorV2_Angle, 0));
+        Instantiate(brakeFloor_Attack, transform.position, transform.rotation * Quaternion.Euler(0, -brakeFloorV2_Angle, 0));
+
 
     }
 
