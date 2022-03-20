@@ -31,7 +31,6 @@ public class WrathExplosionController : MonoBehaviour
         explosionController = GetComponent<WrathExplosionController>();
         rigidB = GetComponentInChildren<Rigidbody>();
         normalMaterial = mesh.material;
-
     }
 
     // Update is called once per frame
@@ -80,27 +79,19 @@ public class WrathExplosionController : MonoBehaviour
             }
         }
 
-        
         SetNormal();
-
     }
-
-
 
     private void SetWrath(BelethSinsController _player)
     {
-
         mesh.material = wrathMaterial;
         _player.AddWrathObject(explosionController);
     }
 
     private void SetNormal()
     {
-
         mesh.material = normalMaterial;
-
     }
-
 
     private void OnDrawGizmos()
     {
@@ -108,14 +99,11 @@ public class WrathExplosionController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, radius);
     }
 
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Wrath")
         {
             SetWrath(other.gameObject.GetComponentInParent<BelethSinsController>());
         }
-
-
     }
 }

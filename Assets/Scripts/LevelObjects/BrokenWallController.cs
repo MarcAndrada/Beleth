@@ -38,7 +38,7 @@ public class BrokenWallController : MonoBehaviour
 
     public void Break()
     {
-     GameObject broken= Instantiate(brokenWall, transform.position, transform.rotation);
+     GameObject broken= Instantiate(brokenWall, new Vector3(transform.position.x, transform.position.y + .6f, transform.position.z), transform.rotation);
         Destroy(broken, timeToDestroy);
       Destroy(gameObject);
 

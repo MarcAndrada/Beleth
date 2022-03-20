@@ -26,6 +26,7 @@ public class FallingrockManager : MonoBehaviour
 
     [SerializeField]
     GameObject fallingRock;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,7 +57,6 @@ public class FallingrockManager : MonoBehaviour
         Vector3 pos = posToSpawn();
         Instantiate(fallingRock, pos, Quaternion.identity);
         yield return new WaitForSeconds(timeToSpawn);
-
     }
 
     Vector3 posToSpawn()
@@ -64,6 +64,5 @@ public class FallingrockManager : MonoBehaviour
         Vector3 _pos;
         _pos = new Vector3(Random.Range(minRange.x, maxRange.x), Random.Range(height.x,height.y), Random.Range(minRange.y, maxRange.y));
         return _pos;
-        
     }
 }
