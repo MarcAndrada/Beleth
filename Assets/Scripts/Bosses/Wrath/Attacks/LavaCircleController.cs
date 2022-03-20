@@ -15,8 +15,7 @@ public class LavaCircleController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "player")
-        {
+        if (other.gameObject.tag == "Player"){
             other.gameObject.GetComponent<BelethHealthController>().GetDamage(playerDamage);
         }
     }

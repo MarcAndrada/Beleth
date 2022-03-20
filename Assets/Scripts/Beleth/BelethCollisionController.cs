@@ -11,8 +11,9 @@ public class BelethCollisionController : MonoBehaviour
     private void Start()
     {
         checkPointManager = GetComponent<BelethCheckPointManager>();
-        
-    
+        healthController = GetComponent<BelethHealthController>();
+
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,5 +24,16 @@ public class BelethCollisionController : MonoBehaviour
         }
     }
 
+
+
+    private void OnParticleCollision(GameObject other)
+    {
+        if (other.gameObject.tag == "BossAttack")
+        {
+            Debug.Log("Tonto x2");
+            healthController.GetDamage(1);
+
+        }
+    }
 
 }

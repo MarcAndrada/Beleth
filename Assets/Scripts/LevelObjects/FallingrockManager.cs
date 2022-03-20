@@ -22,7 +22,7 @@ public class FallingrockManager : MonoBehaviour
 
     public static float actualRocks;
 
-    float timer;
+    //float timer;
 
     [SerializeField]
     GameObject fallingRock;
@@ -30,7 +30,7 @@ public class FallingrockManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timer = 0;
+        //timer = 0;
         actualRocks = 0;
     }
 

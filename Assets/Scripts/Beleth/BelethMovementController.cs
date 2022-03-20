@@ -526,7 +526,7 @@ public class BelethMovementController : MonoBehaviour
         canMove = false;
         attackBraking = _attackBraking;
         isAttacking = true;
-        //currentSpeed = _newSpeed;
+
         yield return new WaitForSeconds(_timeToWait);
 
         // Despues de que acabe la duracion del ataque se desbloquea el movimiento

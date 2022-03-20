@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2172381176274081862}
   m_Layer: 0
   m_Name: BrakeFloorAttack
-  m_TagString: Untagged
+  m_TagString: BossAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,6 +101,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: W_Braum_Effect
       objectReference: {fileID: 0}
+    - target: {fileID: 1322018940230234455, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: m_TagString
+      value: BossAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322018940847079664, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: m_TagString
+      value: BossAttack
+      objectReference: {fileID: 0}
     - target: {fileID: 1322018940847079671, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -116,6 +124,62 @@ PrefabInstance:
     - target: {fileID: 1322018940847079671, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
       propertyPath: m_Materials.Array.data[3]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: TriggerModule.enter
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: CollisionModule.type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: TriggerModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: CollisionModule.minKillSpeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: CollisionModule.m_Bounce.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: CollisionModule.collisionMessages
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: TriggerModule.primitives.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: CollisionModule.m_EnergyLossOnCollision.scalar
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: CollisionModule.m_EnergyLossOnCollision.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: CollisionModule.multiplyColliderForceByParticleSize
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322018941138958076, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1322018941138958077, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: m_TagString
+      value: BossAttack
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}

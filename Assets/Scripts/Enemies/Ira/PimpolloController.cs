@@ -5,9 +5,7 @@ using UnityEngine.AI;
 public class PimpolloController : MonoBehaviour
 {
     [SerializeField]
-    private float knockBackForce = 6;
-    [SerializeField]
-    private float knockUpForce = 0.5f;
+    private bool hide;
 
     [Header("Movement")]
     [SerializeField]
@@ -27,6 +25,12 @@ public class PimpolloController : MonoBehaviour
     private float maxAttackPercent;
     [SerializeField]
     private SphereCollider attackCollider;
+
+    [Header("Damaged")]
+    [SerializeField]
+    private float knockBackForce = 6;
+    [SerializeField]
+    private float knockUpForce = 0.5f;
 
     [Header("Particles")]
     [SerializeField]
