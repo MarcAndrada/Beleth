@@ -4,8 +4,15 @@ using UnityEngine;
 using UnityEngine.AI;
 public class PimpolloController : MonoBehaviour
 {
+
+    [Header("Hiding")]
     [SerializeField]
     private bool hide;
+    [SerializeField]
+    private GameObject meshPimpollo;
+    [SerializeField]
+    private SphereCollider unHideCollider;
+
 
     [Header("Movement")]
     [SerializeField]
@@ -57,6 +64,15 @@ public class PimpolloController : MonoBehaviour
         navMesh = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
+        
+        if (hide)
+        {
+            animator.SetBool("Hide", true);
+        }
+        else
+        {
+            unHideCollider.enabled = false;
+        }
     }
 
 
@@ -78,20 +94,12 @@ public class PimpolloController : MonoBehaviour
                 AttackPlayer();
             }
         }
+        
+
+
+
     }
 
-    IEnumerator PlayerSeen()
-    {
-        //Desactiva la colision que detecta si el player esta en el area y tras esperar un tiempo empieza a perseguir al player
-
-        detectionColl.enabled = false;
-        transform.LookAt(player.transform);
-        Instantiate(exclamationVfx, exclamationSocket.position, exclamationSocket.rotation);
-        yield return new WaitForSeconds(timeToWait);
-        animator.SetTrigger("Chase");
-        chasePlayer = true;
-        StartCoroutine(WaitToExplode());
-    }
 
     private void AttackPlayer() {
 
@@ -115,12 +123,36 @@ public class PimpolloController : MonoBehaviour
 
         transform.position = Vector3.LerpUnclamped(transform.position, player.transform.position, attackTranscurse);
     }
-
     private void SelfDestroy()
     {
         // Instancia las particulas de explosion y se autodestruye
         Instantiate(dieExplosionVfx, transform.position, transform.rotation);
         destroying = true;
+    }
+    private void Damaged()
+    {
+        // Si es golpeado por el tridente del player el enemigo hara la animacion de recibir daño y se le añadria fuerza atras
+        animator.SetBool("getHit", true);
+        navMesh.enabled = false;
+        //Hacer que vaya parriba tambien
+        rb.isKinematic = false;
+        rb.AddForce(player.transform.forward * knockBackForce + transform.up * knockUpForce, ForceMode.Impulse);
+
+        StartCoroutine(WaitToDestroy(1.1f));
+    }
+
+
+    private IEnumerator PlayerSeen()
+    {
+        //Desactiva la colision que detecta si el player esta en el area y tras esperar un tiempo empieza a perseguir al player
+
+        detectionColl.enabled = false;
+        transform.LookAt(player.transform);
+        Instantiate(exclamationVfx, exclamationSocket.position, exclamationSocket.rotation);
+        yield return new WaitForSeconds(timeToWait);
+        animator.SetTrigger("Chase");
+        chasePlayer = true;
+        StartCoroutine(WaitToExplode());
     }
 
     private IEnumerator WaitToExplode()
@@ -136,10 +168,25 @@ public class PimpolloController : MonoBehaviour
         yield return new WaitForSeconds(_timeToWait);
         Destroy(gameObject);
     }
+    private IEnumerator UnHide()
+    {
+        unHideCollider.enabled = false;
+        animator.SetBool("Hide", false);
+        yield return new WaitForSeconds(0.2f);
+        hide = false;
+
+    }
+
+
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player" && !chasePlayer)
+        if (other.tag == "Player" && hide)
+        {
+            StartCoroutine(UnHide());
+        }
+
+        if (other.tag == "Player" && !chasePlayer && !hide)
         {
             //En caso de que el player entre en la zona de interaccion empezara a perseguirle
             player = other.gameObject;
@@ -148,17 +195,7 @@ public class PimpolloController : MonoBehaviour
 
         if (other.tag == "Trident" && chasePlayer)
         {
-            // Si es golpeado por el tridente del player el enemigo se autodestruira
-
-            
-            animator.SetBool("getHit", true);
-            navMesh.enabled = false;
-            //Hacer que vaya parriba tambien
-            rb.isKinematic = false;
-            rb.AddForce(player.transform.forward * knockBackForce + transform.up * knockUpForce, ForceMode.Impulse);
-
-            StartCoroutine(WaitToDestroy(1.1f));
-
+            Damaged();
         }
     }
 }
