@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e8bb01d2f012d046b7b1e4e4c1c47fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 20
-  attackDuration: 4
+  speed: 32
+  attackDuration: 5
 --- !u!1001 &2172381177311994564
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63,11 +63,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1322018940230234454, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1322018940230234454, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1.7
       objectReference: {fileID: 0}
     - target: {fileID: 1322018940230234454, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
       propertyPath: m_LocalRotation.w
@@ -101,14 +101,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: W_Braum_Effect
       objectReference: {fileID: 0}
-    - target: {fileID: 1322018940230234455, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: m_TagString
-      value: BossAttack
-      objectReference: {fileID: 0}
-    - target: {fileID: 1322018940847079664, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: m_TagString
-      value: BossAttack
-      objectReference: {fileID: 0}
     - target: {fileID: 1322018940847079671, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -125,61 +117,13 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[3]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: TriggerModule.enter
-      value: 2
+    - target: {fileID: 1322018940847079671, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: CollisionModule.type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: TriggerModule.enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: CollisionModule.enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: CollisionModule.minKillSpeed
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: CollisionModule.m_Bounce.scalar
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: CollisionModule.collisionMessages
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: CollisionModule.collidesWith.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: TriggerModule.primitives.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: CollisionModule.m_EnergyLossOnCollision.scalar
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: CollisionModule.m_EnergyLossOnCollision.minMaxState
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1322018941138958066, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: CollisionModule.multiplyColliderForceByParticleSize
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1322018941138958076, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1322018941138958077, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
-      propertyPath: m_TagString
-      value: BossAttack
+    - target: {fileID: 1322018940847079671, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
+      propertyPath: m_Materials.Array.data[5]
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1402fb47370e3f14eb7ef8131ab07b78, type: 3}
