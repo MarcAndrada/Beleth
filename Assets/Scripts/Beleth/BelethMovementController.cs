@@ -268,6 +268,7 @@ public class BelethMovementController : MonoBehaviour
             maxFallSpeed = normalFallSpeed;
             // Setear el valor de la animacion de planear
             animController.SetGliding(gliding);
+            animController.SetFirstJump(false);
             if (airSpeed > 0)
             {
                 airSpeed = 0;

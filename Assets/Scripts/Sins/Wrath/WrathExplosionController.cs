@@ -23,6 +23,7 @@ public class WrathExplosionController : MonoBehaviour
 
     private WrathExplosionController explosionController;
     private MeshRenderer mesh;
+    private SkinnedMeshRenderer skinnedMesh;
     private Rigidbody rigidB;
 
     void Start()
@@ -32,6 +33,11 @@ public class WrathExplosionController : MonoBehaviour
         {
             normalMaterial = mesh.material;
 
+        }
+        else
+        {
+            skinnedMesh = GetComponentInChildren<SkinnedMeshRenderer>();
+            normalMaterial = skinnedMesh.material;
         }
        
         explosionController = GetComponent<WrathExplosionController>();
@@ -89,13 +95,32 @@ public class WrathExplosionController : MonoBehaviour
 
     private void SetWrath(BelethSinsController _player)
     {
-        mesh.material = wrathMaterial;
+        if (mesh != null)
+        {
+            mesh.material = wrathMaterial;
+        }
+        else
+        {
+            skinnedMesh.material = wrathMaterial;
+
+        }
         _player.AddWrathObject(explosionController);
+
+
     }
 
     private void SetNormal()
     {
-        mesh.material = normalMaterial;
+        if (mesh != null)
+        {
+            mesh.material = normalMaterial;
+        }
+        else
+        {
+            skinnedMesh.material = normalMaterial;
+        }
+
+        
     }
 
     private void OnDrawGizmos()

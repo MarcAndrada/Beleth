@@ -18,8 +18,6 @@ public class BlindEnemieController : MonoBehaviour
     [SerializeField]
     private float maxScale;
     [SerializeField]
-    private MeshRenderer mesh;
-    [SerializeField]
     private Material normalMaterial;
     [SerializeField]
     private Material wrathMaterial;

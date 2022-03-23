@@ -25,11 +25,21 @@ public class BelethAnimController : MonoBehaviour
         SetOnAir(); 
     }
 
-    private void SetOnAir() {
+    
+
+    public void SetMovmentInput(bool _movingInputPressed) {
+        animator.SetBool("UsingInput", _movingInputPressed);
+    }
+    public void SetSpeedValue(float _playerSpeed) {
+        animator.SetFloat("Speed", _playerSpeed);
+
+    }
+    
+    private void SetOnAir()
+    {
         if (charController.isGrounded && !touchedFloor)
         {
             animator.ResetTrigger("Jump");
-            animator.SetBool("FirstJump", false);
             touchedFloor = true;
         }
         else if (!charController.isGrounded)
@@ -43,26 +53,21 @@ public class BelethAnimController : MonoBehaviour
     {
         animator.SetBool("OnPlatform", _isOnPlatform);
     }
-
-    public void SetMovmentInput(bool _movingInputPressed) {
-        animator.SetBool("UsingInput", _movingInputPressed);
-    }
-    public void SetSpeedValue(float _playerSpeed) {
-        animator.SetFloat("Speed", _playerSpeed);
-
-    }
-
     public void JumpTrigger() {
 
         animator.SetTrigger("Jump");
         StartCoroutine(WaitForJump());
 
     }
+    public void SetFirstJump(bool _didFirstJump) 
+    {
+        animator.SetBool("FirstJump", _didFirstJump);
+    }
 
     IEnumerator WaitForJump() {
 
         yield return new WaitForSeconds(0.1f);
-        animator.SetBool("FirstJump", true);
+        SetFirstJump(true);
 
     }
 
