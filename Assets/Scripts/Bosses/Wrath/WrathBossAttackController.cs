@@ -52,7 +52,7 @@ public class WrathBossAttackController : MonoBehaviour
     private GameObject player;
 
     private WrathBossStateController stateController;
-
+    private Animator animator;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +60,7 @@ public class WrathBossAttackController : MonoBehaviour
         player = stateController.player;
 
         starterPos = transform.position;
+        animator = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -96,6 +97,10 @@ public class WrathBossAttackController : MonoBehaviour
             if (!isBelowFloor)
             {
                 //Bajada
+
+                animator.SetBool("BelowFloor", true);
+
+
                 if (placeToGoState >= 1)
                 {
                     //Al llegar al suelo cambiar isBelowFloor a true y que el state sea 0 de nuevo y mover el boss a la posicion X y Z del target
@@ -108,7 +113,7 @@ public class WrathBossAttackController : MonoBehaviour
                 else
                 {
                     //Mover a la posicion y X tiempo despues que suba
-                    placeToGoState += Time.deltaTime;
+                    placeToGoState += Time.deltaTime * belowSpeed;
                     Vector3 targetPos = new Vector3(transform.position.x, starterPos.y - yOffset, transform.position.z);
                     transform.position = Vector3.Lerp(transform.position, targetPos, placeToGoState);
                 }
@@ -118,16 +123,19 @@ public class WrathBossAttackController : MonoBehaviour
             }
             else
             {
+
                 //Subida
                 if (resetPosition)
                 {
+                                        
                     //Esperar el tiempo suficiente para que emerja el boss del suelo 
                     timeWatied += Time.deltaTime;
 
                     if (timeToWaitToGoUp <= timeWatied)
                     {
+                        animator.SetBool("BelowFloor", false);
 
-                        placeToGoState += Time.deltaTime;
+                        placeToGoState += Time.deltaTime * belowSpeed;
 
                         if (placeToGoState >= 1)
                         {
@@ -154,16 +162,21 @@ public class WrathBossAttackController : MonoBehaviour
                 }
                 else
                 {
+
+
                     //Esperar el tiempo suficiente para que emerja el boss del suelo 
                     timeWatied += Time.deltaTime;
 
                     if (timeToWaitToGoUp <= timeWatied)
                     {
+                        animator.SetBool("BelowFloor", false);
 
-                        placeToGoState += Time.deltaTime;
+
+                        placeToGoState += Time.deltaTime * belowSpeed;
 
                         if (placeToGoState >= 1)
                         {
+
                             //Al acabar poner isAttacking en true y hacer que time to wait sea timeToWaitGoUp
                             isAttacking = true;
                             timeToWait = timeToWaitForNextAttack;
@@ -214,6 +227,7 @@ public class WrathBossAttackController : MonoBehaviour
 
     public void LavaCircleAttack() 
     {
+        animator.SetTrigger("LavaCircle");
         isAttacking = true;
         timeToWait = lavaCircle_Duration;
         timeWatied = 0;
@@ -223,7 +237,7 @@ public class WrathBossAttackController : MonoBehaviour
 
     public void EnemieCircleAttack()
     {
-
+        animator.SetTrigger("LavaCircle");
         isAttacking = true;
         timeToWait = enemieCircle_Duration;
         timeWatied = 0;
@@ -235,30 +249,43 @@ public class WrathBossAttackController : MonoBehaviour
    
     public void BrakeFloorAttack()
     {
-
+        animator.SetTrigger("BrakeFloor");
         isAttacking = true;
         timeToWait = brakeFloor_Duration;
         timeWatied = 0;
-        //Accion del ataque
-        Instantiate(brakeFloor_Attack, transform.position, transform.rotation);
+        
 
     }
 
     public void BrakeFloorAttackV2()
     {
-
+        animator.SetTrigger("BrakeFloor");
         isAttacking = true;
         timeToWait = brakeFloor_Duration;
         timeWatied = 0;
+        
+    }
+
+    public void BrakeFloorAttakAction() 
+    {
         //Accion del ataque
-        Instantiate(brakeFloor_Attack, transform.position, transform.rotation);
-        Instantiate(brakeFloor_Attack, transform.position, transform.rotation * Quaternion.Euler(0, brakeFloorV2_Angle, 0));
-        Instantiate(brakeFloor_Attack, transform.position, transform.rotation * Quaternion.Euler(0, -brakeFloorV2_Angle, 0));
+        switch (stateController.currentFase)
+        {
+            case WrathBossStateController.BossFase.FASE_1:
+                Instantiate(brakeFloor_Attack, transform.position, transform.rotation);
+                break;
+            case WrathBossStateController.BossFase.FASE_2:
+            case WrathBossStateController.BossFase.FASE_3:
+                Instantiate(brakeFloor_Attack, transform.position, transform.rotation);
+                Instantiate(brakeFloor_Attack, transform.position, transform.rotation * Quaternion.Euler(0, brakeFloorV2_Angle, 0));
+                Instantiate(brakeFloor_Attack, transform.position, transform.rotation * Quaternion.Euler(0, -brakeFloorV2_Angle, 0));
+                break;
+            default:
+                break;
+        }
+
 
 
     }
-
-
-
 
 }

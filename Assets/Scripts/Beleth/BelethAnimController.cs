@@ -29,11 +29,13 @@ public class BelethAnimController : MonoBehaviour
         if (charController.isGrounded && !touchedFloor)
         {
             animator.ResetTrigger("Jump");
+            animator.SetBool("FirstJump", false);
             touchedFloor = true;
         }
         else if (!charController.isGrounded)
         {
             touchedFloor = true;
+
         }
         animator.SetBool("OnFloor", charController.isGrounded);
     }
@@ -53,8 +55,17 @@ public class BelethAnimController : MonoBehaviour
     public void JumpTrigger() {
 
         animator.SetTrigger("Jump");
-    
+        StartCoroutine(WaitForJump());
+
     }
+
+    IEnumerator WaitForJump() {
+
+        yield return new WaitForSeconds(0.1f);
+        animator.SetBool("FirstJump", true);
+
+    }
+
     public void SetGliding(bool _isGliding) {
         animator.SetBool("Gliding", _isGliding);
     }

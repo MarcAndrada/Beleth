@@ -28,9 +28,14 @@ public class WrathExplosionController : MonoBehaviour
     void Start()
     {
         mesh = GetComponentInChildren<MeshRenderer>();
+        if (mesh != null)
+        {
+            normalMaterial = mesh.material;
+
+        }
+       
         explosionController = GetComponent<WrathExplosionController>();
         rigidB = GetComponentInChildren<Rigidbody>();
-        normalMaterial = mesh.material;
     }
 
     // Update is called once per frame

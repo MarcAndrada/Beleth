@@ -25,7 +25,7 @@ public class WrathBossStateController : MonoBehaviour
 
     [Header("Fases")]
     [SerializeField]
-    private BossFase currentFase = BossFase.NONE;
+    public BossFase currentFase = BossFase.NONE;
     [SerializeField]
     [Tooltip("En la posicion 0 ha de estar la vida minima para estar en la fase 1, en la posicion 1 ha deestar la vida minima para la fase 2, lo que es inferior sera para la fase 3")]
     private float[] fasesHealth;
