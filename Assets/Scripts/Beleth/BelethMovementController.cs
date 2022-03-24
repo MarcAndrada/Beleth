@@ -115,6 +115,7 @@ public class BelethMovementController : MonoBehaviour
     private BelethCheckPointManager checkPointManager;
     private float attackBraking;
     private bool isAttacking = false;
+
     private void Start()
     {
         charController = GetComponent<CharacterController>();
@@ -435,14 +436,12 @@ public class BelethMovementController : MonoBehaviour
             {
                 gravityValue = gravityGliding;
             }
-
-
             
-               
         }
 
 
     }
+
     //Timers
     IEnumerator WaitForCoyoteTime()
     {
@@ -467,6 +466,7 @@ public class BelethMovementController : MonoBehaviour
             {
                 if (groundedPlayer)
                 {
+                    animController.SetFirstJump(false);
                     // En caso de que el salto sea mientras se esta en el suelo se guardara el punto desde el que hemos saltado como el ultimo punto de spawn
                     checkPointManager.SetNewRespawn(transform.position);
                 }

@@ -11,10 +11,14 @@ public class WrathBossAttackController : MonoBehaviour
     [SerializeField]
     private float yOffset;
     [SerializeField]
-    private float timeToWaitToGoUp;
+    private float timeToWaitUnderPlayer;
+    [SerializeField]
+    [Tooltip("El tiempo que espera mientras esta quieto debajo del player (esta variable va en funcion de la de timeToWaitToGoUp, esa ha de ser mas grande que esta)")]
+    private float timeWaitingToEmerge;
     [SerializeField]
     private float timeToWaitForNextAttack;
-
+    [SerializeField]
+    private GameObject belowFloor_Particles;
     private bool isBelowFloor = false;
     private bool movingOnY = false;
     private float placeToGoState = 0;
@@ -53,6 +57,7 @@ public class WrathBossAttackController : MonoBehaviour
 
     private WrathBossStateController stateController;
     private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -61,6 +66,9 @@ public class WrathBossAttackController : MonoBehaviour
 
         starterPos = transform.position;
         animator = GetComponentInChildren<Animator>();
+
+        belowFloor_Particles.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -107,8 +115,7 @@ public class WrathBossAttackController : MonoBehaviour
                     placeToGoState = 0;
                     isBelowFloor = true;
                     transform.position = new Vector3(player.transform.position.x, starterPos.y - yOffset, player.transform.position.z);
-                    //Debug.Log("Ha parado de bajar");
-
+                    belowFloor_Particles.SetActive(true);
                 }
                 else
                 {
@@ -117,7 +124,7 @@ public class WrathBossAttackController : MonoBehaviour
                     Vector3 targetPos = new Vector3(transform.position.x, starterPos.y - yOffset, transform.position.z);
                     transform.position = Vector3.Lerp(transform.position, targetPos, placeToGoState);
                 }
-                
+
 
 
             }
@@ -131,7 +138,7 @@ public class WrathBossAttackController : MonoBehaviour
                     //Esperar el tiempo suficiente para que emerja el boss del suelo 
                     timeWatied += Time.deltaTime;
 
-                    if (timeToWaitToGoUp <= timeWatied)
+                    if (timeToWaitUnderPlayer <= timeWatied)
                     {
                         animator.SetBool("BelowFloor", false);
 
@@ -147,11 +154,13 @@ public class WrathBossAttackController : MonoBehaviour
                             placeToGoState = 0;
                             timeWatied = 0;
                             resetPosition = false;
+
                         }
                         else
                         {
                             //Mover a la posicion y X tiempo despues que suba
                             transform.position = Vector3.Lerp(transform.position, starterPos, placeToGoState);
+                            belowFloor_Particles.SetActive(false);
 
                         }
                     }
@@ -167,7 +176,7 @@ public class WrathBossAttackController : MonoBehaviour
                     //Esperar el tiempo suficiente para que emerja el boss del suelo 
                     timeWatied += Time.deltaTime;
 
-                    if (timeToWaitToGoUp <= timeWatied)
+                    if (timeToWaitUnderPlayer <= timeWatied)
                     {
                         animator.SetBool("BelowFloor", false);
 
@@ -190,13 +199,14 @@ public class WrathBossAttackController : MonoBehaviour
                             //Mover a la posicion y X tiempo despues que suba
                             Vector3 targetPos = new Vector3(posToEmerge.x, starterPos.y, posToEmerge.z);
                             transform.position = Vector3.Lerp(transform.position, targetPos, placeToGoState);
+                            belowFloor_Particles.SetActive(false);
 
                         }
                     }
                     else
                     {
 
-                        if (timeWatied < timeToWaitToGoUp - 1)
+                        if (timeWatied < timeToWaitUnderPlayer - timeWaitingToEmerge)
                         {
                             posToEmerge = player.transform.position;
                             transform.position = new Vector3(player.transform.position.x, starterPos.y - yOffset, player.transform.position.z);
