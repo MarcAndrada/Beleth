@@ -5,10 +5,22 @@ using UnityEngine;
 public class PimpolloParticles : MonoBehaviour
 {
     [SerializeField]
-    private ParticleSystem secondExplosion;
+    private ParticleSystem AppersVFX;
+    [SerializeField]
+    private Transform AppearsSocket;
+
+    [SerializeField]
+    private ParticleSystem suicideVFX;
 
     public void LastExplosion()
     {
-        Instantiate(secondExplosion, transform.position, transform.rotation);
+        Instantiate(suicideVFX, transform.position, transform.rotation);
     }
+
+    public void Appears()
+    {
+        Instantiate(AppersVFX, AppearsSocket.position, AppearsSocket.rotation); 
+    }
+
+
 }

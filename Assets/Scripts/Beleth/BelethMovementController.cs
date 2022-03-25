@@ -15,7 +15,7 @@ public class BelethMovementController : MonoBehaviour
     private InputAction jumpAction;
     private InputAction runAction;
     private bool canMove = true;
-
+    private bool isGliding = false;
 
     [Header("Movment")]
     [SerializeField]
@@ -309,7 +309,12 @@ public class BelethMovementController : MonoBehaviour
             //En el momento en el que el personaje deje de subir empezara a planear
             maxFallSpeed = glidingFallSpeed;
 
-        } 
+            isGliding = true;
+        }
+        else
+        {
+            isGliding = false;
+        }
 
     
     }
@@ -541,6 +546,11 @@ public class BelethMovementController : MonoBehaviour
         currentSpeed = _newCurrentSpeed;
     }
 
+    //Getters
+    public bool GetGliding()
+    {
+        return isGliding;
+    }
 
     //Extern Actions
     public void AddImpulse(float _impulseForce) {

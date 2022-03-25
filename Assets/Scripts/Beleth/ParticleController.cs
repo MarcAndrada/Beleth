@@ -31,6 +31,9 @@ public class ParticleController : MonoBehaviour
     [SerializeField] ParticleSystem DamageVFX;
     [SerializeField] Transform CapSocket;
 
+    [Header("Gidle")]
+    [SerializeField] ParticleSystem SweatVFX;
+
 
     public void RunLeftDustFbx()
     {
@@ -82,5 +85,10 @@ public class ParticleController : MonoBehaviour
     public void DamageDustFbx()
     {
         Instantiate(DamageVFX, CapSocket.position, CapSocket.rotation);
+    }
+
+    public void SweatFbx()
+    {
+        Instantiate(SweatVFX, CapSocket.position, CapSocket.rotation);
     }
 }
