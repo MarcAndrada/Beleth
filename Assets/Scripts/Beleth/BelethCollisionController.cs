@@ -10,6 +10,7 @@ public class BelethCollisionController : MonoBehaviour
     private CharacterController characterController;
     private void Start()
     {
+        movementController = GetComponent<BelethMovementController>();
         checkPointManager = GetComponent<BelethCheckPointManager>();
         healthController = GetComponent<BelethHealthController>();
         characterController = GetComponent<CharacterController>();

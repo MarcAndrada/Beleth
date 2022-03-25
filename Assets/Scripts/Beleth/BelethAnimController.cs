@@ -25,8 +25,8 @@ public class BelethAnimController : MonoBehaviour
         SetOnAir(); 
     }
 
-    
 
+    #region Movement Animations
     public void SetMovmentInput(bool _movingInputPressed) {
         animator.SetBool("UsingInput", _movingInputPressed);
     }
@@ -34,7 +34,9 @@ public class BelethAnimController : MonoBehaviour
         animator.SetFloat("Speed", _playerSpeed);
 
     }
-    
+    #endregion
+
+    #region Air Animations
     private void SetOnAir()
     {
         if (charController.isGrounded && !touchedFloor)
@@ -75,6 +77,9 @@ public class BelethAnimController : MonoBehaviour
         animator.SetBool("Gliding", _isGliding);
     }
 
+    #endregion
+
+    #region Health Anims
     public void DamageTrigger() {
         animator.SetTrigger("Damaged");
         
@@ -84,6 +89,9 @@ public class BelethAnimController : MonoBehaviour
 
     }
 
+    #endregion
+
+    #region Attack Anims
     public void AttackTrigger() {
 
         animator.SetTrigger("Attack");
@@ -95,6 +103,7 @@ public class BelethAnimController : MonoBehaviour
 
     }
 
+    #endregion
 
 
 }

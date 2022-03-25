@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class BelethMovementController : MonoBehaviour
 {
 
-    //inputs
+    #region Inputs Variables
     private Vector3 movementInput;
     private Vector3 movementDirection;
     private Vector2 recibedInputs;
@@ -15,8 +15,9 @@ public class BelethMovementController : MonoBehaviour
     private InputAction jumpAction;
     private InputAction runAction;
     private bool canMove = true;
-    private bool isGliding = false;
+    #endregion
 
+    #region MovementVariables
     [Header("Movment")]
     [SerializeField]
     [Tooltip("Esta es la velocidad base que tendra el personaje")]
@@ -64,7 +65,9 @@ public class BelethMovementController : MonoBehaviour
     private float minGlidingSpeed;
     [SerializeField]
     private float maxGlidingSpeed;
+    #endregion
 
+    #region Jump Variables
     [Header("Jump")]
     private bool jump = false;
     [SerializeField]
@@ -104,8 +107,9 @@ public class BelethMovementController : MonoBehaviour
     private bool groundedPlayer;
     private bool doubleJumped = false;
     private bool canCoyote;
+    #endregion
 
-
+    #region Components Variables
     [Header("Components & External objects")]
     [SerializeField]
     private Camera followCamera;
@@ -113,8 +117,11 @@ public class BelethMovementController : MonoBehaviour
     private PlayerInput playerInput;
     private BelethAnimController animController;
     private BelethCheckPointManager checkPointManager;
+    private BelethUIController uiController;
     private float attackBraking;
     private bool isAttacking = false;
+    #endregion
+
 
     private void Start()
     {
@@ -122,6 +129,7 @@ public class BelethMovementController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         animController = GetComponent<BelethAnimController>();
         checkPointManager = GetComponent<BelethCheckPointManager>();
+        uiController = GetComponent<BelethUIController>();
 
         gravityValue = gravityOnAir;
 
@@ -142,7 +150,7 @@ public class BelethMovementController : MonoBehaviour
         jumpAction = playerInput.actions["Jump"];
         jumpAction.started += Jump;
         jumpAction.performed += SetGliding;
-        jumpAction.canceled += StopGlide;
+        jumpAction.canceled += _ => StopGlide();
 
         // Run Events
         runAction = playerInput.actions["Run"];
@@ -177,7 +185,7 @@ public class BelethMovementController : MonoBehaviour
     }
 
 
-    //Actions
+    #region Actions
     private void MovePlayer()
     {
         if (recibedInputs.x != 0 || recibedInputs.y != 0)
@@ -251,8 +259,9 @@ public class BelethMovementController : MonoBehaviour
         
 
     }
+    #endregion
 
-    //Checkers
+    #region Checkers
     private void CheckIfCanJump() {
 
         // Detecta si esta tocando el suelo
@@ -304,18 +313,16 @@ public class BelethMovementController : MonoBehaviour
     private void CheckIfGliding() {
 
         //Si esta cayendo y esta planeando 
-        if (playerVelocity.y < 0 && gliding)
+        if (playerVelocity.y < 0 && gliding && uiController.GetStaminaValue() > 0.05f)
         {
             //En el momento en el que el personaje deje de subir empezara a planear
             maxFallSpeed = glidingFallSpeed;
+            CheckCurrentSpeedOnAir(1);
 
-            isGliding = true;
-        }
-        else
+        } else if (gliding && uiController.GetStaminaValue() < 0.05f) 
         {
-            isGliding = false;
+            StopGlide();
         }
-
     
     }
     private void CheckAccelSpeed()
@@ -446,8 +453,9 @@ public class BelethMovementController : MonoBehaviour
 
 
     }
+    #endregion
 
-    //Timers
+    #region Timers
     IEnumerator WaitForCoyoteTime()
     {
         //Esperar el coyote time
@@ -457,7 +465,9 @@ public class BelethMovementController : MonoBehaviour
 
     }
 
-    // Input Actions
+    #endregion
+
+    #region Input Actions
     private void SetMovmentValues(InputAction.CallbackContext obj)
     {
         //Guardamos el valor de los inputs de movimiento
@@ -471,13 +481,17 @@ public class BelethMovementController : MonoBehaviour
             {
                 if (groundedPlayer)
                 {
-                    animController.SetFirstJump(false);
                     // En caso de que el salto sea mientras se esta en el suelo se guardara el punto desde el que hemos saltado como el ultimo punto de spawn
                     checkPointManager.SetNewRespawn(transform.position);
                 }
 
+                animController.SetFirstJump(false);
+
                 // En caso de que este en el suelo o aun este a tiempo de utilizar el coyote time haz el 1r salto
-                playerVelocity.y = 0;
+                if (playerVelocity.y < 0)
+                {
+                    playerVelocity.y = 0;
+                }
                 playerVelocity.y += Mathf.Sqrt(jumpHeight * -jumpImpulse * gravityOnAir);
                 canCoyote = false;
                 animController.JumpTrigger();
@@ -490,7 +504,10 @@ public class BelethMovementController : MonoBehaviour
             else if (!doubleJumped)
             {
                 // En caso de que no haya hecho el doble salto que haga el doble salto
-                playerVelocity.y = 0;
+                if (playerVelocity.y < 0)
+                {
+                    playerVelocity.y = 0;
+                }
                 playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -jumpImpulse * gravityOnAir);
                 doubleJumped = true;
                 animController.JumpTrigger();
@@ -504,9 +521,9 @@ public class BelethMovementController : MonoBehaviour
         //Cuando apriete el boton empieza a planear
         gliding = true;
         animController.SetGliding(gliding);
-        CheckCurrentSpeedOnAir(1);
+        
     }
-    private void StopGlide(InputAction.CallbackContext obj)
+    private void StopGlide()
     {
         // Si deja de apretar el boton de salto que deje de planear
         maxFallSpeed = normalFallSpeed;
@@ -535,9 +552,9 @@ public class BelethMovementController : MonoBehaviour
         }
 
     }
+    #endregion
 
-
-    //Setters
+    #region Setters
     public void SetCanMove(bool _CanMove) {
         canMove = _CanMove;
     }
@@ -546,17 +563,30 @@ public class BelethMovementController : MonoBehaviour
         currentSpeed = _newCurrentSpeed;
     }
 
-    //Getters
+    #endregion
+
+    #region Getters
     public bool GetGliding()
     {
-        return isGliding;
+        if (gliding && playerVelocity.y < 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
+    #endregion
 
-    //Extern Actions
+    #region Extern Actions
     public void AddImpulse(float _impulseForce) {
 
+        jump = true;
         //A�adir un impulso con la fuerza que te pasen
         playerVelocity.y = Mathf.Sqrt(_impulseForce * -jumpImpulse * gravityOnAir);
+        gravityValue = gravityOnAir;
+
 
     }
 
@@ -580,8 +610,9 @@ public class BelethMovementController : MonoBehaviour
 
     }
 
+    #endregion
 
-    //Others
+    #region Others
     private void CheckCurrentSpeedOnAir(int _typeOfVelocity) {
 
         float minSpeedToCheck = 0;
@@ -616,5 +647,5 @@ public class BelethMovementController : MonoBehaviour
 
     }
 
-
+    #endregion
 }
