@@ -52,15 +52,10 @@ public class BelethAttackController : MonoBehaviour
                 case 0:
                     // En caso de que sea un ataque normal
                     tridentController.ChangeTridentTag("Trident");
-
                     break;
                 case 1:
                     // En caso de que sea un ataque con ira
                     tridentController.ChangeTridentTag("Wrath");
-
-                    //aqui
-                    //Instantiate(wrathParticles, tridentSocket.transform.position, tridentSocket.transform.rotation);
-
                     break;
                 default:
                     break;
