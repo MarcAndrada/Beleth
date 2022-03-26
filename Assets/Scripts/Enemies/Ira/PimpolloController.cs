@@ -149,8 +149,8 @@ public class PimpolloController : MonoBehaviour
         detectionColl.enabled = false;
         transform.LookAt(player.transform);
         Instantiate(exclamationVfx, exclamationSocket.position, exclamationSocket.rotation);
-        yield return new WaitForSeconds(timeToWait);
         animator.SetTrigger("Chase");
+        yield return new WaitForSeconds(timeToWait);
         chasePlayer = true;
         StartCoroutine(WaitToExplode());
     }

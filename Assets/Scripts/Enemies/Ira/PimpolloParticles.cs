@@ -10,11 +10,11 @@ public class PimpolloParticles : MonoBehaviour
     private Transform AppearsSocket;
 
     [SerializeField]
-    private ParticleSystem suicideVFX;
+    private ParticleSystem killedVFX;
 
     public void LastExplosion()
     {
-        Instantiate(suicideVFX, transform.position, transform.rotation);
+        Instantiate(killedVFX, transform.position, transform.rotation);
     }
 
     public void Appears()
