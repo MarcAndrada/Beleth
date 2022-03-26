@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FallingrockManager : MonoBehaviour
 {
-
     [SerializeField]
     Vector2 minRange;
 
@@ -22,29 +21,17 @@ public class FallingrockManager : MonoBehaviour
 
     public static float actualRocks;
 
-    //float timer;
-
     [SerializeField]
     GameObject fallingRock;
 
-    // Start is called before the first frame update
     void Start()
     {
         //timer = 0;
         actualRocks = 0;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //if (timer <= timeToSpawn)
-        //{
-        //    timer += Time.deltaTime;
-        //}
-        //else
-        //{
-        //    rockTimer();
-        //}
         if (actualRocks < maxRocks)
         {
             StartCoroutine(rockTimer());

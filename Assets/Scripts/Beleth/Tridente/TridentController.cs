@@ -7,7 +7,9 @@ public class TridentController : MonoBehaviour
     [SerializeField]
     private GameObject trident;
     [SerializeField]
-    private ParticleSystem wrathParticles;
+    private Transform tridentSocket;
+    [SerializeField]
+    ParticleSystem[] wrathParticles;
     [SerializeField]
     private Transform handSocket;
     [SerializeField]
@@ -26,6 +28,7 @@ public class TridentController : MonoBehaviour
     void Start()
     {
         tridentCollider = trident.GetComponent<CapsuleCollider>();
+        //wrathParticles.SetActive(false);
     }
 
     private void Update() {
@@ -49,9 +52,13 @@ public class TridentController : MonoBehaviour
 
     public void StartTridentAttack() {
         tridentCollider.enabled = true;
+
         if (trident.tag == "Wrath")
         {
-            Instantiate(wrathParticles, trident.transform.position, Quaternion.Euler(-transform.forward));
+            foreach (var item in wrathParticles)
+            {
+                item.Play();
+            }
         }
     }
 

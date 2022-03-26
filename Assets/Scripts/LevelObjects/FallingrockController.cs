@@ -5,6 +5,7 @@ using UnityEngine;
 public class FallingrockController : MonoBehaviour
 {
     Rigidbody rb;
+    Transform transform;
     GameObject collisionMark;
     BrokenWallController breakeControll;
 
@@ -18,6 +19,7 @@ public class FallingrockController : MonoBehaviour
     private void Awake()
     {
         breakeControll = GetComponent<BrokenWallController>();
+        transform = GetComponent<Transform>();  
         rb = GetComponent<Rigidbody>();
     }
 
@@ -27,11 +29,17 @@ public class FallingrockController : MonoBehaviour
       
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.up * -1), out hit, Mathf.Infinity))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.up * -1), out hit, /*Mathf.infinty*/ 100))
         {
             Vector3 pos = hit.point;
-            collisionMark = Instantiate(collisionMarkPrefab, pos, Quaternion.identity);
+            collisionMark = Instantiate(collisionMarkPrefab, new Vector3(pos.x, pos.y + 0.1f, pos.z), Quaternion.identity);
         }
+    }
+
+    private void Update()
+    {
+        transform.Rotate(Vector3.forward, 100 * Time.deltaTime);
+        transform.Rotate(Vector3.right, 50.3f * Time.deltaTime);
     }
 
     private void OnDestroy()

@@ -67,7 +67,7 @@ public class ParticleController : MonoBehaviour
 
     public void ActivateAttack()
     {
-        //Instantiate(AttackVFX, HandSocket.position, HandSocket.rotation);
+        Instantiate(AttackVFX, HandSocket.position, HandSocket.rotation);
 
     }
 

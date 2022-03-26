@@ -27,7 +27,6 @@ public class BelethAttackController : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction attackAction;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -58,6 +57,10 @@ public class BelethAttackController : MonoBehaviour
                 case 1:
                     // En caso de que sea un ataque con ira
                     tridentController.ChangeTridentTag("Wrath");
+
+                    //aqui
+                    //Instantiate(wrathParticles, tridentSocket.transform.position, tridentSocket.transform.rotation);
+
                     break;
                 default:
                     break;
