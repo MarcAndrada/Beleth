@@ -95,12 +95,12 @@ public class BelethHealthController : MonoBehaviour
 
     private IEnumerator Respawn() {
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         movementController.SetCanMove(true);
         checkPointManager.GoLastCheckPoint();
         healthPoints = maxHealthPoints;
-        animController.SetHealthValue(healthPoints);
         isAlive = true;
+        animController.SetHealthValue(healthPoints);
     }
 
     public int GetHealthPoints() { 

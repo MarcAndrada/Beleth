@@ -8,11 +8,12 @@ public class WrathBossStateController : MonoBehaviour
     public enum BossFase { NONE, FASE_1, FASE_2, FASE_3 };
 
 
-    public enum BossActions { NONE, BELOW_FLOOR, LAVA_CIRCLE, ENEMIE_CIRCLE, BRAKE_FLOOR }
+    public enum BossActions { NONE, RESET_POS, BELOW_FLOOR, LAVA_CIRCLE, ENEMIE_CIRCLE, BRAKE_FLOOR }
 
     [SerializeField]
     public BossActions currentAction = BossActions.NONE;
 
+    private int attackIndex = 0;
 
     [Header("Boss Stats")]
     [SerializeField]
@@ -29,32 +30,26 @@ public class WrathBossStateController : MonoBehaviour
     [SerializeField]
     [Tooltip("En la posicion 0 ha de estar la vida minima para estar en la fase 1, en la posicion 1 ha deestar la vida minima para la fase 2, lo que es inferior sera para la fase 3")]
     private float[] fasesHealth;
-
-    [Header("Fase Attacks")]
-
     [SerializeField]
-    private int[] timesToDo_BelowFloor;
+    private BossActions[] fase1Patron;
     [SerializeField]
-    private int[] timesToDo_LavaCircle;
+    private BossActions[] fase2Patron;
     [SerializeField]
-    private int[] timesToDo_EnemieCircle;
-    [SerializeField]
-    private int[] timesToDo_BrakeFloor;
-
-    private int attacksDone = 0;
+    private BossActions[] fase3Patron;
 
 
     public bool isDoingAction = false;
 
     private WrathBossAttackController attackController;
     public GameObject player;
+    private Animator animator;
 
     private void Start()
     {
         attackController = GetComponent<WrathBossAttackController>();
+        animator = GetComponentInChildren<Animator>();
 
         currentHP = maxHP;
-        //StartCoroutine(StartFight());
 
         player = GameObject.FindWithTag("Player");
 
@@ -66,8 +61,6 @@ public class WrathBossStateController : MonoBehaviour
     {
         CheckCurrentFase();
         DoCurrentFase();
-
-        //transform.rotation = Quaternion.LookRotation(player.transform.position, Vector3.up);
         
         LookAtPlayer();
 
@@ -93,24 +86,27 @@ public class WrathBossStateController : MonoBehaviour
             case BossFase.FASE_1:
                 if (currentHP <= fasesHealth[0] && !isDoingAction)
                 {
-                    Debug.Log("Entramos en fase 2");
                     currentFase = BossFase.FASE_2;
-                    currentAction = BossActions.BRAKE_FLOOR;
                     if (!attackController.InCenter())
                     {
-                        attackController.GoToStarterPos();
+                        DoCurrentAttack(BossActions.RESET_POS);
                         isDoingAction = true;
                     }
-                    
-                    attacksDone = 0;
+                    attackIndex = 0;
                 }
                 break;
             case BossFase.FASE_2:
                 if (currentHP <= fasesHealth[1])
                 {
-                    Debug.Log("Entramos en fase 3");
                     currentFase = BossFase.FASE_3;
-                    currentAction = BossActions.BELOW_FLOOR;
+                    
+                    if (!attackController.InCenter())
+                    {
+                        DoCurrentAttack(BossActions.RESET_POS);
+                        isDoingAction = true;
+                    }
+
+                    attackIndex = 0;
                     //Hacer que empiezen a caer rocas y el boss te persiga
 
                     //Activar ataque de rocas
@@ -171,69 +167,9 @@ public class WrathBossStateController : MonoBehaviour
         //Esto le sirve al jugador para hacerle daño aplicando irá a los enemigos 2 y de este modo dañar al boss.
         //Si el jugador solo esquiva a los enemigos y no les aplica ira, el boss volverá a hacer el ataque.Hasta un límite de 2 o 3 veces.
 
-        switch (currentAction)
-        {
-            case BossActions.BELOW_FLOOR:
-                if (attacksDone < timesToDo_BelowFloor[0])
-                {
-                    isDoingAction = true;
-                    //Debug.Log("Esta haciendo la subida " + attacksDone);
-                    attackController.GoBelowFloor();
-                    attacksDone++;
-                    //Debug.Log("Es la " + attacksDone + " que hace el topotruco");
+        CheckAttackIndex(0);
 
-                }
-                else if (attacksDone < timesToDo_BelowFloor[0] + 1)
-                {
-                    //Hacer topo truco al centro
-                    attackController.GoToStarterPos();
-                    attacksDone++;
-                    isDoingAction = true;
-                    //Debug.Log("Resetea la posicion");
-                }
-                else
-                {
-                    //Al acabar cambiar el esado al ataque de aros de enemigos
-                    currentAction = BossActions.ENEMIE_CIRCLE;
-                    attacksDone = 0;
-                    //Debug.Log("Ha acabado de moverse");
-                }
-                break;
-            case BossActions.ENEMIE_CIRCLE:
-                if (attacksDone < timesToDo_EnemieCircle[0])
-                {
-                    attackController.EnemieCircleAttack();
-                    attacksDone++;
-                    isDoingAction = true;
-                    //Debug.Log("Es la " + attacksDone + " que hace el circulo de enemigos");
-                }
-                else
-                {
-                    currentAction = BossActions.BRAKE_FLOOR;
-                    attacksDone = 0;
-                    //Debug.Log("El circulo de ataques ha vuelto ");
-                }
-
-                break;
-            case BossActions.BRAKE_FLOOR:
-                if (attacksDone < timesToDo_BrakeFloor[0])
-                {
-                    attackController.BrakeFloorAttack();
-                    attacksDone++;
-                    isDoingAction = true;
-                    //Debug.Log("Es la " + attacksDone + " que hace la ulti de braum");
-                }
-                else
-                {
-                    currentAction = BossActions.BELOW_FLOOR;
-                    attacksDone = 0;
-                    //Debug.Log("Ha acabado el ataque de la ulti de braum");
-
-                }
-                break;
-            default:
-                break;
-        }
+        DoCurrentAttack(fase1Patron[attackIndex]);
 
     }
 
@@ -245,89 +181,10 @@ public class WrathBossStateController : MonoBehaviour
         //Esto le sirve al jugador para hacerle daño aplicando irá a los enemigos 2 y de este modo dañar al boss.
         //Si el jugador solo esquiva a los enemigos y no les aplica ira, el boss volverá a hacer el ataque.Hasta un límite de 2 o 3 veces.
 
-        switch (currentAction)
-        {
-            case BossActions.BELOW_FLOOR:
 
-                if (attacksDone < timesToDo_BelowFloor[1])
-                {
-                    isDoingAction = true;
-                    //Debug.Log("Esta haciendo la subida " + attacksDone);
-                    attackController.GoBelowFloor();
-                    attacksDone++;
-                    //Debug.Log("Es la " + attacksDone + " que hace el topotruco");
+        CheckAttackIndex(1);
 
-                }
-                else if (attacksDone < timesToDo_BelowFloor[1] + 1)
-                {
-                    //Hacer topo truco al centro
-                    attackController.GoToStarterPos();
-                    attacksDone++;
-                    isDoingAction = true;
-                    //Debug.Log("Resetea la posicion");
-                }
-                else
-                {
-                    //Al acabar cambiar el esado al ataque de aros de enemigos
-                    currentAction = BossActions.ENEMIE_CIRCLE;
-                    attacksDone = 0;
-                    //Debug.Log("Ha acabado de moverse");
-                }
-
-                break;
-            case BossActions.LAVA_CIRCLE:
-                if (attacksDone < timesToDo_LavaCircle[1])
-                {
-                    attackController.LavaCircleAttack();
-                    attacksDone++;
-                    isDoingAction = true;
-                }
-                else
-                {
-                    currentAction = BossActions.BRAKE_FLOOR;
-                    attacksDone = 0;
-                }
-                    
-                break;
-            case BossActions.ENEMIE_CIRCLE:
-
-                if (attacksDone < timesToDo_EnemieCircle[1])
-                {
-                    attackController.EnemieCircleAttack();
-                    attacksDone++;
-                    isDoingAction = true;
-                    //Debug.Log("Es la " + attacksDone + " que hace el circulo de enemigos");
-                }
-                else
-                {
-                    currentAction = BossActions.LAVA_CIRCLE;
-                    attacksDone = 0;
-                    //Debug.Log("El circulo de ataques ha vuelto ");
-                }
-
-                break;
-            case BossActions.BRAKE_FLOOR:
-
-                if (attacksDone < timesToDo_BrakeFloor[1])
-                {
-                    attackController.BrakeFloorAttackV2();
-                    attacksDone++;
-                    isDoingAction = true;
-                    //Debug.Log("Es la " + attacksDone + " que hace la ulti de braum");
-                }
-                else
-                {
-                    currentAction = BossActions.BELOW_FLOOR;
-                    attacksDone = 0;
-                    //Debug.Log("Ha acabado el ataque de la ulti de braum");
-
-                }
-
-                break;
-            default:
-                Debug.Log("Error");
-                break;
-        }
+        DoCurrentAttack(fase2Patron[attackIndex]);
 
 
     }
@@ -337,17 +194,77 @@ public class WrathBossStateController : MonoBehaviour
         // hará el ataque de caída de piedras y topo truco. 
         //Durante esta fase el mundo entrara en ira y el “coliseo de pelea” tendrá la mecánica del nivel.
         //El jugador deberá huir/ esquivar durante estos ataques.Pero podrá atacar atrayendo al boss a las rocas restantes de la caída de piedras y/ o a las subidas de lava.
-        isDoingAction = true;
-        //Debug.Log("Esta haciendo la subida " + attacksDone);
-        attackController.GoBelowFloor();
-        attacksDone++;
+
+        CheckAttackIndex(2);
+
+        DoCurrentAttack(fase1Patron[attackIndex]);
 
 
     }
+
+    private void CheckAttackIndex(int _fase) 
+    {
+        switch (_fase)
+        {
+            case 0:
+                if (attackIndex >= fase1Patron.Length)
+                {
+                    attackIndex = 0;
+                }
+                break;
+            case 1:
+                if (attackIndex >= fase2Patron.Length)
+                {
+                    attackIndex = 0;
+                }
+                break;
+            case 2:
+                if (attackIndex >= fase3Patron.Length)
+                {
+                    attackIndex = 0;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void DoCurrentAttack(BossActions _attack) 
+    {
+
+        isDoingAction = true;
+        attackIndex++;
+
+        switch (_attack)
+        {
+            case BossActions.NONE:
+                break;
+            case BossActions.RESET_POS:
+                attackController.GoToStarterPos();
+                break;
+            case BossActions.BELOW_FLOOR:
+                attackController.GoBelowFloor();
+                break;
+            case BossActions.LAVA_CIRCLE:
+                attackController.LavaCircleAttack();
+                break;
+            case BossActions.ENEMIE_CIRCLE:
+                attackController.EnemieCircleAttack();
+                break;
+            case BossActions.BRAKE_FLOOR:
+                attackController.BrakeFloorAttack();
+                break;
+            default:
+                break;
+        }
+    }
+
     // ExternActions
-    public void GetDamage(float _damageDealt) {
+    public void GetDamage(float _damageDealt, GameObject _obj) {
 
         currentHP -= _damageDealt;
+        animator.SetTrigger("Damaged");
+        StartCoroutine(WaitWhileDamaged());
     }
 
     IEnumerator StartFight() 
@@ -360,4 +277,15 @@ public class WrathBossStateController : MonoBehaviour
     
     }
 
+    IEnumerator WaitWhileDamaged() 
+    {
+        attackController.SetIsAttacking(false);
+        attackIndex = 0;
+        isDoingAction = true;
+        
+        yield return new WaitForSeconds(3.5f);
+        
+        isDoingAction = false;
+    
+    }
 }

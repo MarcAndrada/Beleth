@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class BlindEnemieController : MonoBehaviour
+
+public class BlindEnemieBossController : MonoBehaviour
 {
     [SerializeField]
-    private Transform[] placesToGo;
-    [Tooltip("Si esta activado cuando llegue al ultimo punto volvera a empezar desde el 1 si no ira marcha atras \n Ej: El ultimo punto es el 8, en vez de ir al 1 va al 7 despues al 6 ...")]
-    [SerializeField]
-    private bool restartWhenEnd;
+    private float maxDistanceToReach;
     [SerializeField]
     private float attackSpeed;
     [SerializeField]
@@ -17,88 +15,62 @@ public class BlindEnemieController : MonoBehaviour
     private GameObject testMeshScale;
     [SerializeField]
     private float maxScale;
-    [SerializeField]
-    private Material normalMaterial;
-    [SerializeField]
-    private Material wrathMaterial;
 
+    private Vector3 starterPos;
+    private Vector3 pointToReach;
+    private bool going = true;
 
-    private NavMeshAgent agent;
-    private int index = 0;
-    private bool ascending = true;
     private bool canAttack = true;
     private float attackProcess = 1;
     private bool isAttacking = false;
 
+    private NavMeshAgent navAgent;
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        navAgent = GetComponent<NavMeshAgent>();
 
-        MoveNextPlace();
+        starterPos = transform.position;
+        pointToReach = transform.position + transform.forward * maxDistanceToReach;
+
+        navAgent.SetDestination(pointToReach);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!agent.hasPath && !isAttacking)
-        {
-            SetNextPlace();
-            MoveNextPlace();
-        }
-        else
-        {
-            CheckAttack();
-        }
+        CheckRachedPoint();
 
+        CheckAttack();
     }
 
-    private void MoveNextPlace() {
-
-        agent.SetDestination(placesToGo[index].position);
-
-    }
-
-    private void SetNextPlace() {
-        if (restartWhenEnd)
+    private void CheckRachedPoint() 
+    {
+        if (navAgent.velocity == Vector3.zero && !navAgent.hasPath)
         {
-            index++;
-            if (index > placesToGo.Length - 1)
+            if (going)
             {
-                index = 0;
-            }
-        }
-        else
-        {
-            if (ascending)
-            {
-                index++;
-                if (index == placesToGo.Length - 1)
-                {
-                    ascending = false;
-                }
+                navAgent.SetDestination(starterPos);
+                going = false;
             }
             else
             {
-                index--;
-
-                if (index == 0)
-                {
-                    ascending = true;
-                }
+                //Destruir
+                Destroy(transform.parent.gameObject);
             }
         }
     }
 
-    private void CheckAttack() {
+    private void CheckAttack()
+    {
 
         if (isAttacking)
         {
-            agent.SetDestination(transform.position);
+            
             if (canAttack)
             {
-                agent.destination = transform.position;
+                
                 if (attackProcess < maxScale)
                 {
                     attackProcess += attackSpeed * Time.deltaTime;
@@ -122,7 +94,6 @@ public class BlindEnemieController : MonoBehaviour
                     attackProcess = 1;
                     canAttack = true;
                     isAttacking = false;
-                    MoveNextPlace();
                 }
             }
 
@@ -131,7 +102,6 @@ public class BlindEnemieController : MonoBehaviour
 
     }
 
-    
 
     private void OnTriggerStay(Collider other)
     {
@@ -142,8 +112,5 @@ public class BlindEnemieController : MonoBehaviour
 
         }
     }
-
-
-
 
 }

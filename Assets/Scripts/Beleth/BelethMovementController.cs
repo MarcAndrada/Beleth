@@ -113,6 +113,8 @@ public class BelethMovementController : MonoBehaviour
     [Header("Components & External objects")]
     [SerializeField]
     private Camera followCamera;
+    [SerializeField]
+    private PhysicMaterial physicMaterial;
     private CharacterController charController;
     private PlayerInput playerInput;
     private BelethAnimController animController;
@@ -161,6 +163,8 @@ public class BelethMovementController : MonoBehaviour
         currentStateSpeed = walkSpeed;
         maxFallSpeed = normalFallSpeed;
 
+        
+
 
     }
 
@@ -181,6 +185,7 @@ public class BelethMovementController : MonoBehaviour
         }
         CheckCurrentGravity();
         ApplyGravity();
+       
 
     }
 
@@ -319,7 +324,8 @@ public class BelethMovementController : MonoBehaviour
             maxFallSpeed = glidingFallSpeed;
             CheckCurrentSpeedOnAir(1);
 
-        } else if (gliding && uiController.GetStaminaValue() < 0.05f) 
+        }
+        else if (gliding && uiController.GetStaminaValue() < 0.05f) 
         {
             StopGlide();
         }

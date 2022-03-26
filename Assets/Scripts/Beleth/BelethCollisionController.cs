@@ -23,6 +23,23 @@ public class BelethCollisionController : MonoBehaviour
         {
             checkPointManager.SetNewCheckPoint(other.transform.position);
         }
+
+        
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "BossAttack")
+        {
+            healthController.GetDamage(1);
+
+        }
+
+        if (other.gameObject.tag == "Boss")
+        {
+            healthController.GetDamage(1);
+
+        }
     }
 
     private void OnParticleCollision(GameObject other)

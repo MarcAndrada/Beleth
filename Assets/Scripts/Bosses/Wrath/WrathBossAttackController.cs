@@ -33,10 +33,13 @@ public class WrathBossAttackController : MonoBehaviour
 
     [Header("Enemie Circle")]
     [SerializeField]
+    private GameObject enemiePrefab;
+    [SerializeField]
     private float enemieCircle_Duration;
     [SerializeField]
-    private float enemieCircle_Offset;
-
+    private float enemieCircle_Quantity;
+    private float enemieCircle_AngleDiff;
+    private float currentAngleRot = 0;
 
     [Header("Brake Floor")]
     [SerializeField]
@@ -66,6 +69,8 @@ public class WrathBossAttackController : MonoBehaviour
 
         starterPos = transform.position;
         animator = GetComponentInChildren<Animator>();
+
+        enemieCircle_AngleDiff = 360 / enemieCircle_Quantity;
 
         belowFloor_Particles.SetActive(false);
 
@@ -242,7 +247,8 @@ public class WrathBossAttackController : MonoBehaviour
         timeToWait = lavaCircle_Duration;
         timeWatied = 0;
         //Accion del ataque
-        Instantiate(lavaCircle_Attack, transform.position, Quaternion.Euler(-90,0,0));
+        GameObject lavaCircle = Instantiate(lavaCircle_Attack, transform.position, Quaternion.Euler(-90,0,0));
+        lavaCircle.transform.SetParent(transform, false);
     }
 
     public void EnemieCircleAttack()
@@ -252,7 +258,14 @@ public class WrathBossAttackController : MonoBehaviour
         timeToWait = enemieCircle_Duration;
         timeWatied = 0;
         //Accion del ataque
+        for (int i = 0; i < enemieCircle_Quantity; i++)
+        {
 
+            GameObject thisEnemie = Instantiate(enemiePrefab, transform.position, transform.rotation * Quaternion.Euler(0, currentAngleRot,0));
+
+            thisEnemie.transform.position = thisEnemie.transform.position + thisEnemie.transform.forward * 2;
+            currentAngleRot += enemieCircle_AngleDiff;
+        }
 
 
     }
@@ -265,15 +278,6 @@ public class WrathBossAttackController : MonoBehaviour
         timeWatied = 0;
         
 
-    }
-
-    public void BrakeFloorAttackV2()
-    {
-        animator.SetTrigger("BrakeFloor");
-        isAttacking = true;
-        timeToWait = brakeFloor_Duration;
-        timeWatied = 0;
-        
     }
 
     public void BrakeFloorAttakAction() 
@@ -296,6 +300,11 @@ public class WrathBossAttackController : MonoBehaviour
 
 
 
+    }
+
+    public void SetIsAttacking(bool _isNowAttacking) 
+    {
+        isAttacking= _isNowAttacking;
     }
 
 }

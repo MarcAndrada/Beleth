@@ -55,8 +55,20 @@ public class BelethSinsController : MonoBehaviour
     }
 
     public void AddWrathObject(WrathExplosionController _objComponent) {
+        bool _same = false;
 
-        wrathManager.Add(_objComponent);
+        foreach (var item in wrathManager)
+        {
+            if (item == _objComponent)
+            {
+                _same = true;
+            }
+        }
+
+        if (!_same) 
+        {
+            wrathManager.Add(_objComponent);
+        }
 
     }
 
@@ -64,7 +76,10 @@ public class BelethSinsController : MonoBehaviour
 
         foreach (var item in wrathManager)
         {
-            item.WrathExplosion();
+            if (item != null)
+            {
+                item.WrathExplosion();
+            }
 
         }
 

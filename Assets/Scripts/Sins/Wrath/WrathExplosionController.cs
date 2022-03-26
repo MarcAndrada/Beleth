@@ -76,6 +76,12 @@ public class WrathExplosionController : MonoBehaviour
             {
                 hit.gameObject.GetComponentInChildren<BelethMovementController>().AddImpulse(playerImpulse);
             }
+
+            if (hit.gameObject.tag == "Boss")
+            {
+                hit.gameObject.GetComponentInParent<WrathBossStateController>().GetDamage(15f, gameObject);
+            }
+
             Rigidbody rb = hit.GetComponent<Rigidbody>();
 
             if(hit.gameObject.tag == "Breakable")
