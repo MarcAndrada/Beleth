@@ -44,25 +44,6 @@ public class WrathExplosionController : MonoBehaviour
         rigidB = GetComponentInChildren<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //if (Input.GetKeyDown("g"))
-        //{
-        //    if (!wrathActive)
-        //    {
-
-        //        wrathActive= true;
-        //    }
-        //    else
-        //    {
-        //        WrathExplosion();
-        //        wrathActive = false;
-        //    }
-        //}
-    }
-
-
     public void WrathExplosion()
     {
         //Implosione
@@ -111,8 +92,6 @@ public class WrathExplosionController : MonoBehaviour
 
         }
         _player.AddWrathObject(explosionController);
-
-
     }
 
     private void SetNormal()
@@ -125,8 +104,6 @@ public class WrathExplosionController : MonoBehaviour
         {
             skinnedMesh.material = normalMaterial;
         }
-
-        
     }
 
     private void OnDrawGizmos()

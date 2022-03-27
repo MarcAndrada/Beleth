@@ -245,10 +245,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc67d45dbc1327246b3f63d5d564b069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minRange: {x: -20, y: -10}
-  maxRange: {x: 20, y: 10}
+  minRange: {x: -30, y: -25}
+  maxRange: {x: 30, y: 25}
   height: {x: 15, y: 15}
-  timeToSpawn: 2
+  timeToSpawn: 3
   maxRocks: 3
   fallingRock: {fileID: 5952174810769810554, guid: 79c82351ec5812043857c43134173b6e, type: 3}
 --- !u!4 &1831631038
@@ -378,7 +378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8252404588007831824, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000008283496
+      value: 0.000008283498
       objectReference: {fileID: 0}
     - target: {fileID: 8252404588284891785, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.w
@@ -386,15 +386,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8252404588284891785, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.013500971
+      value: 0.013500972
       objectReference: {fileID: 0}
     - target: {fileID: 8252404588284891785, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0002617927
+      value: -0.00026175828
       objectReference: {fileID: 0}
     - target: {fileID: 8252404588284891785, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000035347775
+      value: 0.0000035343135
       objectReference: {fileID: 0}
     - target: {fileID: 9107998978559298370, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_RootOrder

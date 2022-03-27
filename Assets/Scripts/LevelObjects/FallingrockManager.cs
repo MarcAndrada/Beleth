@@ -26,7 +26,6 @@ public class FallingrockManager : MonoBehaviour
 
     void Start()
     {
-        //timer = 0;
         actualRocks = 0;
     }
 
@@ -44,6 +43,7 @@ public class FallingrockManager : MonoBehaviour
         Vector3 pos = posToSpawn();
         Instantiate(fallingRock, pos, Quaternion.identity);
         yield return new WaitForSeconds(timeToSpawn);
+        
     }
 
     Vector3 posToSpawn()

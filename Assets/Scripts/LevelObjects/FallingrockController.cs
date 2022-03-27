@@ -16,6 +16,10 @@ public class FallingrockController : MonoBehaviour
     [SerializeField]
     GameObject collisionMarkPrefab;
 
+    [Header("VFX")]
+    [SerializeField]
+    ParticleSystem[] explosion;
+
     private void Awake()
     {
         breakeControll = GetComponent<BrokenWallController>();
@@ -53,6 +57,12 @@ public class FallingrockController : MonoBehaviour
         if (collision.gameObject.tag == "Scenario")
         {
             breakeControll.Break();
+
+            foreach (var item in explosion)
+            {
+                Instantiate(item, transform.position, Quaternion.Euler(0, 0, 0));
+            }
+
             Destroy(gameObject);
         }
     }
