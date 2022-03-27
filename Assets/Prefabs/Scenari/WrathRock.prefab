@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1632250545398627299}
   - component: {fileID: 267049994851441543}
   - component: {fileID: 3785948619087665212}
+  - component: {fileID: -3217973640704290622}
   m_Layer: 0
   m_Name: WrathRock
   m_TagString: Untagged
@@ -113,3 +114,22 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6433128827303214681, guid: 18c7d79326914ac45bfb7e511ce993d6, type: 3}
+--- !u!114 &-3217973640704290622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983499171468384822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f38d9467846c2114eb8e059ccf6fccf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveHimself: 0
+  timeToExplode: 0
+  radius: 15
+  strenght: 70
+  upStrenght: 60
+  playerImpulse: 0
+  wrathMaterial: {fileID: 2100000, guid: 7df87cf6cc46b8343848214fc1c6b208, type: 2}
