@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SimplyDestroyController : MonoBehaviour
 {
+    [SerializeField]
+    float timeToDie;
     float timer;
 
     // Start is called before the first frame update
@@ -16,6 +18,6 @@ public class SimplyDestroyController : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 3) Destroy(gameObject);
+        if (timer > timeToDie) Destroy(gameObject);
     }
 }
