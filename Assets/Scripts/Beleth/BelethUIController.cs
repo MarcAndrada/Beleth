@@ -42,6 +42,10 @@ public class BelethUIController : MonoBehaviour
         pauseAction.started += _ => PauseGame();
         belethController = GetComponentInParent<BelethMovementController>();
         belethHealthController = GetComponentInParent<BelethHealthController>();
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+
     }
 
     private void Update()
@@ -157,13 +161,14 @@ public class BelethUIController : MonoBehaviour
 
     #endregion
 
-    #region Pause UI
+   #region Pause UI
 
     private void ToGame()
     {
         isPaused = !isPaused;
         pauseCanvas.SetActive(false);
         Time.timeScale = 1;
+
     }
 
     private void PauseGame()
@@ -172,7 +177,10 @@ public class BelethUIController : MonoBehaviour
         {
             isPaused =! isPaused;
             pauseCanvas.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
             Time.timeScale = 0;
+
         }
         else
         {
@@ -182,13 +190,15 @@ public class BelethUIController : MonoBehaviour
 
     public void ContinuePause()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         ToGame();
     }
 
     public void SettingsGame()
     {
         ToGame();
-        SceneManager.LoadScene("SettingsScene");
+        SceneManager.LoadScene("Settings");
     }
 
     public void QuitGame()
@@ -197,6 +207,6 @@ public class BelethUIController : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    #endregion
+   #endregion
 
 }

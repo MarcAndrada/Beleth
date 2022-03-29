@@ -139,9 +139,6 @@ public class BelethMovementController : MonoBehaviour
         animController.SetSpeedValue(currentSpeed);
         animController.SetGliding(gliding);
 
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
         //Movment Events
         moveAction = playerInput.actions["Move"];
         moveAction.started += SetMovmentValues;

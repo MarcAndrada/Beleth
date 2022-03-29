@@ -5,7 +5,6 @@ using UnityEngine;
 public class FallingrockController : MonoBehaviour
 {
     Rigidbody rb;
-    Transform transform;
     GameObject collisionMark;
     BrokenWallController breakeControll;
 
@@ -23,7 +22,6 @@ public class FallingrockController : MonoBehaviour
     private void Awake()
     {
         breakeControll = GetComponent<BrokenWallController>();
-        transform = GetComponent<Transform>();  
         rb = GetComponent<Rigidbody>();
     }
 

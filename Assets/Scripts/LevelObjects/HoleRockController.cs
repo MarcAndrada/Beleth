@@ -6,12 +6,10 @@ public class HoleRockController : MonoBehaviour
 {
     Rigidbody rb;
     BoxCollider boxcollider;
-    Transform transform;
     float timer;
 
     private void Awake()
     {
-        transform = GetComponent<Transform>();
         rb = GetComponent<Rigidbody>();
         boxcollider = GetComponent<BoxCollider>();
     }

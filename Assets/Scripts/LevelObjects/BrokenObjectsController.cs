@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class BrokenObjectsController : MonoBehaviour
 {
-    Rigidbody rigidbody;
-    BoxCollider collider;
+    Rigidbody rb;
+    BoxCollider boxColl;
 
     float timer;
 
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>();
-        collider = GetComponent<BoxCollider>();
+        rb = GetComponent<Rigidbody>();
+        boxColl = GetComponent<BoxCollider>();
     }
 
     // Start is called before the first frame update
@@ -27,8 +27,8 @@ public class BrokenObjectsController : MonoBehaviour
         timer += Time.deltaTime; 
         if (timer > 2)
         {
-            Destroy(rigidbody);
-            Destroy(collider);
+            Destroy(rb);
+            Destroy(boxColl);
 
             if(timer > 4) Destroy(gameObject);
         }  
