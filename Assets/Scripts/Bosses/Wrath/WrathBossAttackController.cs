@@ -87,7 +87,7 @@ public class WrathBossAttackController : MonoBehaviour
 
     }
 
-
+    #region Checkers
     private void CheckIfAttacking() 
     {
 
@@ -226,7 +226,9 @@ public class WrathBossAttackController : MonoBehaviour
             }
         }
     }
-    
+    #endregion
+
+    #region Attacks
     public void GoBelowFloor() {
         movingOnY = true;
     }
@@ -234,11 +236,6 @@ public class WrathBossAttackController : MonoBehaviour
         resetPosition = true;
         GoBelowFloor();
     }
-    public bool InCenter() 
-    {
-        return transform.position == starterPos;
-    }
-
 
     public void LavaCircleAttack() 
     {
@@ -301,10 +298,16 @@ public class WrathBossAttackController : MonoBehaviour
 
 
     }
+    #endregion
 
+    #region Setters & Getters
     public void SetIsAttacking(bool _isNowAttacking) 
     {
         isAttacking= _isNowAttacking;
     }
-
+    public bool InCenter()
+    {
+        return transform.position == starterPos;
+    }
+    #endregion
 }

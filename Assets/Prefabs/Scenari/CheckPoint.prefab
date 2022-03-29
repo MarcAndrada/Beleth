@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5727259725505724196}
   - component: {fileID: 5727259725505724201}
+  - component: {fileID: 465947543}
   m_Layer: 0
   m_Name: CheckPoint
   m_TagString: CheckPoints
@@ -45,6 +46,22 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.9090767
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!111 &465947543
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5727259725505724200}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 5f67a85dc01d2394887111ec077e3d82, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 5f67a85dc01d2394887111ec077e3d82, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &6189573596872981547
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74,7 +91,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9ed5d79592e2dab44bc681ccb500563a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.953
+      value: -0.93
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9ed5d79592e2dab44bc681ccb500563a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -86,15 +103,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9ed5d79592e2dab44bc681ccb500563a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000081460335
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9ed5d79592e2dab44bc681ccb500563a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9ed5d79592e2dab44bc681ccb500563a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9ed5d79592e2dab44bc681ccb500563a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -108,6 +125,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 9ed5d79592e2dab44bc681ccb500563a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 738e356e6e5f74b4f9988105a55068e5, type: 2}
     - target: {fileID: 919132149155446097, guid: 9ed5d79592e2dab44bc681ccb500563a, type: 3}
       propertyPath: m_Name
       value: Checkpoint

@@ -64,9 +64,10 @@ public class BelethCheckPointManager : MonoBehaviour
         charController.enabled = true;
     }
 
-    public void SetNewCheckPoint(Vector3 _newCheckPointPos)
+    public void SetNewCheckPoint(Vector3 _newCheckPointPos, Animation _anim)
     {
         lastCheckPoint = _newCheckPointPos;
+        _anim.Play();
         //Debug.Log("New CheckPoint Setted at " + lastCheckPoint);
     }
 

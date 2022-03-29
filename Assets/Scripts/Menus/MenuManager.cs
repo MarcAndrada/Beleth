@@ -18,12 +18,12 @@ public class MenuManager : MonoBehaviour
 
     public void Settings()
     {
-        SceneManager.LoadScene("Credits");
+        SceneManager.LoadScene("Settings");
     }
 
     public void Credits()
     {
-        SceneManager.LoadScene("Settings");
+        SceneManager.LoadScene("Credits");
     }
 
     public void Quit()

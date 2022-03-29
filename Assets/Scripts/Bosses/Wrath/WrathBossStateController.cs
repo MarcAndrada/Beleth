@@ -10,7 +10,8 @@ public class WrathBossStateController : MonoBehaviour
 
     public enum BossActions { NONE, RESET_POS, BELOW_FLOOR, LAVA_CIRCLE, ENEMIE_CIRCLE, BRAKE_FLOOR }
 
-    [SerializeField]
+    public bool fighting = false;
+
     public BossActions currentAction = BossActions.NONE;
 
     private int attackIndex = 0;
@@ -22,10 +23,9 @@ public class WrathBossStateController : MonoBehaviour
     private float maxHP;
     [SerializeField]
     private float currentHP;
-   
+    
 
     [Header("Fases")]
-    [SerializeField]
     public BossFase currentFase = BossFase.NONE;
     [SerializeField]
     [Tooltip("En la posicion 0 ha de estar la vida minima para estar en la fase 1, en la posicion 1 ha deestar la vida minima para la fase 2, lo que es inferior sera para la fase 3")]
@@ -44,7 +44,7 @@ public class WrathBossStateController : MonoBehaviour
     public GameObject player;
     private Animator animator;
 
-    private void Start()
+    private void Awake()
     {
         attackController = GetComponent<WrathBossAttackController>();
         animator = GetComponentInChildren<Animator>();
@@ -53,30 +53,32 @@ public class WrathBossStateController : MonoBehaviour
 
         player = GameObject.FindWithTag("Player");
 
-
     }
 
 
     private void Update()
     {
-        CheckCurrentFase();
-        DoCurrentFase();
-        
-        LookAtPlayer();
-
-        if (Input.GetKeyDown(KeyCode.J))
+        if (fighting)
         {
-            StartCoroutine(StartFight());
-        
-        }
+            CheckCurrentFase();
+            DoCurrentFase();
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            currentHP -= 33;
+            LookAtPlayer();
         }
+        
 
     }
 
+    private void LookAtPlayer()
+    {
+        Vector3 lookPos = player.transform.position - transform.position;
+        lookPos.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(lookPos);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+    }
+
+
+    #region Check Fase
     private void CheckCurrentFase() 
     {
         switch (currentFase)
@@ -151,15 +153,6 @@ public class WrathBossStateController : MonoBehaviour
 
     }
 
-    private void LookAtPlayer() 
-    {
-        Vector3 lookPos = player.transform.position - transform.position;
-        lookPos.y = 0;
-        Quaternion rotation = Quaternion.LookRotation(lookPos);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
-    }
-
-
     private void Fase1() 
     {
         //Hace 1 subida de lava, a los 2 segundos hará un topo truco a la posición relativa de Beleth. < -Y repetirá esto 1 vez más. El jugador deberá huir/ esquivar durante estos ataques.
@@ -202,6 +195,9 @@ public class WrathBossStateController : MonoBehaviour
 
     }
 
+    #endregion
+
+    #region Attack
     private void CheckAttackIndex(int _fase) 
     {
         switch (_fase)
@@ -258,8 +254,21 @@ public class WrathBossStateController : MonoBehaviour
                 break;
         }
     }
+    IEnumerator WaitWhileDamaged()
+    {
+        attackController.SetIsAttacking(false);
+        attackIndex = 0;
+        isDoingAction = true;
 
-    // ExternActions
+        yield return new WaitForSeconds(3.5f);
+
+        isDoingAction = false;
+
+    }
+
+    #endregion
+
+    #region ExternActions
     public void GetDamage(float _damageDealt, GameObject _obj) {
 
         currentHP -= _damageDealt;
@@ -267,25 +276,30 @@ public class WrathBossStateController : MonoBehaviour
         StartCoroutine(WaitWhileDamaged());
     }
 
-    IEnumerator StartFight() 
+    public IEnumerator StartFight() 
     {
-
-
-        yield return new WaitForSeconds(2f);
+        fighting = true;
+        yield return new WaitForSeconds(1f);
         currentAction = BossActions.BRAKE_FLOOR;
         currentFase = BossFase.FASE_1;
+        
+        
     
     }
 
-    IEnumerator WaitWhileDamaged() 
+    public IEnumerator StopFight() 
     {
-        attackController.SetIsAttacking(false);
-        attackIndex = 0;
+        fighting = false;
         isDoingAction = true;
-        
-        yield return new WaitForSeconds(3.5f);
-        
+        currentFase = BossFase.NONE;
+        currentAction = BossActions.NONE;
+        DoCurrentAttack(BossActions.RESET_POS);
+        yield return new WaitForSeconds(1f);
         isDoingAction = false;
-    
+        fighting = false;
+        currentFase = BossFase.NONE;
+        currentAction = BossActions.NONE;
     }
+
+    #endregion
 }

@@ -42,7 +42,7 @@ public class BelethHealthController : MonoBehaviour
         if (canBeDamaged)
         {
             healthPoints -= _damageDeal;
-            Debug.Log("Te isieron " + _damageDeal + " de pupa te quedan " + healthPoints + " de vida");
+            //Debug.Log("Te isieron " + _damageDeal + " de pupa te quedan " + healthPoints + " de vida");
             // Hacer animacion
             animController.SetHealthValue(healthPoints);
             if (_doHurtAnim || healthPoints <= 0)
@@ -81,14 +81,14 @@ public class BelethHealthController : MonoBehaviour
     }
 
     private void Die() {
-
+       
+        //Desactivar el movimiento
         movementController.SetCanMove(false);
         isAlive = false;
-        //Hacer la animacion de muerte
-        //Mostrar menu de reiniciar nivel
 
-        //Desactivar el movimiento
-        Debug.Log("Has muerto");
+        //Hacer la animacion de muerte
+        
+        //Debug.Log("Has muerto");
         StartCoroutine(Respawn());
     
     }

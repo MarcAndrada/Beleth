@@ -21,7 +21,7 @@ public class BelethCollisionController : MonoBehaviour
     {
         if (other.gameObject.tag == "CheckPoints")
         {
-            checkPointManager.SetNewCheckPoint(other.transform.position);
+            checkPointManager.SetNewCheckPoint(other.transform.position, other.gameObject.GetComponent<Animation>());
         }
 
         
