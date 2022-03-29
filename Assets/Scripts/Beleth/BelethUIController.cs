@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
+
+
 public class BelethUIController : MonoBehaviour
 {
+    [Header("Canvas")]
     [SerializeField]
-    private GameObject deathCanvas;
+    GameObject deathCanvas;
+    [SerializeField]
+    GameObject pauseCanvas;
 
     [Header("Stamina Bar")]
     [SerializeField]
@@ -13,12 +20,19 @@ public class BelethUIController : MonoBehaviour
     [SerializeField]
     Animator staminaAnimator;
 
-    
+    PlayerInput playerInput;
+    InputAction pauseAction;
 
     BelethMovementController belethController;
 
+    bool isPaused;
+
     private void Start()
     {
+        pauseCanvas.SetActive(false);
+        playerInput = GetComponent<PlayerInput>();
+        pauseAction = playerInput.actions["Pause"];
+        pauseAction.started += _ => PauseGame();
         belethController = GetComponentInParent<BelethMovementController>();
     }
 
@@ -104,6 +118,48 @@ public class BelethUIController : MonoBehaviour
     public float GetStaminaValue() 
     {
         return slider.value;
+    }
+
+    #endregion
+
+    #region Pause UI
+
+    private void ToGame()
+    {
+        isPaused = !isPaused;
+        pauseCanvas.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    private void PauseGame()
+    {
+        if (!isPaused)
+        {
+            isPaused =! isPaused;
+            pauseCanvas.SetActive(true);
+            Time.timeScale = 0;
+        }
+        else
+        {
+            ToGame();
+        }
+    }
+
+    public void ContinuePause()
+    {
+        ToGame();
+    }
+
+    public void SettingsGame()
+    {
+        ToGame();
+        SceneManager.LoadScene("SettingsScene");
+    }
+
+    public void QuitGame()
+    {
+        ToGame();
+        SceneManager.LoadScene("MainMenu");
     }
 
     #endregion

@@ -1340,7 +1340,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8252404587704736877}
-  m_LocalRotation: {x: 0.074376225, y: -0.0002610661, z: 0.000019471043, w: 0.99723023}
+  m_LocalRotation: {x: 0.074376225, y: -0.0002610747, z: 0.000019471683, w: 0.99723023}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1461,6 +1461,7 @@ Transform:
   - {fileID: 8252404587556793963}
   - {fileID: 8252404587785757670}
   - {fileID: 666770734}
+  - {fileID: 1446404424}
   m_Father: {fileID: 9107998978559298370}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1591,7 +1592,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf9e9fbf2085094e96cc91cee5441bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathCanvas: {fileID: 0}
+  deathCanvas: {fileID: 7716640487271206770, guid: aeec61a94dbb83a44bf0970d23682450, type: 3}
+  pauseCanvas: {fileID: 1446404427}
   slider: {fileID: 1868105016}
   staminaAnimator: {fileID: 1868105017}
 --- !u!114 &7986495146437007437
@@ -1826,7 +1828,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8252404588284891791}
-  m_LocalRotation: {x: 0.01350097, y: -0.00026178887, z: 0.0000035347257, w: 0.99990886}
+  m_LocalRotation: {x: 0.013500971, y: -0.00026178887, z: 0.0000035347257, w: 0.99990886}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2029,14 +2031,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29bc401d4b2e3434ebe56b1953ac89be, type: 3}
---- !u!1 &2113417510830710077 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 29bc401d4b2e3434ebe56b1953ac89be, type: 3}
-  m_PrefabInstance: {fileID: 1266980265644433516}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1594149661450946439 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 29bc401d4b2e3434ebe56b1953ac89be, type: 3}
+  m_PrefabInstance: {fileID: 1266980265644433516}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2113417510830710077 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 29bc401d4b2e3434ebe56b1953ac89be, type: 3}
   m_PrefabInstance: {fileID: 1266980265644433516}
   m_PrefabAsset: {fileID: 0}
 --- !u!136 &852679809348189830
@@ -3428,3 +3430,118 @@ MonoBehaviour:
   DamageVFX: {fileID: 4958685313913807361, guid: 393b7c3057fdcb347b80ee69843e100a, type: 3}
   CapSocket: {fileID: 8630191594923349356}
   SweatVFX: {fileID: 7092860121128876527, guid: 00fe93189750c2248862807b57c48981, type: 3}
+--- !u!1001 &5845454134510693391
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8252404587919447210}
+    m_Modifications:
+    - target: {fileID: 802168563926798709, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1643709173727738123}
+    - target: {fileID: 802168563926798709, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: QuitGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 802168563926798709, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BelethUIController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 802168563926798709, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226789795078521718, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1643709173727738123}
+    - target: {fileID: 1226789795078521718, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SettingsGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226789795078521718, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BelethUIController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1226789795078521718, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5845454135216786756, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_Name
+      value: PauseUICanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5845454135216786759, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5845454135216786759, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5845454135216786759, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -8.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 5845454135216786759, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 5845454135216786759, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5845454135216786759, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5845454135216786759, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5845454135216786759, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5845454135216786759, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5845454135216786759, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5845454135216786759, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6187738974858482389, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1643709173727738123}
+    - target: {fileID: 6187738974858482389, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ContinuePause
+      objectReference: {fileID: 0}
+    - target: {fileID: 6187738974858482389, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: BelethUIController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6187738974858482389, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+--- !u!4 &1446404424 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5845454135216786759, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+  m_PrefabInstance: {fileID: 5845454134510693391}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1446404427 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5845454135216786756, guid: ef1aa5cfa1dd20744af35dfa3c46a060, type: 3}
+  m_PrefabInstance: {fileID: 5845454134510693391}
+  m_PrefabAsset: {fileID: 0}
