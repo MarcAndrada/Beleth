@@ -161,7 +161,7 @@ public class BelethUIController : MonoBehaviour
 
     #endregion
 
-   #region Pause UI
+    #region Pause UI
 
     private void ToGame()
     {
@@ -207,6 +207,6 @@ public class BelethUIController : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-   #endregion
+    #endregion
 
 }

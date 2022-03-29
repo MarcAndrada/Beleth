@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WrathExplosionController : MonoBehaviour
 {
+    [Header("Variables")]
     [SerializeField]
     bool moveHimself;
     [SerializeField]
@@ -17,31 +18,36 @@ public class WrathExplosionController : MonoBehaviour
     [SerializeField]
     private float playerImpulse;
 
-    private Material normalMaterial;
+    [Header("VFX")]
     [SerializeField]
-    private Material wrathMaterial;
+    GameObject wrathVFX;
+
+    //[SerializeField]
+    //private Material wrathMaterial;
 
     private WrathExplosionController explosionController;
-    private MeshRenderer mesh;
-    private SkinnedMeshRenderer skinnedMesh;
+    //private MeshRenderer mesh;
+    //private SkinnedMeshRenderer skinnedMesh;
     private Rigidbody rigidB;
 
     void Start()
     {
-        mesh = GetComponentInChildren<MeshRenderer>();
-        if (mesh != null)
-        {
-            normalMaterial = mesh.material;
-
-        }
-        else
-        {
-            skinnedMesh = GetComponentInChildren<SkinnedMeshRenderer>();
-            normalMaterial = skinnedMesh.material;
-        }
+        //mesh = GetComponentInChildren<MeshRenderer>();
+        //if (mesh != null)
+        //{
+        //    normalMaterial = mesh.material;
+        //
+        //}
+        //else
+        //{
+        //    skinnedMesh = GetComponentInChildren<SkinnedMeshRenderer>();
+        //    normalMaterial = skinnedMesh.material;
+        //}
        
         explosionController = GetComponent<WrathExplosionController>();
         rigidB = GetComponentInChildren<Rigidbody>();
+
+        if(wrathVFX) wrathVFX.SetActive(false);
     }
 
     public void WrathExplosion()
@@ -82,28 +88,33 @@ public class WrathExplosionController : MonoBehaviour
 
     private void SetWrath(BelethSinsController _player)
     {
-        if (mesh != null)
-        {
-            mesh.material = wrathMaterial;
-        }
-        else
-        {
-            skinnedMesh.material = wrathMaterial;
+        //if (mesh != null)
+        //{
+        //    mesh.material = wrathMaterial;
+        //}
+        //else
+        //{
+        //    skinnedMesh.material = wrathMaterial;
+        //
+        //}
 
-        }
+        if (wrathVFX) wrathVFX.SetActive(true);
+
         _player.AddWrathObject(explosionController);
     }
 
     private void SetNormal()
     {
-        if (mesh != null)
-        {
-            mesh.material = normalMaterial;
-        }
-        else
-        {
-            skinnedMesh.material = normalMaterial;
-        }
+        //if (mesh != null)
+        //{
+        //    mesh.material = normalMaterial;
+        //}
+        //else
+        //{
+        //    skinnedMesh.material = normalMaterial;
+        //}
+
+        if (wrathVFX) wrathVFX.SetActive(false);
     }
 
     private void OnDrawGizmos()
