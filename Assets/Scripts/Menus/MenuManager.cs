@@ -16,6 +16,16 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene(level);
     }
 
+    public void Settings()
+    {
+        SceneManager.LoadScene("Credits");
+    }
+
+    public void Credits()
+    {
+        SceneManager.LoadScene("Settings");
+    }
+
     public void Quit()
     {
         Application.Quit();

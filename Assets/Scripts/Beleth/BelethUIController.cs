@@ -13,6 +13,8 @@ public class BelethUIController : MonoBehaviour
     GameObject deathCanvas;
     [SerializeField]
     GameObject pauseCanvas;
+    [SerializeField]
+    GameObject hudCanvas;
 
     [Header("Stamina Bar")]
     [SerializeField]
@@ -20,10 +22,15 @@ public class BelethUIController : MonoBehaviour
     [SerializeField]
     Animator staminaAnimator;
 
+    [Header("HUD")]
+    [SerializeField]
+    GameObject[] hearts;
+
     PlayerInput playerInput;
     InputAction pauseAction;
 
     BelethMovementController belethController;
+    BelethHealthController belethHealthController;
 
     bool isPaused;
 
@@ -34,38 +41,66 @@ public class BelethUIController : MonoBehaviour
         pauseAction = playerInput.actions["Pause"];
         pauseAction.started += _ => PauseGame();
         belethController = GetComponentInParent<BelethMovementController>();
+        belethHealthController = GetComponentInParent<BelethHealthController>();
     }
 
     private void Update()
     {
         CheckStaminaSlider();
+        SetHealthUI(CheckHealth());
     }
 
     #region Health UI
+
+    private int CheckHealth()
+    {
+        return belethHealthController.GetHealthPoints();
+    }
     public void SetHealthUI(int _toatLive)
     {
         switch (_toatLive)
         {
             case 0:
-
+                foreach (var item in hearts)
+                {
+                    item.SetActive(false);
+                }
                 break;
             case 1:
-
+                hearts[0].SetActive(true);
+                hearts[1].SetActive(false);
+                hearts[2].SetActive(false);
+                hearts[3].SetActive(false);
+                hearts[4].SetActive(false);
+                hearts[5].SetActive(false);
                 break;
             case 2:
-
+                hearts[1].SetActive(true);
+                hearts[2].SetActive(false);
+                hearts[3].SetActive(false);
+                hearts[4].SetActive(false);
+                hearts[5].SetActive(false);
                 break;
             case 3:
-
+                hearts[2].SetActive(true);
+                hearts[3].SetActive(false);
+                hearts[4].SetActive(false);
+                hearts[5].SetActive(false);
                 break;
             case 4:
-
+                hearts[3].SetActive(true);
+                hearts[4].SetActive(false);
+                hearts[5].SetActive(false);
                 break;
             case 5:
-
+                hearts[4].SetActive(true);
+                hearts[5].SetActive(false);
                 break;
             case 6:
-
+                foreach (var item in hearts)
+                {
+                    item.SetActive(true);
+                }
                 break;
             default:
                 break;
