@@ -24,10 +24,12 @@ public class TridentController : MonoBehaviour
     private bool countingForTridentPos = false;
     private float timeWaitedTridentPos = 0;
     private CapsuleCollider tridentCollider;
+    private BelethAnimController belethAnimController;
     // Start is called before the first frame update
     void Start()
     {
         tridentCollider = trident.GetComponent<CapsuleCollider>();
+        belethAnimController = GetComponentInParent<BelethAnimController>();
         //wrathParticles.SetActive(false);
     }
 
@@ -108,5 +110,8 @@ public class TridentController : MonoBehaviour
         timeWaitedTridentPos = 0;
     }
 
-
+    public void SetOnFloor() 
+    {
+        belethAnimController.SetFirstJump(false);
+    }
 }

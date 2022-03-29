@@ -42,6 +42,7 @@ public class BelethAnimController : MonoBehaviour
         if (charController.isGrounded && !touchedFloor)
         {
             animator.ResetTrigger("Jump");
+            SetFirstJump(false);
             touchedFloor = true;
         }
         else if (!charController.isGrounded)
