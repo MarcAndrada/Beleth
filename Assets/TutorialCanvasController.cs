@@ -5,7 +5,8 @@ using UnityEngine.Video;
 
 public class TutorialCanvasController : MonoBehaviour
 {
-
+    [SerializeField]
+    GameObject Player;
     [SerializeField]
     VideoPlayer videoPlayer;
     [SerializeField]
@@ -18,7 +19,7 @@ public class TutorialCanvasController : MonoBehaviour
     {
         timeToStop = videoPlayer.length * timesToPlay;
         timer = 0;
-        
+            
     }
 
  
@@ -27,7 +28,6 @@ public class TutorialCanvasController : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-
         if(timer>= timeToStop)
         {
             timer = 0;
@@ -35,11 +35,9 @@ public class TutorialCanvasController : MonoBehaviour
         }
     }
 
-   
-
     public void SetLenght()
     {
-
+        
         timeToStop = videoPlayer.length * timesToPlay;
     }
 }
