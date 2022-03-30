@@ -77,7 +77,6 @@ public class WrathExplosionController : MonoBehaviour
 
             if (hit.gameObject.tag == "Muro")
             {
-                Debug.Log("efef");
                 hit.gameObject.GetComponent<WallController>().Break();
             }
 
