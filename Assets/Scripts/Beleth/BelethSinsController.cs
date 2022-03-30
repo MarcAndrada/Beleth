@@ -25,6 +25,7 @@ public class BelethSinsController : MonoBehaviour
     private BelethAnimController animController;
     private BelethMovementController movementController;
     private BelethAttackController attackController;
+    private BelethAudioController audioController;
     private PlayerInput playerInput;
     private InputAction wrathAttackAction;
     private InputAction wrathExplisionAction;
@@ -39,6 +40,7 @@ public class BelethSinsController : MonoBehaviour
         animController = GetComponent<BelethAnimController>();
         movementController = GetComponent<BelethMovementController>();
         attackController = GetComponent<BelethAttackController>();
+        audioController = GetComponentInChildren<BelethAudioController>();
 
         // Wrath Events
         wrathAttackAction = playerInput.actions["WrathAttack"];
@@ -73,17 +75,17 @@ public class BelethSinsController : MonoBehaviour
     }
 
     private void ExplodeAllObjects() {
+       foreach (var item in wrathManager)
+       {
+           if (item != null)
+           {
+               item.WrathExplosion();
+           }
 
-        foreach (var item in wrathManager)
-        {
-            if (item != null)
-            {
-                item.WrathExplosion();
-            }
+       }
+       audioController.soundCont.WrathActivation(wrathManager.Count);
 
-        }
-
-        wrathManager.Clear();
+       wrathManager.Clear();
 
     }
 

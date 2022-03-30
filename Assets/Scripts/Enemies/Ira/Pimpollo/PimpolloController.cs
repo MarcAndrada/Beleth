@@ -193,7 +193,7 @@ public class PimpolloController : MonoBehaviour
             StartCoroutine(PlayerSeen());
         }
 
-        if (other.tag == "Trident" && chasePlayer)
+        if (other.tag == "Trident" && chasePlayer || other.tag == "Wrath" && chasePlayer)
         {
             Damaged();
         }

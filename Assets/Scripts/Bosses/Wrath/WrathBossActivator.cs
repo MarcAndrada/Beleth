@@ -8,8 +8,8 @@ public class WrathBossActivator : MonoBehaviour
     private WrathBossStateController boss;
 
     private BelethHealthController playerHealth;
-    // Start is called before the first frame update
-    void Awake()
+
+    private void Start()
     {
         playerHealth = boss.player.GetComponent<BelethHealthController>();
     }

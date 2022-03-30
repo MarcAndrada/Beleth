@@ -167,6 +167,8 @@ public class BelethUIController : MonoBehaviour
     {
         isPaused = !isPaused;
         pauseCanvas.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         Time.timeScale = 1;
 
     }
@@ -190,8 +192,6 @@ public class BelethUIController : MonoBehaviour
 
     public void ContinuePause()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
         ToGame();
     }
 

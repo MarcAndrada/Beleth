@@ -20,6 +20,7 @@ public class BelethHealthController : MonoBehaviour
     private BelethAnimController animController;
     private BelethCheckPointManager checkPointManager;
     private BelethMovementController movementController;
+    private BelethAudioController audioController;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,7 @@ public class BelethHealthController : MonoBehaviour
         animController = GetComponent<BelethAnimController>();
         checkPointManager = GetComponent<BelethCheckPointManager>();
         movementController = GetComponent<BelethMovementController>();
+        audioController = GetComponentInChildren<BelethAudioController>();
 
         healthPoints = maxHealthPoints;
     }
@@ -49,11 +51,13 @@ public class BelethHealthController : MonoBehaviour
             {
                 animController.DamageTrigger();
             }
+
+            canBeDamaged = false;
             movementController.SetCanMove(false);
             movementController.SetCurrentSpeed(0);
-            canBeDamaged = false;
-            StartCoroutine(WaitForInmortalFrames());
             CheckHP();
+            StartCoroutine(WaitForInmortalFrames());
+
         }
     }
 
@@ -72,10 +76,13 @@ public class BelethHealthController : MonoBehaviour
             if (isAlive)
             {
                 Die();
+                audioController.soundCont.BelethDeath();
+
             }
         }
         else
         {
+            audioController.soundCont.BelethDamaged();
             StartCoroutine(WaitToMoveAgain());
         }
     }
@@ -101,6 +108,7 @@ public class BelethHealthController : MonoBehaviour
         healthPoints = maxHealthPoints;
         isAlive = true;
         animController.SetHealthValue(healthPoints);
+        audioController.soundCont.ReviveSound();
     }
 
     public int GetHealthPoints() { 
