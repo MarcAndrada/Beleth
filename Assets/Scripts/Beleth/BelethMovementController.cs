@@ -120,6 +120,7 @@ public class BelethMovementController : MonoBehaviour
     private BelethAnimController animController;
     private BelethCheckPointManager checkPointManager;
     private BelethUIController uiController;
+    private BelethAudioController audioController;
     private float attackBraking;
     private bool isAttacking = false;
     #endregion
@@ -132,6 +133,7 @@ public class BelethMovementController : MonoBehaviour
         animController = GetComponent<BelethAnimController>();
         checkPointManager = GetComponent<BelethCheckPointManager>();
         uiController = GetComponent<BelethUIController>();
+        audioController = GetComponentInChildren<BelethAudioController>();
 
         gravityValue = gravityOnAir;
 
@@ -502,7 +504,7 @@ public class BelethMovementController : MonoBehaviour
                 gravityValue = gravityOnAir;
 
                 CheckCurrentSpeedOnAir(0);
-
+                audioController.JumpSound();
             }
             else if (!doubleJumped)
             {
@@ -514,7 +516,7 @@ public class BelethMovementController : MonoBehaviour
                 playerVelocity.y += Mathf.Sqrt(doubleJumpHeight * -jumpImpulse * gravityOnAir);
                 doubleJumped = true;
                 animController.JumpTrigger();
-
+                audioController.JumpSound();
             }
         }
         

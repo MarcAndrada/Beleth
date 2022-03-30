@@ -24,6 +24,7 @@ public class BelethAttackController : MonoBehaviour
     private BelethAnimController animController;
     private BelethMovementController movementController;
     private TridentController tridentController;
+    private BelethAudioController audioController;
     private PlayerInput playerInput;
     private InputAction attackAction;
 
@@ -35,6 +36,7 @@ public class BelethAttackController : MonoBehaviour
         animController = GetComponent<BelethAnimController>();
         movementController = GetComponent<BelethMovementController>();
         tridentController = GetComponentInChildren<TridentController>();
+        audioController = GetComponentInChildren<BelethAudioController>();
 
         //Attack Events
         attackAction = playerInput.actions["Attack"];
@@ -52,10 +54,12 @@ public class BelethAttackController : MonoBehaviour
                 case 0:
                     // En caso de que sea un ataque normal
                     tridentController.ChangeTridentTag("Trident");
+                    audioController.AttackSound(_attackType);
                     break;
                 case 1:
                     // En caso de que sea un ataque con ira
                     tridentController.ChangeTridentTag("Wrath");
+                    audioController.AttackSound(_attackType);
                     break;
                 default:
                     break;

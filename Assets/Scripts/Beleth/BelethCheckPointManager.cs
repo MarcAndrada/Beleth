@@ -19,12 +19,15 @@ public class BelethCheckPointManager : MonoBehaviour
     private bool canSaveRespawnPoint = true;
     private CharacterController charController;
     private BelethHealthController healthController;
+    private BelethAudioController audioController;
 
     // Start is called before the first frame update
     void Start()
     {
         charController = GetComponent<CharacterController>();
         healthController = GetComponent<BelethHealthController>();
+        audioController = GetComponentInChildren<BelethAudioController>();
+
         lastCheckPoint = transform.position;
         lastRespawn = transform.position;
     }
@@ -68,6 +71,7 @@ public class BelethCheckPointManager : MonoBehaviour
     {
         lastCheckPoint = _newCheckPointPos;
         _anim.Play();
+        audioController.soundCont.CheckPointSound();
         //Debug.Log("New CheckPoint Setted at " + lastCheckPoint);
     }
 

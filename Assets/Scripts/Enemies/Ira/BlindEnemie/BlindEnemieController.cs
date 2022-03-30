@@ -91,10 +91,10 @@ public class BlindEnemieController : MonoBehaviour
 
         if (isAttacking)
         {
-            agent.SetDestination(transform.position);
+
             if (canAttack)
             {
-                agent.destination = transform.position;
+
                 if (attackProcess < maxScale)
                 {
                     attackProcess += attackSpeed * Time.deltaTime;
