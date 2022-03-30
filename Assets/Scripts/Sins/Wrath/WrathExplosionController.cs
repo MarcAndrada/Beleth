@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class WrathExplosionController : MonoBehaviour
 {
@@ -21,38 +22,35 @@ public class WrathExplosionController : MonoBehaviour
     [Header("VFX")]
     [SerializeField]
     GameObject wrathVFX;
-
-    //[SerializeField]
-    //private Material wrathMaterial;
+    [SerializeField]
+    ParticleSystem explosionWrathVFX;
 
     private WrathExplosionController explosionController;
-    //private MeshRenderer mesh;
-    //private SkinnedMeshRenderer skinnedMesh;
     private Rigidbody rigidB;
 
     void Start()
     {
-        //mesh = GetComponentInChildren<MeshRenderer>();
-        //if (mesh != null)
-        //{
-        //    normalMaterial = mesh.material;
-        //
-        //}
-        //else
-        //{
-        //    skinnedMesh = GetComponentInChildren<SkinnedMeshRenderer>();
-        //    normalMaterial = skinnedMesh.material;
-        //}
-       
         explosionController = GetComponent<WrathExplosionController>();
         rigidB = GetComponentInChildren<Rigidbody>();
 
         if(wrathVFX) wrathVFX.SetActive(false);
     }
 
+    //private void Update()
+    //{
+    //    while (isInWrath)
+    //    {
+    //
+    //    }
+    //}
+
     public void WrathExplosion()
     {
         //Implosione
+
+        
+        Instantiate(explosionWrathVFX, transform.position, transform.rotation);
+
 
         Vector3 explosionPosition = gameObject.transform.position;
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, radius);
@@ -77,6 +75,12 @@ public class WrathExplosionController : MonoBehaviour
 
             }
 
+            if (hit.gameObject.tag == "Muro")
+            {
+                Debug.Log("efef");
+                hit.gameObject.GetComponent<WallController>().Break();
+            }
+
             if (rb != null && rb != rigidB || rb != null && moveHimself)
             {
                 rb.AddExplosionForce(strenght, explosionPosition, radius, upStrenght, ForceMode.Impulse);
@@ -88,33 +92,24 @@ public class WrathExplosionController : MonoBehaviour
 
     private void SetWrath(BelethSinsController _player)
     {
-        //if (mesh != null)
-        //{
-        //    mesh.material = wrathMaterial;
-        //}
-        //else
-        //{
-        //    skinnedMesh.material = wrathMaterial;
-        //
-        //}
-
-        if (wrathVFX) wrathVFX.SetActive(true);
+        if (wrathVFX)
+        {
+            wrathVFX.SetActive(true);
+            InWrathAnim();
+        }
 
         _player.AddWrathObject(explosionController);
     }
 
     private void SetNormal()
     {
-        //if (mesh != null)
-        //{
-        //    mesh.material = normalMaterial;
-        //}
-        //else
-        //{
-        //    skinnedMesh.material = normalMaterial;
-        //}
-
         if (wrathVFX) wrathVFX.SetActive(false);
+    }
+
+    private void InWrathAnim()
+    {
+        Vector3 pos = new Vector3(0, .5f, 0);
+        transform.DOPunchPosition(pos, 1, 6, .1f); //.SetLoops(10, LoopType.Restart);
     }
 
     private void OnDrawGizmos()

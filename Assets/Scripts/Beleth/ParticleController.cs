@@ -89,6 +89,6 @@ public class ParticleController : MonoBehaviour
 
     public void SweatFbx()
     {
-        Instantiate(SweatVFX, CapSocket.position, CapSocket.rotation);
+        //Instantiate(SweatVFX, CapSocket.position, CapSocket.rotation);
     }
 }

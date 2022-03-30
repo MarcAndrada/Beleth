@@ -18,7 +18,6 @@ public class BlindEnemieController : MonoBehaviour
     [SerializeField]
     private float maxScale;
 
-
     private NavMeshAgent agent;
     private int index = 0;
     private bool ascending = true;
@@ -47,13 +46,11 @@ public class BlindEnemieController : MonoBehaviour
         {
             CheckAttack();
         }
-
     }
 
-    private void MoveNextPlace() {
-
+    private void MoveNextPlace() 
+    {
         agent.SetDestination(placesToGo[index].position);
-
     }
 
     private void SetNextPlace() {
@@ -104,8 +101,6 @@ public class BlindEnemieController : MonoBehaviour
                     attackProcess = maxScale;
                     canAttack = false;
                 }
-
-
             }
             else
             {
@@ -124,22 +119,14 @@ public class BlindEnemieController : MonoBehaviour
 
             testMeshScale.transform.localScale = new Vector3(attackProcess, attackProcess, attackProcess);
         }
-
     }
-
     
-
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player" && !isAttacking)
         {
             isAttacking = true;
             other.gameObject.GetComponent<BelethHealthController>().GetDamage(1);
-
         }
     }
-
-
-
-
 }
