@@ -31,7 +31,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private AudioClip checkPoint;
 
-
+    [SerializeField]
+    private AudioClip wrathExplosion; 
 
     [SerializeField]
     private AudioClip clickSound;
@@ -46,25 +47,25 @@ public class SoundManager : MonoBehaviour
 
     #region Beleth Sounds
 
-    public void SoundRandomFootstep(AudioSource _currentAS) 
+    public void SoundRandomFootstep(AudioSource _currentAS)
     {
         _currentAS.pitch = Random.Range(maxAndMinPitch[0], maxAndMinPitch[1]);
-        _currentAS.PlayOneShot(footsteps[Random.Range(0,footsteps.Length - 1)]);
+        _currentAS.PlayOneShot(footsteps[Random.Range(0, footsteps.Length - 1)]);
     }
-    
+
     public void Jump(AudioSource _currentAS)
     {
         _currentAS.pitch = Random.Range(voicePitch[0], voicePitch[1]);
         _currentAS.PlayOneShot(jump);
     }
 
-    public void WingsSound(AudioSource _currentAS) 
+    public void WingsSound(AudioSource _currentAS)
     {
         _currentAS.pitch = Random.Range(maxAndMinPitch[0], maxAndMinPitch[1]);
         _currentAS.PlayOneShot(wingFlap[Random.Range(0, wingFlap.Length - 1)]);
     }
 
-    public void NormalAttackSound(AudioSource _currentAS) 
+    public void NormalAttackSound(AudioSource _currentAS)
     {
         _currentAS.pitch = Random.Range(voicePitch[0], voicePitch[1]);
         _currentAS.PlayOneShot(normalAttack);
@@ -90,22 +91,22 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void BelethDamaged() 
+    public void BelethDamaged()
     {
         audioSource2D.PlayOneShot(belethDamage);
     }
 
-    public void BelethDeath() 
+    public void BelethDeath()
     {
         audioSource2D.PlayOneShot(belethDeath);
     }
 
-    public void ReviveSound() 
+    public void ReviveSound()
     {
         audioSource2D.PlayOneShot(revive);
     }
 
-    public void CheckPointSound() 
+    public void CheckPointSound()
     {
         audioSource2D.PlayOneShot(checkPoint);
 
@@ -113,6 +114,16 @@ public class SoundManager : MonoBehaviour
 
     #endregion
 
+
+    #region Wrath
+
+    public void WrathExplosion(AudioSource _currentAS) 
+    {
+        _currentAS.pitch = Random.Range(maxAndMinPitch[0], maxAndMinPitch[1]);
+        _currentAS.PlayOneShot(wrathActivation);
+    }
+
+    #endregion
 
     #region Menu Sounds
 

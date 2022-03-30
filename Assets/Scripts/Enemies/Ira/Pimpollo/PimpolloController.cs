@@ -46,7 +46,23 @@ public class PimpolloController : MonoBehaviour
     private Transform exclamationSocket;
     [SerializeField]
     private ParticleSystem dieExplosionVfx;
-   
+
+
+    [Header("Sound")]
+    [SerializeField]
+    private AudioClip unHideSound;
+    [SerializeField]
+    private AudioClip chaseSound;
+    [SerializeField]
+    private AudioClip jumpSound;
+    [SerializeField]
+    private AudioClip explosionSound;
+    [SerializeField]
+    private AudioClip deathSound;
+    private AudioSource audioSource;
+
+
+
     private float attackTranscurse = 0;
     private bool chasePlayer = false;
     private bool isAttacking = false;
@@ -64,7 +80,8 @@ public class PimpolloController : MonoBehaviour
         navMesh = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
-        
+        audioSource = GetComponent<AudioSource>();
+
         if (hide)
         {
             animator.SetBool("Hide", true);
@@ -107,6 +124,10 @@ public class PimpolloController : MonoBehaviour
         attackCollider.enabled = true;
         isAttacking = true;
         navMesh.enabled = false;
+        if (attackTranscurse <= 0)
+        {
+            audioSource.PlayOneShot(jumpSound);
+        }
 
         if (attackTranscurse < maxAttackPercent)
         {
@@ -117,6 +138,8 @@ public class PimpolloController : MonoBehaviour
             if (!destroying)
             {
                 SelfDestroy();
+                
+                audioSource.PlayOneShot(explosionSound);
                 Destroy(gameObject);
             }
         }
@@ -137,7 +160,7 @@ public class PimpolloController : MonoBehaviour
         //Hacer que vaya parriba tambien
         rb.isKinematic = false;
         rb.AddForce(player.transform.forward * knockBackForce + transform.up * knockUpForce, ForceMode.Impulse);
-
+        StartCoroutine(WaitToDeathSound(0.8f));
         StartCoroutine(WaitToDestroy(1.1f));
     }
 
@@ -153,6 +176,7 @@ public class PimpolloController : MonoBehaviour
         yield return new WaitForSeconds(timeToWait);
         chasePlayer = true;
         StartCoroutine(WaitToExplode());
+        audioSource.PlayOneShot(chaseSound);
     }
 
     private IEnumerator WaitToExplode()
@@ -163,6 +187,11 @@ public class PimpolloController : MonoBehaviour
         StartCoroutine(WaitToDestroy(0));
     }
 
+    private IEnumerator WaitToDeathSound(float _timeToWait) 
+    {
+        yield return new WaitForSeconds(_timeToWait);
+        audioSource.PlayOneShot(deathSound);
+    }
     private IEnumerator WaitToDestroy(float _timeToWait) 
     {
         yield return new WaitForSeconds(_timeToWait);
@@ -174,6 +203,7 @@ public class PimpolloController : MonoBehaviour
         animator.SetBool("Hide", false);
         yield return new WaitForSeconds(0.2f);
         hide = false;
+        audioSource.PlayOneShot(unHideSound);
 
     }
 
@@ -184,6 +214,7 @@ public class PimpolloController : MonoBehaviour
         if (other.tag == "Player" && hide)
         {
             StartCoroutine(UnHide());
+
         }
 
         if (other.tag == "Player" && !chasePlayer && !hide)

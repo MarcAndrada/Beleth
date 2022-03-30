@@ -18,6 +18,8 @@ public class WrathExplosionController : MonoBehaviour
     float upStrenght;
     [SerializeField]
     private float playerImpulse;
+    [SerializeField]
+    private float bossDamage;
 
     [Header("VFX")]
     [SerializeField]
@@ -64,7 +66,7 @@ public class WrathExplosionController : MonoBehaviour
 
             if (hit.gameObject.tag == "Boss")
             {
-                hit.gameObject.GetComponentInParent<WrathBossStateController>().GetDamage(15f, gameObject);
+                hit.gameObject.GetComponentInParent<WrathBossStateController>().GetDamage(bossDamage, gameObject);
             }
 
             Rigidbody rb = hit.GetComponent<Rigidbody>();
