@@ -79,12 +79,9 @@ public class WrathBossAttackController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         CheckIfAttacking();
 
         CheckIfMovingY();
-
-
     }
 
     #region Checkers

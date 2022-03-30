@@ -7,7 +7,6 @@ public class WrathBossStateController : MonoBehaviour
 {
     public enum BossFase { NONE, FASE_1, FASE_2, FASE_3 };
 
-
     public enum BossActions { NONE, RESET_POS, BELOW_FLOOR, LAVA_CIRCLE, ENEMIE_CIRCLE, BRAKE_FLOOR }
 
     public bool fighting = false;
@@ -24,7 +23,6 @@ public class WrathBossStateController : MonoBehaviour
     [SerializeField]
     private float currentHP;
     
-
     [Header("Fases")]
     public BossFase currentFase = BossFase.NONE;
     [SerializeField]
@@ -37,6 +35,9 @@ public class WrathBossStateController : MonoBehaviour
     [SerializeField]
     private BossActions[] fase3Patron;
 
+    [Header("Meteoritos Fase 3")]
+    [SerializeField]
+    GameObject RocksManager;
 
     public bool isDoingAction = false;
 
@@ -53,6 +54,7 @@ public class WrathBossStateController : MonoBehaviour
 
         player = GameObject.FindWithTag("Player");
 
+        RocksManager.SetActive(false);
     }
 
 
@@ -65,8 +67,6 @@ public class WrathBossStateController : MonoBehaviour
 
             LookAtPlayer();
         }
-        
-
     }
 
     private void LookAtPlayer()
@@ -109,7 +109,10 @@ public class WrathBossStateController : MonoBehaviour
                     }
 
                     attackIndex = 0;
+
                     //Hacer que empiezen a caer rocas y el boss te persiga
+
+                    RocksManager.SetActive(true);
 
                     //Activar ataque de rocas
                 }
@@ -279,7 +282,7 @@ public class WrathBossStateController : MonoBehaviour
     public IEnumerator StartFight() 
     {
         fighting = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2.5f);
         currentAction = BossActions.BRAKE_FLOOR;
         currentFase = BossFase.FASE_1;
         
@@ -302,4 +305,14 @@ public class WrathBossStateController : MonoBehaviour
     }
 
     #endregion
+
+    public float GetMaxLife()
+    {
+        return maxHP;
+    }
+
+    public float GetActualLife()
+    {
+        return currentHP;
+    }
 }
