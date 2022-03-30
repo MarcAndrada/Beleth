@@ -37,15 +37,15 @@ public class BlindEnemieController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!agent.hasPath && !isAttacking)
+        if (!agent.hasPath)
         {
             SetNextPlace();
             MoveNextPlace();
         }
-        else
-        {
+        
+
             CheckAttack();
-        }
+        
     }
 
     private void MoveNextPlace() 
