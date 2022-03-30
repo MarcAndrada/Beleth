@@ -6,11 +6,14 @@ public class WrathBossActivator : MonoBehaviour
 {
     [SerializeField]
     private WrathBossStateController boss;
+    [SerializeField]
+    GameObject BossCanvas;
 
     private BelethHealthController playerHealth;
 
     private void Start()
     {
+        BossCanvas.SetActive(false);
         playerHealth = boss.player.GetComponent<BelethHealthController>();
     }
 
@@ -34,6 +37,7 @@ public class WrathBossActivator : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             StartCoroutine(boss.StartFight());
+            BossCanvas.SetActive(true);
         }
     }
 
@@ -42,6 +46,7 @@ public class WrathBossActivator : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             PlayerExit();
+            BossCanvas.SetActive(false);
         }
     }
 }

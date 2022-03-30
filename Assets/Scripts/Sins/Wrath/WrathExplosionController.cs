@@ -109,8 +109,8 @@ public class WrathExplosionController : MonoBehaviour
 
     private void InWrathAnim()
     {
-        Vector3 pos = new Vector3(0, .5f, 0);
-        transform.DOPunchPosition(pos, 1, 6, .1f); //.SetLoops(10, LoopType.Restart);
+        //Vector3 pos = new Vector3(0, .5f, 0);
+        //transform.DOPunchPosition(pos, 1, 6, .1f) ; //.SetLoops(10, LoopType.Restart);
     }
 
     private void OnDrawGizmos()

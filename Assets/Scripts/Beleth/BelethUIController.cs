@@ -167,8 +167,6 @@ public class BelethUIController : MonoBehaviour
     {
         isPaused = !isPaused;
         pauseCanvas.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         Time.timeScale = 1;
 
     }
@@ -186,6 +184,8 @@ public class BelethUIController : MonoBehaviour
         }
         else
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             ToGame();
         }
     }
@@ -197,12 +197,16 @@ public class BelethUIController : MonoBehaviour
 
     public void SettingsGame()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
         ToGame();
         SceneManager.LoadScene("Settings");
     }
 
     public void QuitGame()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
         ToGame();
         SceneManager.LoadScene("MainMenu");
     }
