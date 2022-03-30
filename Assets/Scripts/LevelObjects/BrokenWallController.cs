@@ -34,7 +34,7 @@ public class BrokenWallController : MonoBehaviour
         }
 
         int i = 1;
-        if (Random.Range(0, 3) == i) Instantiate(wrathRock, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
+        if (Random.Range(0, 5) == i) Instantiate(wrathRock, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
 
         Destroy(gameObject);
     }

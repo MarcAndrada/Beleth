@@ -184,25 +184,29 @@ public class BelethUIController : MonoBehaviour
         }
         else
         {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             ToGame();
         }
     }
 
     public void ContinuePause()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
         ToGame();
     }
 
     public void SettingsGame()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
         ToGame();
         SceneManager.LoadScene("Settings");
     }
 
     public void QuitGame()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
         ToGame();
         SceneManager.LoadScene("MainMenu");
     }

@@ -18,6 +18,8 @@ public class WrathExplosionController : MonoBehaviour
     float upStrenght;
     [SerializeField]
     private float playerImpulse;
+    [SerializeField]
+    private float bossDamage;
 
     [Header("VFX")]
     [SerializeField]
@@ -64,7 +66,7 @@ public class WrathExplosionController : MonoBehaviour
 
             if (hit.gameObject.tag == "Boss")
             {
-                hit.gameObject.GetComponentInParent<WrathBossStateController>().GetDamage(15f, gameObject);
+                hit.gameObject.GetComponentInParent<WrathBossStateController>().GetDamage(bossDamage, gameObject);
             }
 
             Rigidbody rb = hit.GetComponent<Rigidbody>();
@@ -77,7 +79,6 @@ public class WrathExplosionController : MonoBehaviour
 
             if (hit.gameObject.tag == "Muro")
             {
-                Debug.Log("efef");
                 hit.gameObject.GetComponent<WallController>().Break();
             }
 
@@ -108,8 +109,8 @@ public class WrathExplosionController : MonoBehaviour
 
     private void InWrathAnim()
     {
-        Vector3 pos = new Vector3(0, .5f, 0);
-        transform.DOPunchPosition(pos, 1, 6, .1f); //.SetLoops(10, LoopType.Restart);
+        //Vector3 pos = new Vector3(0, .5f, 0);
+        //transform.DOPunchPosition(pos, 1, 6, .1f) ; //.SetLoops(10, LoopType.Restart);
     }
 
     private void OnDrawGizmos()

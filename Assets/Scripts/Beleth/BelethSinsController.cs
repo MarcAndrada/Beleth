@@ -79,10 +79,13 @@ public class BelethSinsController : MonoBehaviour
        {
            if (item != null)
            {
-               item.WrathExplosion();
+                item.WrathExplosion();
+                audioController.soundCont.WrathExplosion(item.GetComponent<AudioSource>());
+
            }
 
        }
+
        audioController.soundCont.WrathActivation(wrathManager.Count);
 
        wrathManager.Clear();

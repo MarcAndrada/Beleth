@@ -7,9 +7,15 @@ public class WallController : MonoBehaviour
     [SerializeField]
     GameObject BrokeWall;
 
+    bool can;
+
     public void Break()
     {
-        Instantiate(BrokeWall);
-        Destroy(gameObject);
+        if (!can)
+        {
+            Instantiate(BrokeWall);
+            Destroy(gameObject);
+            can = true;
+        }
     }
 }
