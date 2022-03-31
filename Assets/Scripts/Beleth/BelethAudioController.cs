@@ -27,7 +27,7 @@ public class BelethAudioController : MonoBehaviour
 
     public void JumpSound() 
     {
-        soundCont.Jump(feetAS);
+        soundCont.Jump(wingAS);
     }
 
     public void WingSound() 

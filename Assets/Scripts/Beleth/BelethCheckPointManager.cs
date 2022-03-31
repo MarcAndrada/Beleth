@@ -20,13 +20,14 @@ public class BelethCheckPointManager : MonoBehaviour
     private CharacterController charController;
     private BelethHealthController healthController;
     private BelethAudioController audioController;
-
+    private BelethMovementController movementController;
     // Start is called before the first frame update
     void Start()
     {
         charController = GetComponent<CharacterController>();
         healthController = GetComponent<BelethHealthController>();
         audioController = GetComponentInChildren<BelethAudioController>();
+        movementController = GetComponent<BelethMovementController>();
 
         lastCheckPoint = transform.position;
         lastRespawn = transform.position;
@@ -35,12 +36,12 @@ public class BelethCheckPointManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (canSaveRespawnPoint && charController.isGrounded)
+        if (canSaveRespawnPoint && charController.isGrounded && !movementController.onPlatform)
         {
             StartCoroutine(WaitForSetNewPoint());
         }
 
-        if (transform.position.y < maxFallDistance)
+        if (transform.position.y < lastRespawn.y + maxFallDistance)
         {
             healthController.GetDamage(voidFallDamage, false);
 

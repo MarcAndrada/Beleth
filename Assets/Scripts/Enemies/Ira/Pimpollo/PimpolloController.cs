@@ -67,6 +67,7 @@ public class PimpolloController : MonoBehaviour
     private bool chasePlayer = false;
     private bool isAttacking = false;
     private bool destroying = false;
+    private bool hitted = false;
 
     private NavMeshAgent navMesh;
     private GameObject player;
@@ -119,32 +120,36 @@ public class PimpolloController : MonoBehaviour
 
 
     private void AttackPlayer() {
+        if (!hitted)
+        {
 
-        transform.LookAt(player.transform, Vector3.up);
-        attackCollider.enabled = true;
-        isAttacking = true;
-        navMesh.enabled = false;
-        if (attackTranscurse <= 0)
-        {
-            audioSource.PlayOneShot(jumpSound);
-        }
-
-        if (attackTranscurse < maxAttackPercent)
-        {
-            attackTranscurse += attackSpeed * Time.deltaTime;
-        }
-        else
-        {
-            if (!destroying)
+        
+            transform.LookAt(player.transform, Vector3.up);
+            attackCollider.enabled = true;
+            isAttacking = true;
+            navMesh.enabled = false;
+            if (attackTranscurse <= 0)
             {
-                SelfDestroy();
-                
-                audioSource.PlayOneShot(explosionSound);
-                Destroy(gameObject);
+                audioSource.PlayOneShot(jumpSound);
             }
-        }
 
-        transform.position = Vector3.LerpUnclamped(transform.position, player.transform.position, attackTranscurse);
+            if (attackTranscurse < maxAttackPercent)
+            {
+                attackTranscurse += attackSpeed * Time.deltaTime;
+            }
+            else
+            {
+                if (!destroying)
+                {
+                    SelfDestroy();
+                    
+                    audioSource.PlayOneShot(explosionSound);
+                    Destroy(gameObject);
+                }
+            }
+
+            transform.position = Vector3.LerpUnclamped(transform.position, player.transform.position, attackTranscurse);
+        }
     }
     private void SelfDestroy()
     {
@@ -157,6 +162,7 @@ public class PimpolloController : MonoBehaviour
         // Si es golpeado por el tridente del player el enemigo hara la animacion de recibir daño y se le añadria fuerza atras
         animator.SetBool("getHit", true);
         navMesh.enabled = false;
+        hitted = true;
         //Hacer que vaya parriba tambien
         rb.isKinematic = false;
         rb.AddForce(player.transform.forward * knockBackForce + transform.up * knockUpForce, ForceMode.Impulse);

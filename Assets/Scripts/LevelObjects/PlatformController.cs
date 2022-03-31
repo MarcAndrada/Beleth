@@ -167,23 +167,21 @@ public class PlatformController : MonoBehaviour
             playerCont = other.GetComponent<BelethMovementController>();
             animController = other.GetComponent<BelethAnimController>();
             animController.SetOnPlatform(true);
-
+            other.gameObject.GetComponent<BelethMovementController>().onPlatform = true;
         }
     }
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player" & cc)
         {
-            if (rb.velocity.y <= 0)
-            {
-                cc.Move(new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z) * Time.deltaTime);
-
-            }
-            else 
-            {
-                cc.Move(new Vector3(rb.velocity.x, 0.0001f, rb.velocity.z) * Time.deltaTime);
-            }
-            //
+            //if (rb.velocity.y <= 0)
+            //{
+            //    cc.Move(new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z) * Time.deltaTime);
+            //}
+            //else
+            //{
+            //}
+            cc.Move(new Vector3(rb.velocity.x, -0.0001f, rb.velocity.z) * Time.deltaTime);
 
         }
     }
@@ -193,7 +191,7 @@ public class PlatformController : MonoBehaviour
         if (other.tag == "Player")
         {
             animController.SetOnPlatform(false);
-
+            other.gameObject.GetComponent<BelethMovementController>().onPlatform = false;
         }
 
     }

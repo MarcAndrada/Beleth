@@ -29,7 +29,7 @@ public class BelethCollisionController : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "BossAttack")
+        if (other.gameObject.tag == "BossAttack" || other.gameObject.tag == "Boss" || other.gameObject.tag == "Lava")
         {
             healthController.GetDamage(1);
 

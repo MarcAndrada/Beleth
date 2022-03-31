@@ -65,11 +65,11 @@ public class BelethMovementController : MonoBehaviour
     private float minGlidingSpeed;
     [SerializeField]
     private float maxGlidingSpeed;
+    public bool onPlatform = false;
     #endregion
 
     #region Jump Variables
     [Header("Jump")]
-    private bool jump = false;
     [SerializeField]
     [Tooltip("Altura que tendra el salto base estando en el suelo")]
     private float jumpHeight;
@@ -104,6 +104,8 @@ public class BelethMovementController : MonoBehaviour
     private float coyoteTime;
     [SerializeField]
     private float maxFloorCheckDistance;
+    private bool jump = false;
+    [SerializeField]
     private bool groundedPlayer;
     private bool doubleJumped = false;
     private bool canCoyote;
@@ -484,7 +486,7 @@ public class BelethMovementController : MonoBehaviour
         {
             if (groundedPlayer || canCoyote)
             {
-                if (groundedPlayer)
+                if (groundedPlayer && !onPlatform)
                 {
                     // En caso de que el salto sea mientras se esta en el suelo se guardara el punto desde el que hemos saltado como el ultimo punto de spawn
                     checkPointManager.SetNewRespawn(transform.position);

@@ -8,13 +8,15 @@ public class WrathBossActivator : MonoBehaviour
     private WrathBossStateController boss;
     [SerializeField]
     GameObject BossCanvas;
-
+    [SerializeField]
+    private GameObject door;
     private BelethHealthController playerHealth;
 
     private void Start()
     {
         BossCanvas.SetActive(false);
         playerHealth = boss.player.GetComponent<BelethHealthController>();
+
     }
 
     // Update is called once per frame
@@ -29,6 +31,7 @@ public class WrathBossActivator : MonoBehaviour
     private void PlayerExit()
     {
         StartCoroutine(boss.StopFight());
+        door.transform.position = new Vector3(door.transform.position.x, -30 , door.transform.position.z);
         Debug.Log("Sale");
     }
 
@@ -38,6 +41,8 @@ public class WrathBossActivator : MonoBehaviour
         {
             StartCoroutine(boss.StartFight());
             BossCanvas.SetActive(true);
+            door.transform.position = new Vector3(door.transform.position.x, 0, door.transform.position.z);
+
         }
     }
 
