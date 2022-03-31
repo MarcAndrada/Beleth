@@ -10,6 +10,7 @@ public class WrathBossActivator : MonoBehaviour
     GameObject BossCanvas;
     [SerializeField]
     private GameObject door;
+    private SphereCollider collision;
     private BelethHealthController playerHealth;
 
     private void Start()
@@ -28,7 +29,7 @@ public class WrathBossActivator : MonoBehaviour
         }
     }
 
-    private void PlayerExit()
+    public void PlayerExit()
     {
         StartCoroutine(boss.StopFight());
         door.transform.position = new Vector3(door.transform.position.x, -30 , door.transform.position.z);

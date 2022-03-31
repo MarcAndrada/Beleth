@@ -37,18 +37,27 @@ public class WrathBossStateController : MonoBehaviour
 
     [Header("Meteoritos Fase 3")]
     [SerializeField]
-    GameObject RocksManager;
+    private GameObject RocksManager;
+
+    [Header("Audios")]
+    [SerializeField]
+    private AudioClip damagedSound;
+    [SerializeField]
+    private AudioClip deathSound;
 
     public bool isDoingAction = false;
 
     private WrathBossAttackController attackController;
     public GameObject player;
     private Animator animator;
+    private AudioSource audiosource;
 
     private void Awake()
     {
         attackController = GetComponent<WrathBossAttackController>();
         animator = GetComponentInChildren<Animator>();
+        audiosource = GetComponent<AudioSource>();
+
 
         currentHP = maxHP;
 
@@ -66,6 +75,10 @@ public class WrathBossStateController : MonoBehaviour
             DoCurrentFase();
 
             LookAtPlayer();
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                currentHP -= 33;
+            }
         }
     }
 
@@ -111,9 +124,6 @@ public class WrathBossStateController : MonoBehaviour
                     attackIndex = 0;
 
                     //Hacer que empiezen a caer rocas y el boss te persiga
-
-                    RocksManager.SetActive(true);
-
                     //Activar ataque de rocas
                 }
                 break;
@@ -123,6 +133,9 @@ public class WrathBossStateController : MonoBehaviour
                     //Hacer muerte del boss
                     currentFase = BossFase.NONE;
                     //Lamar a la funcion de muerte
+                    RocksManager.SetActive(false);
+                    animator.SetBool("Dead", true);
+                    audiosource.PlayOneShot(damagedSound);
 
                 }
                 break;
@@ -191,13 +204,30 @@ public class WrathBossStateController : MonoBehaviour
         //Durante esta fase el mundo entrara en ira y el “coliseo de pelea” tendrá la mecánica del nivel.
         //El jugador deberá huir/ esquivar durante estos ataques.Pero podrá atacar atrayendo al boss a las rocas restantes de la caída de piedras y/ o a las subidas de lava.
 
-        CheckAttackIndex(2);
+        if (!RocksManager.activeInHierarchy)
+        {
+            DoCurrentAttack(fase3Patron[attackIndex], true);
+        }
+        else
+        {
+            CheckAttackIndex(2);
 
-        DoCurrentAttack(fase1Patron[attackIndex]);
+            DoCurrentAttack(fase3Patron[attackIndex]);
+        }
+       
 
 
     }
 
+    IEnumerator WaitForStopMeteorAnim() 
+    {
+        animator.SetTrigger("MeteorSummon");
+        RocksManager.SetActive(true);
+        yield return new WaitForSeconds(3f);
+
+        isDoingAction = false;
+    
+    }
     #endregion
 
     #region Attack
@@ -228,33 +258,39 @@ public class WrathBossStateController : MonoBehaviour
         }
     }
 
-    private void DoCurrentAttack(BossActions _attack) 
+    private void DoCurrentAttack(BossActions _attack, bool _doMeteors = false) 
     {
 
         isDoingAction = true;
         attackIndex++;
-
-        switch (_attack)
+        if (!_doMeteors)
         {
-            case BossActions.NONE:
-                break;
-            case BossActions.RESET_POS:
-                attackController.GoToStarterPos();
-                break;
-            case BossActions.BELOW_FLOOR:
-                attackController.GoBelowFloor();
-                break;
-            case BossActions.LAVA_CIRCLE:
-                attackController.LavaCircleAttack();
-                break;
-            case BossActions.ENEMIE_CIRCLE:
-                attackController.EnemieCircleAttack();
-                break;
-            case BossActions.BRAKE_FLOOR:
-                attackController.BrakeFloorAttack();
-                break;
-            default:
-                break;
+            switch (_attack)
+            {
+                case BossActions.NONE:
+                    break;
+                case BossActions.RESET_POS:
+                    attackController.GoToStarterPos();
+                    break;
+                case BossActions.BELOW_FLOOR:
+                    attackController.GoBelowFloor();
+                    break;
+                case BossActions.LAVA_CIRCLE:
+                    attackController.LavaCircleAttack();
+                    break;
+                case BossActions.ENEMIE_CIRCLE:
+                    attackController.EnemieCircleAttack();
+                    break;
+                case BossActions.BRAKE_FLOOR:
+                    attackController.BrakeFloorAttack();
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            StartCoroutine(WaitForStopMeteorAnim());
         }
     }
     IEnumerator WaitWhileDamaged()
@@ -262,6 +298,7 @@ public class WrathBossStateController : MonoBehaviour
         attackController.SetIsAttacking(false);
         attackIndex = 0;
         isDoingAction = true;
+        audiosource.PlayOneShot(damagedSound);
 
         yield return new WaitForSeconds(3.5f);
 
@@ -297,7 +334,7 @@ public class WrathBossStateController : MonoBehaviour
         currentFase = BossFase.NONE;
         currentAction = BossActions.NONE;
         DoCurrentAttack(BossActions.RESET_POS);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         isDoingAction = false;
         fighting = false;
         currentFase = BossFase.NONE;

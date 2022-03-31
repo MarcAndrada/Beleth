@@ -84,6 +84,12 @@ public class BelethCheckPointManager : MonoBehaviour
 
     }
 
+    public void TPPlayer(Vector3 newPos) 
+    {
+        charController.enabled = false;
+        transform.position = newPos;
+        charController.enabled = true;
+    }
 
     private IEnumerator WaitForSetNewPoint() {
 

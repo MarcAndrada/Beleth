@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class WrathBossAnimEvents : MonoBehaviour
 {
-    private WrathBossAttackController wrathBossAttackController;
 
+    [SerializeField]
+    private GameObject parent;
+    private WrathBossAttackController wrathBossAttackController;
+    private AudioSource audiosource;
     private void Start()
     {
         wrathBossAttackController = GetComponentInParent<WrathBossAttackController>();
+        audiosource = GetComponentInParent<AudioSource>();
+
     }
 
     public void CallBrakeFloor() 
@@ -17,6 +22,10 @@ public class WrathBossAnimEvents : MonoBehaviour
     }
 
 
+    public void DestroyBoss() 
+    {
+        Destroy(parent);
+    }
 
 
     private void OnCollisionEnter(Collision collision)

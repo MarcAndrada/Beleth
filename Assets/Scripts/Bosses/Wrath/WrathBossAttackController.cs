@@ -49,6 +49,16 @@ public class WrathBossAttackController : MonoBehaviour
     [SerializeField]
     private float brakeFloorV2_Angle;
 
+    [Header("Audios")]
+    [SerializeField]
+    private AudioClip goBelowFloor;
+    [SerializeField]
+    private AudioClip returnBelowFloor;
+    [SerializeField]
+    private AudioClip lavaCircleSound;
+    [SerializeField]
+    private AudioClip enemieCircleSound;
+
 
     private float timeWatied = 0;
     private float timeToWait = 0;
@@ -60,11 +70,13 @@ public class WrathBossAttackController : MonoBehaviour
 
     private WrathBossStateController stateController;
     private Animator animator;
+    private AudioSource audiosource;
 
     // Start is called before the first frame update
     void Start()
     {
         stateController = GetComponent<WrathBossStateController>();
+        audiosource = GetComponent<AudioSource>();
         player = stateController.player;
 
         starterPos = transform.position;
@@ -198,6 +210,7 @@ public class WrathBossAttackController : MonoBehaviour
                         }
                         else
                         {
+                            
                             //Mover a la posicion y X tiempo despues que suba
                             Vector3 targetPos = new Vector3(posToEmerge.x, starterPos.y, posToEmerge.z);
                             transform.position = Vector3.Lerp(transform.position, targetPos, placeToGoState);
@@ -228,6 +241,7 @@ public class WrathBossAttackController : MonoBehaviour
     #region Attacks
     public void GoBelowFloor() {
         movingOnY = true;
+        audiosource.PlayOneShot(goBelowFloor);
     }
     public void GoToStarterPos() {
         resetPosition = true;
@@ -243,6 +257,7 @@ public class WrathBossAttackController : MonoBehaviour
         //Accion del ataque
         GameObject lavaCircle = Instantiate(lavaCircle_Attack, transform.position, Quaternion.Euler(-90,0,0));
         lavaCircle.transform.SetParent(transform, false);
+        audiosource.PlayOneShot(lavaCircleSound);
     }
 
     public void EnemieCircleAttack()
@@ -260,7 +275,7 @@ public class WrathBossAttackController : MonoBehaviour
             thisEnemie.transform.position = thisEnemie.transform.position + thisEnemie.transform.forward * 2;
             currentAngleRot += enemieCircle_AngleDiff;
         }
-
+        audiosource.PlayOneShot(enemieCircleSound);
 
     }
    

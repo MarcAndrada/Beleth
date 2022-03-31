@@ -34,12 +34,6 @@ public class BelethCollisionController : MonoBehaviour
             healthController.GetDamage(1);
 
         }
-
-        if (other.gameObject.tag == "Boss")
-        {
-            healthController.GetDamage(1);
-
-        }
     }
 
     private void OnParticleCollision(GameObject other)

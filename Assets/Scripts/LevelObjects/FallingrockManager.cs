@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class FallingrockManager : MonoBehaviour
 {
+   
     [SerializeField]
-    Vector2 minRange;
+    Transform minRange;
 
     [SerializeField]
-    Vector2 maxRange;
+    Transform maxRange;
 
     [SerializeField]
     Vector2 height;
@@ -49,7 +50,7 @@ public class FallingrockManager : MonoBehaviour
     Vector3 posToSpawn()
     {
         Vector3 _pos;
-        _pos = new Vector3(Random.Range(minRange.x, maxRange.x), Random.Range(height.x,height.y), Random.Range(minRange.y, maxRange.y));
+        _pos = new Vector3(Random.Range(minRange.position.x, maxRange.position.x), Random.Range(height.x,height.y), Random.Range(minRange.position.z, maxRange.position.z));
         return _pos;
     }
 }

@@ -21,6 +21,7 @@ public class BelethHealthController : MonoBehaviour
     private BelethCheckPointManager checkPointManager;
     private BelethMovementController movementController;
     private BelethAudioController audioController;
+    WrathBossActivator activator;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +30,7 @@ public class BelethHealthController : MonoBehaviour
         checkPointManager = GetComponent<BelethCheckPointManager>();
         movementController = GetComponent<BelethMovementController>();
         audioController = GetComponentInChildren<BelethAudioController>();
-
+        activator = FindObjectOfType<WrathBossActivator>();
         healthPoints = maxHealthPoints;
     }
 
@@ -97,18 +98,21 @@ public class BelethHealthController : MonoBehaviour
         
         //Debug.Log("Has muerto");
         StartCoroutine(Respawn());
-    
+        activator.PlayerExit();
+
+
     }
 
     private IEnumerator Respawn() {
 
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2f);
         movementController.SetCanMove(true);
         checkPointManager.GoLastCheckPoint();
-        healthPoints = maxHealthPoints;
         isAlive = true;
-        animController.SetHealthValue(healthPoints);
         audioController.soundCont.ReviveSound();
+        healthPoints = maxHealthPoints;
+        animController.SetHealthValue(healthPoints);
+
     }
 
     public int GetHealthPoints() { 

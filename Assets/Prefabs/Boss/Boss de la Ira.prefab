@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 198121156970558814}
   - component: {fileID: 198121156970558815}
   - component: {fileID: 198121156970558808}
+  - component: {fileID: 1573139758}
   m_Layer: 9
   m_Name: Boss de la Ira
   m_TagString: Boss
@@ -121,7 +122,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 198121156970558813}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 2.09, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -155,6 +156,9 @@ MonoBehaviour:
   fase1Patron: 0500000002000000030000000200000001000000040000000500000002000000
   fase2Patron: 05000000030000000100000004000000040000000200000002000000020000000500000002000000
   fase3Patron: 0200000005000000
+  RocksManager: {fileID: 0}
+  damagedSound: {fileID: 0}
+  deathSound: {fileID: 0}
   isDoingAction: 0
   player: {fileID: 0}
 --- !u!114 &198121156970558808
@@ -183,6 +187,106 @@ MonoBehaviour:
   brakeFloor_Attack: {fileID: 2172381176274081856, guid: 0dd9b51e22c0e404cbff2bf61ceea218, type: 3}
   brakeFloor_Duration: 3.5
   brakeFloorV2_Angle: 40
+  goBelowFloor: {fileID: 0}
+  returnBelowFloor: {fileID: 0}
+  lavaCircleSound: {fileID: 0}
+  enemieCircleSound: {fileID: 0}
+--- !u!82 &1573139758
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198121156970558813}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &198121155888364712
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -734,3 +838,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1194174dfe6c66f40aa54bdb1905cc2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 198121156970558813}
