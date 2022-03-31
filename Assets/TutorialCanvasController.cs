@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Video;
 
 public class TutorialCanvasController : MonoBehaviour
 {
     [SerializeField]
+    TutorialCanvas m_Canvas;
+    [SerializeField]
     GameObject Player;
     [SerializeField]
     VideoPlayer videoPlayer;
+    [SerializeField]
+    Text text;
     [SerializeField]
     double timesToPlay;
     double timeToStop;
@@ -19,10 +24,7 @@ public class TutorialCanvasController : MonoBehaviour
     {
         timeToStop = videoPlayer.length * timesToPlay;
         timer = 0;
-            
     }
-
- 
 
     // Update is called once per frame
     void Update()
@@ -35,9 +37,9 @@ public class TutorialCanvasController : MonoBehaviour
         }
     }
 
-    public void SetLenght()
+    public void SetThings()
     {
-        
         timeToStop = videoPlayer.length * timesToPlay;
+        text.text = m_Canvas.GetText();
     }
 }

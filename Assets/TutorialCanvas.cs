@@ -18,19 +18,8 @@ public class TutorialCanvas : MonoBehaviour
     [SerializeField]
     VideoClip videoToPlay;
 
-    
-  
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-     
-    }
+    [SerializeField]
+    string text;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -38,8 +27,13 @@ public class TutorialCanvas : MonoBehaviour
         {
             tutorialCanvas.SetActive(true);
             videoPlayer.clip = videoToPlay;
-            tutorialCanvas.GetComponent<TutorialCanvasController>().SetLenght();
+            tutorialCanvas.GetComponent<TutorialCanvasController>().SetThings();
         }
+    }
+
+    public string GetText()
+    {
+        return text;
     }
 }
 
