@@ -10,7 +10,6 @@ public class WrathBossActivator : MonoBehaviour
     GameObject BossCanvas;
     [SerializeField]
     private GameObject door;
-    private SphereCollider collision;
     private BelethHealthController playerHealth;
 
     private void Start()
@@ -34,6 +33,8 @@ public class WrathBossActivator : MonoBehaviour
         StartCoroutine(boss.StopFight());
         door.transform.position = new Vector3(door.transform.position.x, -30 , door.transform.position.z);
         Debug.Log("Sale");
+        boss.player.GetComponentInChildren<BelethAudioController>().soundCont.ChangeMusicLevel();
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,6 +44,7 @@ public class WrathBossActivator : MonoBehaviour
             StartCoroutine(boss.StartFight());
             BossCanvas.SetActive(true);
             door.transform.position = new Vector3(door.transform.position.x, 0, door.transform.position.z);
+            boss.player.GetComponentInChildren<BelethAudioController>().soundCont.ChangeMusicBoss();
 
         }
     }

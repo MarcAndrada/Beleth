@@ -135,7 +135,7 @@ public class WrathBossStateController : MonoBehaviour
                     //Lamar a la funcion de muerte
                     RocksManager.SetActive(false);
                     animator.SetBool("Dead", true);
-                    audiosource.PlayOneShot(damagedSound);
+                    audiosource.PlayOneShot(deathSound);
 
                 }
                 break;
@@ -313,6 +313,7 @@ public class WrathBossStateController : MonoBehaviour
 
         currentHP -= _damageDealt;
         animator.SetTrigger("Damaged");
+        audiosource.PlayOneShot(damagedSound);
         StartCoroutine(WaitWhileDamaged());
     }
 

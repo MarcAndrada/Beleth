@@ -6,6 +6,16 @@ public class SoundManager : MonoBehaviour
 {
 
     private AudioSource audioSource2D;
+    [Header("Music")]
+    [SerializeField]
+    private AudioSource musicAudioSource;
+    [SerializeField]
+    private AudioClip musicClip;
+    [SerializeField]
+    private AudioClip bossMusicClip;
+
+
+    [Header("Sounds")]
     [SerializeField]
     private float[] maxAndMinPitch;
     [SerializeField]
@@ -43,6 +53,7 @@ public class SoundManager : MonoBehaviour
     private void Start()
     {
         audioSource2D = GetComponent<AudioSource>();
+        musicAudioSource.clip = musicClip;
     }
 
     #region Beleth Sounds
@@ -114,6 +125,20 @@ public class SoundManager : MonoBehaviour
 
     #endregion
 
+    #region Music
+    public void ChangeMusicBoss() 
+    {
+        musicAudioSource.clip = bossMusicClip;
+        musicAudioSource.Play();
+
+    }
+    public void ChangeMusicLevel()
+    {
+        musicAudioSource.clip = musicClip;
+        musicAudioSource.Play();
+    }
+
+    #endregion
 
     #region Wrath
 

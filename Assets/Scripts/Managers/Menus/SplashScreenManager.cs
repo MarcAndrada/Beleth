@@ -6,12 +6,15 @@ using UnityEngine.SceneManagement;
 public class SplashScreenManager : MonoBehaviour
 {
     [SerializeField]
-    int secondsToWait;
+    private int secondsToWait;
+    [SerializeField]
+    private GameObject managers;
 
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(ToMainMenu());
+        DontDestroyOnLoad(managers);
     }
 
     IEnumerator ToMainMenu()
