@@ -284,7 +284,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Speed
-    m_EventTreshold: 0.2
+    m_EventTreshold: 39
   - m_ConditionMode: 1
     m_ConditionEvent: UsingInput
     m_EventTreshold: 0
@@ -310,9 +310,6 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 3
-    m_ConditionEvent: Speed
-    m_EventTreshold: 0.2
   - m_ConditionMode: 1
     m_ConditionEvent: UsingInput
     m_EventTreshold: 0
@@ -472,7 +469,7 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 4
     m_ConditionEvent: Speed
-    m_EventTreshold: 3.1
+    m_EventTreshold: 60
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1060667732787934995}
   m_Solo: 0
@@ -537,7 +534,7 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.05
+  m_TransitionDuration: 0.02
   m_TransitionOffset: 0
   m_ExitTime: 0.75
   m_HasExitTime: 0
@@ -1034,7 +1031,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 4
     m_ConditionEvent: Speed
-    m_EventTreshold: 3.1
+    m_EventTreshold: 60
   - m_ConditionMode: 1
     m_ConditionEvent: UsingInput
     m_EventTreshold: 0
@@ -1214,9 +1211,6 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 4
-    m_ConditionEvent: Speed
-    m_EventTreshold: 0.7
   - m_ConditionMode: 2
     m_ConditionEvent: UsingInput
     m_EventTreshold: 0
@@ -1333,7 +1327,7 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 3
     m_ConditionEvent: Speed
-    m_EventTreshold: 3.1
+    m_EventTreshold: 59
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5719027381326128856}
   m_Solo: 0
@@ -1398,9 +1392,6 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 4
-    m_ConditionEvent: Speed
-    m_EventTreshold: 0.7
   - m_ConditionMode: 2
     m_ConditionEvent: UsingInput
     m_EventTreshold: 0

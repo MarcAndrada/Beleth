@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class BelethCollisionController : MonoBehaviour
 {
-    private BelethMovementController movementController;
     private BelethCheckPointManager checkPointManager;
     private BelethHealthController healthController;
-    private CharacterController characterController;
+    private CoinController coinController;
+    private BelethUIController uIController;
+
     private void Start()
     {
-        movementController = GetComponent<BelethMovementController>();
         checkPointManager = GetComponent<BelethCheckPointManager>();
         healthController = GetComponent<BelethHealthController>();
-        characterController = GetComponent<CharacterController>();
+        coinController = GetComponent<CoinController>();
+        uIController = GetComponent<BelethUIController>();
+
 
     }
 
@@ -24,7 +26,31 @@ public class BelethCollisionController : MonoBehaviour
             checkPointManager.SetNewCheckPoint(other.transform.position, other.gameObject.GetComponent<Animation>());
         }
 
-        
+        if (other.gameObject.tag == "DeadZone")
+        {
+            healthController.GetDamage(1);
+            if (healthController.GetHealthPoints() > 0)
+            {
+                checkPointManager.GoLastRespawn();
+            }
+        }
+
+
+        if (other.gameObject.tag == "Coin")
+        {
+            coinController.AddCoin();
+            //Hacer algo con la moneda que encontremos 
+            other.gameObject.SetActive(false);
+        }
+
+        if (other.gameObject.tag == "Collectable")
+        {
+            CollectableController currentCollectable = other.GetComponent<CollectableController>();
+            uIController.ObtainedCollectable(currentCollectable.collectableID);
+            currentCollectable.DisableCollectable();
+        }
+
+
     }
 
     private void OnTriggerStay(Collider other)

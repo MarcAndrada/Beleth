@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HoleRockController : MonoBehaviour
 {
+    [SerializeField]
+    private float timeToWait;
     Rigidbody rb;
     BoxCollider boxcollider;
     float timer;
@@ -24,20 +26,20 @@ public class HoleRockController : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > 2 && rb == null && boxcollider == null)
+        if (timer > timeToWait && rb == null && boxcollider == null)
         {
             transform.Translate(Vector3.down * 1 * Time.deltaTime, Space.World);
 
-            if(timer > 4) Destroy(gameObject);
+            if(timer > timeToWait + 3) Destroy(gameObject);
         }
-        else if (timer > 3)
+        else if (timer > timeToWait)
         {
             rb.isKinematic = true;
             boxcollider.enabled = false;
 
             transform.Translate(Vector3.down * 1 * Time.deltaTime, Space.World);
 
-            if (timer > 4) Destroy(gameObject);
+            if (timer > timeToWait + 3) Destroy(gameObject);
         }
     }
 }

@@ -6,7 +6,7 @@ public class BelethAnimController : MonoBehaviour
 {
 
     private Animator animator;
-    private CharacterController charController;
+    private BelethMovementController movmentController;
 
     private bool touchedFloor = false;
 
@@ -14,7 +14,7 @@ public class BelethAnimController : MonoBehaviour
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
-        charController = GetComponent<CharacterController>();
+        movmentController = GetComponent<BelethMovementController>();
         animator.SetBool("OnFloor", true);
 
     }
@@ -39,18 +39,18 @@ public class BelethAnimController : MonoBehaviour
     #region Air Animations
     private void SetOnAir()
     {
-        if (charController.isGrounded && !touchedFloor)
+        if ( movmentController.groundedPlayer && !touchedFloor)
         {
             animator.ResetTrigger("Jump");
             SetFirstJump(false);
             touchedFloor = true;
         }
-        else if (!charController.isGrounded)
+        else if (!movmentController.groundedPlayer)
         {
             touchedFloor = true;
 
         }
-        animator.SetBool("OnFloor", charController.isGrounded);
+        animator.SetBool("OnFloor", movmentController.groundedPlayer);
     }
     public void SetOnPlatform(bool _isOnPlatform)
     {

@@ -17,14 +17,12 @@ public class BelethCheckPointManager : MonoBehaviour
     private Vector3 lastCheckPoint;
 
     private bool canSaveRespawnPoint = true;
-    private CharacterController charController;
     private BelethHealthController healthController;
     private BelethAudioController audioController;
     private BelethMovementController movementController;
     // Start is called before the first frame update
     void Start()
     {
-        charController = GetComponent<CharacterController>();
         healthController = GetComponent<BelethHealthController>();
         audioController = GetComponentInChildren<BelethAudioController>();
         movementController = GetComponent<BelethMovementController>();
@@ -36,7 +34,7 @@ public class BelethCheckPointManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (canSaveRespawnPoint && charController.isGrounded && !movementController.onPlatform)
+        if (canSaveRespawnPoint && !movementController.onPlatform)
         {
             StartCoroutine(WaitForSetNewPoint());
         }
@@ -63,9 +61,8 @@ public class BelethCheckPointManager : MonoBehaviour
     }
 
     public void GoLastRespawn() {
-        charController.enabled = false;
         transform.position = lastRespawn;
-        charController.enabled = true;
+
     }
 
     public void SetNewCheckPoint(Vector3 _newCheckPointPos, Animation _anim)
@@ -78,17 +75,17 @@ public class BelethCheckPointManager : MonoBehaviour
 
     public void GoLastCheckPoint()
     {
-        charController.enabled = false;
+       
         transform.position = lastCheckPoint;
-        charController.enabled = true;
+       
 
     }
 
     public void TPPlayer(Vector3 newPos) 
     {
-        charController.enabled = false;
+        
         transform.position = newPos;
-        charController.enabled = true;
+        
     }
 
     private IEnumerator WaitForSetNewPoint() {

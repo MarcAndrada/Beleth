@@ -55,7 +55,6 @@ public class BelethHealthController : MonoBehaviour
 
             canBeDamaged = false;
             movementController.SetCanMove(false);
-            movementController.SetCurrentSpeed(0);
             CheckHP();
             StartCoroutine(WaitForInmortalFrames());
 

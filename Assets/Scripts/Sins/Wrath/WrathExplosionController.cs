@@ -57,7 +57,12 @@ public class WrathExplosionController : MonoBehaviour
         Vector3 explosionPosition = gameObject.transform.position;
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, radius);
 
-        foreach(Collider hit in colliders)
+        if (gameObject.tag == "Activator")
+        {
+            gameObject.GetComponent<ActivatorsController>().ActivateCurrentArm();
+        }
+
+        foreach (Collider hit in colliders)
         {
             if (hit.gameObject.tag == "Player" && playerImpulse > 0)
             {
@@ -68,6 +73,8 @@ public class WrathExplosionController : MonoBehaviour
             {
                 hit.gameObject.GetComponentInParent<WrathBossStateController>().GetDamage(bossDamage, gameObject);
             }
+
+            
 
             Rigidbody rb = hit.GetComponent<Rigidbody>();
 

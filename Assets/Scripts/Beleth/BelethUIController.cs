@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-
+using TMPro;
 
 public class BelethUIController : MonoBehaviour
 {
@@ -25,6 +25,11 @@ public class BelethUIController : MonoBehaviour
     [Header("HUD")]
     [SerializeField]
     GameObject[] hearts;
+    [SerializeField]
+    private GameObject[] collectables;
+    [SerializeField]
+    private TextMeshProUGUI coinText;
+    
 
     PlayerInput playerInput;
     InputAction pauseAction;
@@ -36,15 +41,18 @@ public class BelethUIController : MonoBehaviour
 
     private void Start()
     {
-        pauseCanvas.SetActive(false);
         playerInput = GetComponent<PlayerInput>();
         pauseAction = playerInput.actions["Pause"];
-        pauseAction.started += _ => PauseGame();
-        belethController = GetComponentInParent<BelethMovementController>();
-        belethHealthController = GetComponentInParent<BelethHealthController>();
+        pauseAction.started += _ => CheckIfPaused();
+        belethController = GetComponent<BelethMovementController>();
+        belethHealthController = GetComponent<BelethHealthController>();
+        
 
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        pauseCanvas.SetActive(false);
+
 
     }
 
@@ -110,16 +118,26 @@ public class BelethUIController : MonoBehaviour
                 break;
         }
     }
-    public void ShowDeathUI(bool _canShow) {
+    public void ShowDeathUI(bool _canShow)
+    {
 
         deathCanvas.SetActive(_canShow);
-    
+
+    }
+
+    #endregion
+
+    #region Collectables UI
+
+    public void ObtainedCollectable(int _collectableID) 
+    {
+        collectables[_collectableID].SetActive(true);
     }
 
     #endregion
 
     #region Stamina slider
-    private void CheckStaminaSlider() 
+    private void CheckStaminaSlider()
     {
         if (belethController.GetGliding())
         {
@@ -154,7 +172,7 @@ public class BelethUIController : MonoBehaviour
 
         //Deja de planear aqui
     }
-    public float GetStaminaValue() 
+    public float GetStaminaValue()
     {
         return slider.value;
     }
@@ -163,54 +181,70 @@ public class BelethUIController : MonoBehaviour
 
     #region Pause UI
 
-    private void ToGame()
+
+    private void CheckIfPaused() 
     {
-        isPaused = !isPaused;
-        pauseCanvas.SetActive(false);
+        if (!isPaused)
+        {
+           Pause();
+
+        }
+        else
+        {
+            UnPause();
+        }
+    }
+
+    public void Pause() 
+    {
+        isPaused = true;
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        pauseCanvas.SetActive(true);
+        
+    }
+
+    public void UnPause() 
+    {
+        isPaused = false;
         Time.timeScale = 1;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        pauseCanvas.SetActive(false);
+
 
     }
 
     private void PauseGame()
     {
-        if (!isPaused)
-        {
-            isPaused =! isPaused;
-            pauseCanvas.SetActive(true);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.Confined;
-            Time.timeScale = 0;
-
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            ToGame();
-        }
-    }
-
-    public void ContinuePause()
-    {
-        ToGame();
+        
     }
 
     public void SettingsGame()
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
-        ToGame();
+        UnPause();
         SceneManager.LoadScene("Settings");
     }
 
     public void QuitGame()
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
-        ToGame();
+        
+        UnPause();
         SceneManager.LoadScene("MainMenu");
     }
 
     #endregion
+
+    #region Coins UI
+
+    public void UpdateCoinUI(int _currentCoins) 
+    {
+        //Hacer que las monedas se cambien en el canvas
+        coinText.text = _currentCoins.ToString();
+    }
+
+    #endregion
+
 
 }

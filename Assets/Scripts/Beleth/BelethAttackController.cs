@@ -17,10 +17,9 @@ public class BelethAttackController : MonoBehaviour
     [SerializeField]
     private GameObject followCamera;
 
-
+    [HideInInspector]
     public bool canAttack = true;
 
-    private CharacterController charController;
     private BelethAnimController animController;
     private BelethMovementController movementController;
     private TridentController tridentController;
@@ -32,7 +31,6 @@ public class BelethAttackController : MonoBehaviour
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
-        charController = GetComponent<CharacterController>();
         animController = GetComponent<BelethAnimController>();
         movementController = GetComponent<BelethMovementController>();
         tridentController = GetComponentInChildren<TridentController>();
@@ -46,7 +44,7 @@ public class BelethAttackController : MonoBehaviour
 
     public void AttackAction_started(int _attackType)
     {
-        if (canAttack && charController.isGrounded)
+        if (canAttack && movementController.groundedPlayer)
         {
             //Segun el tipo de ataque cambiara el tag del tridente
             switch (_attackType)

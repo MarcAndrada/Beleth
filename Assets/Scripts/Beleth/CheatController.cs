@@ -5,8 +5,6 @@ using UnityEngine;
 public class CheatController : MonoBehaviour
 {
     GameObject[] checkPoints;
-    CharacterController charCont;
-
     int index = 0;
     
     
@@ -14,7 +12,6 @@ public class CheatController : MonoBehaviour
     void Awake()
     {
         checkPoints = GameObject.FindGameObjectsWithTag("CheckPoints");
-        charCont = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
@@ -22,9 +19,7 @@ public class CheatController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            charCont.enabled = false;
             transform.position = checkPoints[index].transform.position;
-            charCont.enabled = true;
             index++;
             if (index >= checkPoints.Length)
             {

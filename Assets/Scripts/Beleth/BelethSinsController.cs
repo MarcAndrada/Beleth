@@ -21,7 +21,6 @@ public class BelethSinsController : MonoBehaviour
     private GameObject followCamera;
 
 
-    private CharacterController charController;
     private BelethAnimController animController;
     private BelethMovementController movementController;
     private BelethAttackController attackController;
@@ -36,7 +35,6 @@ public class BelethSinsController : MonoBehaviour
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
-        charController = GetComponent<CharacterController>();
         animController = GetComponent<BelethAnimController>();
         movementController = GetComponent<BelethMovementController>();
         attackController = GetComponent<BelethAttackController>();
