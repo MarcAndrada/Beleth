@@ -6,7 +6,7 @@ public class FallingrockController : MonoBehaviour
 {
     Rigidbody rb;
     GameObject collisionMark;
-    BrokenWallController breakeControll;
+    MeteorFragmentController breakeControll;
 
     [SerializeField]
     float fallingSpeed;
@@ -21,7 +21,7 @@ public class FallingrockController : MonoBehaviour
 
     private void Awake()
     {
-        breakeControll = GetComponent<BrokenWallController>();
+        breakeControll = GetComponent<MeteorFragmentController>();
         rb = GetComponent<Rigidbody>();
     }
 

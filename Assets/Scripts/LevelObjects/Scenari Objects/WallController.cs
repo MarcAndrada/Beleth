@@ -6,6 +6,8 @@ public class WallController : MonoBehaviour
 {
     [SerializeField]
     GameObject BrokeWall;
+    [SerializeField]
+    GameObject existingBrokeWall;
 
     bool can;
 
@@ -13,9 +15,16 @@ public class WallController : MonoBehaviour
     {
         if (!can)
         {
-            Instantiate(BrokeWall);
-            Destroy(gameObject);
+            if (existingBrokeWall != null)
+            {
+                existingBrokeWall.SetActive(true);
+            }
+            else
+            {
+                Instantiate(BrokeWall);
+            }            
             can = true;
+            Destroy(gameObject);
         }
     }
 }

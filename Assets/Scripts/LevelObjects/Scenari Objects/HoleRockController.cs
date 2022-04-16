@@ -6,14 +6,16 @@ public class HoleRockController : MonoBehaviour
 {
     [SerializeField]
     private float timeToWait;
+    [SerializeField]
+    private float timeOffset;
     Rigidbody rb;
-    BoxCollider boxcollider;
+    MeshCollider coll;
     float timer;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        boxcollider = GetComponent<BoxCollider>();
+        coll = GetComponent<MeshCollider>();
     }
 
     // Start is called before the first frame update
@@ -26,20 +28,20 @@ public class HoleRockController : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if (timer > timeToWait && rb == null && boxcollider == null)
+        if (timer > timeToWait && rb == null && coll == null)
         {
             transform.Translate(Vector3.down * 1 * Time.deltaTime, Space.World);
 
-            if(timer > timeToWait + 3) Destroy(gameObject);
+            if(timer > timeToWait + timeOffset) Destroy(gameObject);
         }
         else if (timer > timeToWait)
         {
             rb.isKinematic = true;
-            boxcollider.enabled = false;
+            coll.enabled = false;
 
-            transform.Translate(Vector3.down * 1 * Time.deltaTime, Space.World);
+            transform.Translate(Vector3.down * 3 * Time.deltaTime, Space.World);
 
-            if (timer > timeToWait + 3) Destroy(gameObject);
+            if (timer > timeToWait + timeOffset) Destroy(gameObject);
         }
     }
 }

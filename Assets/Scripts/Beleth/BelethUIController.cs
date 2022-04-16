@@ -216,11 +216,6 @@ public class BelethUIController : MonoBehaviour
 
     }
 
-    private void PauseGame()
-    {
-        
-    }
-
     public void SettingsGame()
     {
         UnPause();
@@ -231,6 +226,8 @@ public class BelethUIController : MonoBehaviour
     {
         
         UnPause();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Confined;
         SceneManager.LoadScene("MainMenu");
     }
 

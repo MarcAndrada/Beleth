@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BrokenWallController : MonoBehaviour
+public class MeteorFragmentController : MonoBehaviour
 {
     [Header("Explosion Variables")]
     [SerializeField]

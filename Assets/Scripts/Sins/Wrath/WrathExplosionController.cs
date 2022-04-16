@@ -50,7 +50,6 @@ public class WrathExplosionController : MonoBehaviour
     {
         //Implosione
 
-        
         Instantiate(explosionWrathVFX, transform.position, transform.rotation);
 
 
@@ -66,7 +65,7 @@ public class WrathExplosionController : MonoBehaviour
         {
             if (hit.gameObject.tag == "Player" && playerImpulse > 0)
             {
-                hit.gameObject.GetComponentInChildren<BelethMovementController>().AddImpulse(playerImpulse);
+                hit.gameObject.GetComponentInChildren<BelethMovementController>().AddImpulse(transform.forward, playerImpulse);
             }
 
             if (hit.gameObject.tag == "Boss")
@@ -74,13 +73,9 @@ public class WrathExplosionController : MonoBehaviour
                 hit.gameObject.GetComponentInParent<WrathBossStateController>().GetDamage(bossDamage, gameObject);
             }
 
-            
-
-            Rigidbody rb = hit.GetComponent<Rigidbody>();
-
-            if(hit.gameObject.tag == "Breakable")
+            if (hit.gameObject.tag == "Breakable")
             {
-                hit.gameObject.GetComponent<BrokenWallController>().Break();
+                hit.gameObject.GetComponent<MeteorFragmentController>().Break();
 
             }
 
@@ -88,6 +83,11 @@ public class WrathExplosionController : MonoBehaviour
             {
                 hit.gameObject.GetComponent<WallController>().Break();
             }
+
+
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
+
+            
 
             if (rb != null && rb != rigidB || rb != null && moveHimself)
             {

@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class BelethMovementController : MonoBehaviour
 {
-
+    
     #region Inputs Variables
     private Vector3 movementInput;
     private Vector3 movementDirection;
@@ -14,11 +14,13 @@ public class BelethMovementController : MonoBehaviour
     private InputAction moveAction;
     private InputAction jumpAction;
     private InputAction runAction;
-    
+
     #endregion
 
     #region MovementVariables
     [Header("Movment")]
+    [SerializeField]
+    private Transform[] floorRayPlaces;
     [SerializeField]
     private bool canMove = true;
     [SerializeField]
@@ -26,7 +28,6 @@ public class BelethMovementController : MonoBehaviour
     private float floorRotationSpeed;
     [SerializeField]
     private float airRotationSpeed;
-
     [SerializeField]
     [Tooltip("Velocidad actual a la que va a acelerar el personaje")]
     private float currentAccel;
@@ -44,6 +45,7 @@ public class BelethMovementController : MonoBehaviour
     private float glidingSpeed;
     private bool running;
     public bool onPlatform = false;
+    private bool onRamp;
     #endregion
 
     #region Jump Variables
@@ -71,7 +73,7 @@ public class BelethMovementController : MonoBehaviour
     private bool jump = false;
     private bool doubleJumped = false;
     private bool canCoyote;
-
+    RaycastHit groundHit;
 
 
 
@@ -81,25 +83,23 @@ public class BelethMovementController : MonoBehaviour
     [Header("Components & External objects")]
     [SerializeField]
     private Camera followCamera;
-    [SerializeField]
-    private PhysicMaterial physicMaterial;
+    private CapsuleCollider coll;
     private Rigidbody rb;
     private PlayerInput playerInput;
     private BelethAnimController animController;
     private BelethCheckPointManager checkPointManager;
     private BelethAudioController audioController;
-    private CapsuleCollider coll;
     private bool isAttacking = false;
     #endregion
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        coll = GetComponent<CapsuleCollider>();
         playerInput = GetComponent<PlayerInput>();
         animController = GetComponent<BelethAnimController>();
         checkPointManager = GetComponent<BelethCheckPointManager>();
         audioController = GetComponentInChildren<BelethAudioController>();
-        coll = GetComponent<CapsuleCollider>();
 
         //Setear valor a las animaciones
         //animController.SetSpeedValue(currentSpeed);
@@ -147,13 +147,23 @@ public class BelethMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ApplyGravity();
+        //Comprobar si esta en el suelo y se le debe quitar la grabedad (para las rampas)
+        if (!groundedPlayer || movementDirection != Vector3.zero) 
+        {
+            ApplyGravity();
+        }
+
         //rb.AddForce(transform.forward * axis.y * 200,ForceMode.Acceleration);
 
         if (canMove)
         {
             RotatePlayer();
             MovePlayer();
+        }
+
+        if (groundedPlayer)
+        {
+            RampMovement();
         }
 
     }
@@ -201,6 +211,73 @@ public class BelethMovementController : MonoBehaviour
         }
    
     }
+    private void RampMovement() 
+    {
+
+        Debug.DrawRay(floorRayPlaces[0].position, -transform.up, Color.blue);
+        Debug.DrawRay(floorRayPlaces[1].position, floorRayPlaces[1].forward, Color.red);
+        Debug.DrawRay(floorRayPlaces[2].position, floorRayPlaces[2].forward, Color.green);
+
+
+        if (movementInput != Vector3.zero)
+        {
+            RaycastHit groundHit2;
+            Ray forwardRay = new Ray(floorRayPlaces[1].position, floorRayPlaces[1].forward);
+            float newMaxPos = maxFloorCheckDistance * 2;
+            float angleFloor = Vector3.Angle(groundHit.normal, Vector3.up);
+            Vector3 slopeOffset;
+            bool bajada = false;
+            
+
+            if (Physics.Raycast(forwardRay, out groundHit2, newMaxPos))
+            {
+                //Si esta subiendo
+                angleFloor = Vector3.Angle(groundHit2.normal, Vector3.up);
+                slopeOffset = new Vector3(movementDirection.x * (currentAccel * 1.5f), angleFloor * 2, movementDirection.z * (currentAccel * 1.5f));
+
+            }
+            else
+            {
+
+                RaycastHit groundHit3;
+                Ray backwardRay = new Ray(floorRayPlaces[2].position, floorRayPlaces[2].forward);
+
+                //Esta bajando
+                if (Physics.Raycast(backwardRay, out groundHit3, newMaxPos))
+                {
+                    if (groundHit3.distance > newMaxPos / 2 && !groundedPlayer)
+                    {
+                        transform.position = new Vector3 (transform.position.x, groundHit3.point.y + (coll.height / 2), transform.position.z);
+                    }
+
+                    //Si ha dejado de tocar el suelo comprueba si hay algo en diagonal hacia atras si es asi envialo hacia abajo
+                    angleFloor = -Vector3.Angle(groundHit3.normal, Vector3.up);
+                    slopeOffset = new Vector3(0, angleFloor / 1.5f, 0);
+                    Debug.Log(slopeOffset);
+                    bajada = true;
+
+                }
+                else
+                {
+                    //Si no que no agregue ninguna fuerza
+                    slopeOffset = Vector3.zero;
+                }
+
+
+            }
+
+            if (!bajada)
+            {
+                rb.AddForce(slopeOffset, ForceMode.Force);
+            }
+            else
+            {
+                rb.AddForce(slopeOffset, ForceMode.VelocityChange);
+            }
+
+        }
+    }
+
     #endregion
 
     #region Checkers
@@ -227,8 +304,8 @@ public class BelethMovementController : MonoBehaviour
     private void CheckIfGrounded() 
     {
         // Detecta si esta tocando el suelo
-        RaycastHit hit;
-        if (Physics.Raycast(new Ray( new Vector3(transform.position.x,transform.position.y - coll.height/2,transform.position.z), -Vector3.up), out hit, maxFloorCheckDistance))
+        Ray floorRay = new Ray(floorRayPlaces[0].position, -transform.up);
+        if (Physics.Raycast(floorRay, out groundHit, maxFloorCheckDistance))
         {
             groundedPlayer = true;
             
@@ -237,6 +314,7 @@ public class BelethMovementController : MonoBehaviour
         {
             groundedPlayer = false;
         }
+                
     }
     private void CheckIfCanJump() {
 
@@ -354,6 +432,7 @@ public class BelethMovementController : MonoBehaviour
                 {
                     rb.velocity = new Vector3(rb.velocity.x, 0 ,rb.velocity.z);
                 }
+                rb.velocity = Vector3.zero;
                 rb.AddForce(transform.up * doubleJumpHeight * 10, ForceMode.Impulse);
 
                 doubleJumped = true;
@@ -420,12 +499,12 @@ public class BelethMovementController : MonoBehaviour
     #endregion
 
     #region Extern Actions
-    public void AddImpulse(float _impulseForce) {
-
-        jump = true;
+    public void AddImpulse(Vector3 _impulseDir, float _impulseForce) {
         //A�adir un impulso con la fuerza que te pasen
-
-        
+        rb.AddForce(_impulseDir * _impulseForce * 10, ForceMode.Impulse);
+        jump = true;
+        animController.SetFirstJump(false);
+        canCoyote = false;
 
     }
 
