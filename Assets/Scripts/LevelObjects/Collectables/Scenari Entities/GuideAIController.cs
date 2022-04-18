@@ -11,6 +11,10 @@ public class GuideAIController : MonoBehaviour
     [SerializeField]
     private float maxDistanceFromPlayer;
     [SerializeField]
+    private float resetDistanceFromPlayer;
+    [SerializeField]
+    private bool resetTime;
+    [SerializeField]
     private float timeToWait;
 
     private bool canMove = true;
@@ -64,10 +68,19 @@ public class GuideAIController : MonoBehaviour
             farFromPlayer = false;
 
         }
+
+
+
+        if (Vector3.Distance(startingZone.player.transform.position, transform.position) > resetDistanceFromPlayer)
+        {
+            StartCoroutine(RestartPos());
+            farFromPlayer = false;
+        }
+
     }
     private void CheckIfReset() 
     {
-        if (farFromPlayer)
+        if (farFromPlayer && resetTime)
         {
             timeWaited += Time.deltaTime;
 
@@ -82,6 +95,8 @@ public class GuideAIController : MonoBehaviour
         {
             timeWaited = 0;
         }
+
+
     }
 
     private void SetNextPlace()

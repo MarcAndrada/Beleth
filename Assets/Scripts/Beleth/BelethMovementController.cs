@@ -61,6 +61,8 @@ public class BelethMovementController : MonoBehaviour
     [SerializeField]
     private float maxFloorCheckDistance;
     [SerializeField]
+    private float maxRampCheckDistance;
+    [SerializeField]
     public bool groundedPlayer;
     [SerializeField]
     private float extraGravity;
@@ -161,10 +163,8 @@ public class BelethMovementController : MonoBehaviour
             MovePlayer();
         }
 
-        if (groundedPlayer)
-        {
-            RampMovement();
-        }
+        CheckRampMovement();
+        
 
     }
 
@@ -211,72 +211,6 @@ public class BelethMovementController : MonoBehaviour
         }
    
     }
-    private void RampMovement() 
-    {
-
-        Debug.DrawRay(floorRayPlaces[0].position, -transform.up, Color.blue);
-        Debug.DrawRay(floorRayPlaces[1].position, floorRayPlaces[1].forward, Color.red);
-        Debug.DrawRay(floorRayPlaces[2].position, floorRayPlaces[2].forward, Color.green);
-
-
-        if (movementInput != Vector3.zero)
-        {
-            RaycastHit groundHit2;
-            Ray forwardRay = new Ray(floorRayPlaces[1].position, floorRayPlaces[1].forward);
-            float newMaxPos = maxFloorCheckDistance * 2;
-            float angleFloor = Vector3.Angle(groundHit.normal, Vector3.up);
-            Vector3 slopeOffset;
-            bool bajada = false;
-            
-
-            if (Physics.Raycast(forwardRay, out groundHit2, newMaxPos))
-            {
-                //Si esta subiendo
-                angleFloor = Vector3.Angle(groundHit2.normal, Vector3.up);
-                slopeOffset = new Vector3(movementDirection.x * (currentAccel * 1.5f), angleFloor * 2, movementDirection.z * (currentAccel * 1.5f));
-
-            }
-            else
-            {
-
-                RaycastHit groundHit3;
-                Ray backwardRay = new Ray(floorRayPlaces[2].position, floorRayPlaces[2].forward);
-
-                //Esta bajando
-                if (Physics.Raycast(backwardRay, out groundHit3, newMaxPos))
-                {
-                    if (groundHit3.distance > newMaxPos / 2 && !groundedPlayer)
-                    {
-                        transform.position = new Vector3 (transform.position.x, groundHit3.point.y + (coll.height / 2), transform.position.z);
-                    }
-
-                    //Si ha dejado de tocar el suelo comprueba si hay algo en diagonal hacia atras si es asi envialo hacia abajo
-                    angleFloor = -Vector3.Angle(groundHit3.normal, Vector3.up);
-                    slopeOffset = new Vector3(0, angleFloor / 1.5f, 0);
-                    Debug.Log(slopeOffset);
-                    bajada = true;
-
-                }
-                else
-                {
-                    //Si no que no agregue ninguna fuerza
-                    slopeOffset = Vector3.zero;
-                }
-
-
-            }
-
-            if (!bajada)
-            {
-                rb.AddForce(slopeOffset, ForceMode.Force);
-            }
-            else
-            {
-                rb.AddForce(slopeOffset, ForceMode.VelocityChange);
-            }
-
-        }
-    }
 
     #endregion
 
@@ -315,6 +249,90 @@ public class BelethMovementController : MonoBehaviour
             groundedPlayer = false;
         }
                 
+    }
+    private void CheckRampMovement()
+    {
+
+        float angleFloor = Vector3.Angle(groundHit.normal, Vector3.up);
+
+
+
+
+
+        if (movementInput != Vector3.zero && angleFloor != 0)
+        {
+
+            Debug.DrawRay(floorRayPlaces[0].position, -transform.up, Color.blue);
+            Debug.DrawRay(floorRayPlaces[1].position, floorRayPlaces[1].forward, Color.red);
+            Debug.DrawRay(floorRayPlaces[2].position, floorRayPlaces[2].forward, Color.red);
+            Debug.DrawRay(floorRayPlaces[1].position, floorRayPlaces[3].forward, Color.red);
+            Debug.DrawRay(floorRayPlaces[2].position, floorRayPlaces[4].forward, Color.green);
+
+
+            RaycastHit groundHit2;
+            Vector3 slopeOffset;
+            bool bajada = false;
+
+            //Esta subiendo
+            if (Physics.Raycast(new Ray(floorRayPlaces[1].position, floorRayPlaces[1].forward), out groundHit2, maxRampCheckDistance))
+            {
+
+                angleFloor = Vector3.Angle(groundHit2.normal, Vector3.up);
+                slopeOffset = new Vector3(movementDirection.x * (currentAccel * 1.2f), angleFloor * 2, movementDirection.z * (currentAccel * 1.2f));
+
+            }
+            else if (Physics.Raycast(new Ray(floorRayPlaces[2].position, floorRayPlaces[2].forward), out groundHit2, maxRampCheckDistance))
+            {
+                angleFloor = Vector3.Angle(groundHit2.normal, Vector3.up);
+                slopeOffset = new Vector3(movementDirection.x * (currentAccel * 1.2f), angleFloor * 2, movementDirection.z * (currentAccel * 1.2f));
+
+            }
+            else if (Physics.Raycast(new Ray(floorRayPlaces[3].position, floorRayPlaces[3].forward), out groundHit2, maxRampCheckDistance))
+            {
+                angleFloor = Vector3.Angle(groundHit2.normal, Vector3.up);
+                slopeOffset = new Vector3(movementDirection.x * (currentAccel * 1.2f), angleFloor * 2, movementDirection.z * (currentAccel * 1.2f));
+
+            }
+            //Esta bajando
+            else
+            {
+
+                RaycastHit groundHit3;
+
+
+                if (Physics.Raycast(new Ray(floorRayPlaces[4].position, floorRayPlaces[4].forward), out groundHit3, maxRampCheckDistance))
+                {
+                    if (groundHit3.distance > maxRampCheckDistance / 2 && !groundedPlayer)
+                    {
+                        transform.position = new Vector3(transform.position.x, groundHit3.point.y + (coll.height / 2), transform.position.z);
+                    }
+
+                    //Si ha dejado de tocar el suelo comprueba si hay algo en diagonal hacia atras si es asi envialo hacia abajo
+                    angleFloor = -Vector3.Angle(groundHit3.normal, Vector3.up);
+                    slopeOffset = new Vector3(0, angleFloor / 2f, 0);
+                    bajada = true;
+                    Debug.Log("1");
+
+                }
+                else
+                {
+                    //Si no que no agregue ninguna fuerza
+                    slopeOffset = Vector3.zero;
+                }
+
+
+            }
+
+            if (!bajada)
+            {
+                rb.AddForce(slopeOffset, ForceMode.Force);
+            }
+            else
+            {
+                rb.AddForce(slopeOffset, ForceMode.VelocityChange);
+            }
+
+        }
     }
     private void CheckIfCanJump() {
 
@@ -378,7 +396,7 @@ public class BelethMovementController : MonoBehaviour
         
         animController.SetSpeedValue(currentAccel);
     }
-    
+
     #endregion
 
     #region Timers
