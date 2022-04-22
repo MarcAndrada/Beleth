@@ -34,7 +34,7 @@ public class BelethCheckPointManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (canSaveRespawnPoint && !movementController.onPlatform)
+        if (canSaveRespawnPoint && !movementController.onPlatform && movementController.groundedPlayer)
         {
             StartCoroutine(WaitForSetNewPoint());
         }

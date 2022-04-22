@@ -10,7 +10,8 @@ public class BelethAudioController : MonoBehaviour
     private AudioSource wingAS;
     [SerializeField]
     private AudioSource attackAS;
-
+    
+    [HideInInspector]
     public SoundManager soundCont;
 
     void Awake()
@@ -27,7 +28,7 @@ public class BelethAudioController : MonoBehaviour
 
     public void JumpSound() 
     {
-        soundCont.Jump(wingAS);
+        soundCont.Jump(attackAS);
     }
 
     public void WingSound() 

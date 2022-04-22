@@ -11,9 +11,14 @@ public class TridentController : MonoBehaviour
     [SerializeField]
     ParticleSystem[] wrathParticles;
     [SerializeField]
+    private Transform backSocket;
+    [SerializeField]
     private Transform handSocket;
     [SerializeField]
-    private Transform backSocket;
+    private Transform attackSocket;
+    [SerializeField]
+    private Transform wrathAttackSocket;
+    
     [SerializeField]
     private float tridentMoveSpeed;
     [SerializeField]
@@ -77,11 +82,16 @@ public class TridentController : MonoBehaviour
         switch (_currentPos)
         {
             case 0:
-                trident.transform.SetParent(handSocket);
+                trident.transform.SetParent(backSocket);
                 break;
             case 1:
-                trident.transform.SetParent(backSocket);
-
+                trident.transform.SetParent(attackSocket);
+                break;
+            case 2:
+                trident.transform.SetParent(wrathAttackSocket);
+                break;
+            case 3:
+                trident.transform.SetParent(handSocket);
                 break;
             default:
                 break;
@@ -98,7 +108,7 @@ public class TridentController : MonoBehaviour
 
             if (timeWaitedTridentPos >= timeToWaitTridentPos)
             {
-                SetTridentPos(1);
+                SetTridentPos(0);
                 countingForTridentPos = false;
                 timeWaitedTridentPos = 0;
             }
@@ -114,4 +124,6 @@ public class TridentController : MonoBehaviour
     {
         belethAnimController.SetFirstJump(false);
     }
+
+
 }

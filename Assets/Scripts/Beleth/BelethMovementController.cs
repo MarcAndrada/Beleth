@@ -49,6 +49,7 @@ public class BelethMovementController : MonoBehaviour
     #endregion
 
     #region Jump Variables
+
     [Header("Jump")]
     [SerializeField]
     [Tooltip("Altura que tendra el salto base estando en el suelo")]
@@ -72,7 +73,6 @@ public class BelethMovementController : MonoBehaviour
     [Tooltip("El tiempo que dispondra el player para saltar y no tener que hacer el salto pixel perfect")]
     private float coyoteTime;
     private bool gliding = false;
-    private bool jump = false;
     private bool doubleJumped = false;
     private bool canCoyote;
     RaycastHit groundHit;
@@ -171,10 +171,14 @@ public class BelethMovementController : MonoBehaviour
     #region Actions
     private void MovePlayer()
     {
-
-        rb.AddForce(movementDirection * currentAccel, ForceMode.Acceleration);
-
-        //animController.SetSpeedValue(currentSpeed);
+        if (movementInput != Vector3.zero)
+        {
+            rb.AddForce(movementDirection * currentAccel, ForceMode.Acceleration);
+        }
+        else
+        {
+            rb.AddForce(new Vector3(-rb.velocity.x, 0, -rb.velocity.z) * 10);    
+        }
 
     }
     private void RotatePlayer()
@@ -201,7 +205,7 @@ public class BelethMovementController : MonoBehaviour
     private void ApplyGravity() 
     {
 
-        if (!gliding)
+        if (!gliding || isAttacking && gliding)
         {
             rb.AddForce(Physics.gravity * (rb.mass * rb.mass + extraGravity));
         }
@@ -311,7 +315,6 @@ public class BelethMovementController : MonoBehaviour
                     angleFloor = -Vector3.Angle(groundHit3.normal, Vector3.up);
                     slopeOffset = new Vector3(0, angleFloor / 2f, 0);
                     bajada = true;
-                    Debug.Log("1");
 
                 }
                 else
@@ -340,7 +343,6 @@ public class BelethMovementController : MonoBehaviour
         //Si el player esta en el suelo esto hace que no se caiga por la gravedad y reseteamos los valores del salto (cantidad de saltos, coyote time ...)
         if (groundedPlayer && rb.velocity.y < 0)
         {
-            jump = false;
             doubleJumped = false;
             canCoyote = true;
             gliding = false;
@@ -405,7 +407,7 @@ public class BelethMovementController : MonoBehaviour
         //Esperar el coyote time
 
         yield return new WaitForSeconds(coyoteTime);
-        canCoyote = false;
+        canCoyote = false;   
 
     }
 
@@ -421,7 +423,7 @@ public class BelethMovementController : MonoBehaviour
     {
         if (canMove)
         {
-            if (groundedPlayer || canCoyote)
+            if (groundedPlayer && !isAttacking || canCoyote && !isAttacking)
             {
                 if (groundedPlayer && !onPlatform)
                 {
@@ -439,7 +441,6 @@ public class BelethMovementController : MonoBehaviour
                 rb.AddForce(transform.up * jumpHeight * 10, ForceMode.Impulse);
                 canCoyote = false;
                 animController.JumpTrigger();
-                jump = true;
 
                 audioController.JumpSound();
             }
@@ -520,17 +521,16 @@ public class BelethMovementController : MonoBehaviour
     public void AddImpulse(Vector3 _impulseDir, float _impulseForce) {
         //A�adir un impulso con la fuerza que te pasen
         rb.AddForce(_impulseDir * _impulseForce * 10, ForceMode.Impulse);
-        jump = true;
         animController.SetFirstJump(false);
         canCoyote = false;
 
     }
 
-    public IEnumerator DoAttack(float _attackBraking, float _timeToWait) {
+    public IEnumerator DoAttack(float _timeToWait) {
 
 
         isAttacking = true;
-
+        rb.velocity = Vector3.zero;
         yield return new WaitForSeconds(_timeToWait);
 
         isAttacking = false;

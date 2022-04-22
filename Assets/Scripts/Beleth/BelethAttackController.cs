@@ -10,9 +10,10 @@ public class BelethAttackController : MonoBehaviour
     [SerializeField]
     private float attackCD;
     [SerializeField]
-    private float attackDuration;
+    private float wrathAttackCD;
     [SerializeField]
-    private float attackDecelSpeed;
+    private float wrathAttackDuration;
+
 
     [SerializeField]
     private GameObject followCamera;
@@ -44,33 +45,51 @@ public class BelethAttackController : MonoBehaviour
 
     public void AttackAction_started(int _attackType)
     {
-        if (canAttack && movementController.groundedPlayer)
+        if (canAttack && Time.timeScale > 0)
         {
             //Segun el tipo de ataque cambiara el tag del tridente
             switch (_attackType)
             {
                 case 0:
                     // En caso de que sea un ataque normal
+                    //Cambiarle el tag al tridente para saber el tipo de ataque
                     tridentController.ChangeTridentTag("Trident");
+                    //Poner el tridente en su posicion
+                    tridentController.SetTridentPos(1);
+                    //Reproducir sonido
                     audioController.AttackSound(_attackType);
+                    //Hacer la animacion
+                    animController.AttackTrigger();
+                    //Empezar el CD del ataque
+                    StartCoroutine(WaitAttackCD(attackCD));
                     break;
+
                 case 1:
                     // En caso de que sea un ataque con ira
-                    tridentController.ChangeTridentTag("Wrath");
-                    audioController.AttackSound(_attackType);
+                    if (movementController.groundedPlayer)
+                    {
+                        //Cambiarle el tag al tridente para saber el tipo de ataque
+                        tridentController.ChangeTridentTag("Wrath");
+                        //Poner el tridente en su posicion
+                        tridentController.SetTridentPos(2);
+                        //Reproducir sonido
+                        audioController.AttackSound(_attackType);
+                        //Hacer la animacion
+                        animController.WrathAttackTrigger();
+
+                        //Congelar el movimiento durante un tiempo mientras hace el ataque
+                        StartCoroutine(movementController.DoAttack(wrathAttackDuration));
+                        //Empezar el CD del ataque
+                        StartCoroutine(WaitAttackCD(wrathAttackCD));
+
+                    }
                     break;
+
                 default:
                     break;
             }
 
-            tridentController.SetTridentPos(0);
-
-            //Hacer la animacion
-            animController.AttackTrigger();
-            //Congelar el movimiento durante un tiempo mientras hace el ataque
-            StartCoroutine(movementController.DoAttack(attackDecelSpeed, attackDuration));
-            //Empezar el CD del ataque
-            StartCoroutine(WaitAttackCD());
+            
 
             tridentController.ResetTridentPosTimer();
         }
@@ -78,7 +97,7 @@ public class BelethAttackController : MonoBehaviour
 
     }
 
-    private IEnumerator WaitAttackCD() {
+    private IEnumerator WaitAttackCD(float _timeToWait) {
         
         canAttack = false;
         yield return new WaitForSeconds(attackCD);

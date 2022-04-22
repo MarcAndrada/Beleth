@@ -144,8 +144,12 @@ public class SoundManager : MonoBehaviour
 
     public void WrathExplosion(AudioSource _currentAS) 
     {
-        _currentAS.pitch = Random.Range(maxAndMinPitch[0], maxAndMinPitch[1]);
-        _currentAS.PlayOneShot(wrathActivation);
+        if (_currentAS != null)
+        {
+            _currentAS.pitch = Random.Range(maxAndMinPitch[0], maxAndMinPitch[1]);
+            _currentAS.PlayOneShot(wrathActivation);
+        }
+        
     }
 
     #endregion

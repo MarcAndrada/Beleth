@@ -98,10 +98,17 @@ public class BelethAnimController : MonoBehaviour
         animator.SetTrigger("Attack");
 
     }
+    public void WrathAttackTrigger()
+    {
+
+        animator.SetTrigger("WrathAttack");
+
+    }
+
     public void ResetAttackTrigger()
     {
         animator.ResetTrigger("Attack");
-
+        animator.ResetTrigger("WrathAttack");
     }
 
     #endregion
