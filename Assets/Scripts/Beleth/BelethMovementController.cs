@@ -43,6 +43,8 @@ public class BelethMovementController : MonoBehaviour
     [SerializeField]
     [Tooltip("Velocidad en la que el personaje acelera estando en el aire")]
     private float glidingSpeed;
+    [SerializeField]
+    private LayerMask floorLayer;
     private bool running;
     public bool onPlatform = false;
     private bool onRamp;
@@ -94,7 +96,7 @@ public class BelethMovementController : MonoBehaviour
     private bool isAttacking = false;
     #endregion
 
-    private void Start()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         coll = GetComponent<CapsuleCollider>();
@@ -102,10 +104,6 @@ public class BelethMovementController : MonoBehaviour
         animController = GetComponent<BelethAnimController>();
         checkPointManager = GetComponent<BelethCheckPointManager>();
         audioController = GetComponentInChildren<BelethAudioController>();
-
-        //Setear valor a las animaciones
-        //animController.SetSpeedValue(currentSpeed);
-        animController.SetGliding(gliding);
 
         //Movment Events
         moveAction = playerInput.actions["Move"];
@@ -123,16 +121,13 @@ public class BelethMovementController : MonoBehaviour
         runAction = playerInput.actions["Run"];
         runAction.started += _ => SetRunning();
         runAction.canceled += _ => SetRunning();
+    }
 
-        //maxWalkSpeed *= 1000;
-        //maxRunSpeed *= 1000;
-        //maxAirSpeed *= 1000;
-        //maxGlidingSpeed *= 1000;
-
-        //floorAccel *= 10000;
-        //airAccel *= 10000;
-
-       
+    private void Start()
+    {
+        //Setear valor a las animaciones
+        //animController.SetSpeedValue(currentSpeed);
+        animController.SetGliding(gliding);
 
     }
 
@@ -243,16 +238,30 @@ public class BelethMovementController : MonoBehaviour
     {
         // Detecta si esta tocando el suelo
         Ray floorRay = new Ray(floorRayPlaces[0].position, -transform.up);
-        if (Physics.Raycast(floorRay, out groundHit, maxFloorCheckDistance))
+        if (Physics.Raycast(floorRay, out groundHit, maxFloorCheckDistance, floorLayer))
         {
             groundedPlayer = true;
-            
+            animController.SetOnAir();
+            animController.SetFirstJump(true);
         }
         else
         {
             groundedPlayer = false;
-        }
+            animController.SetOnAir();
+
+            if (Physics.Raycast(floorRay, out groundHit, maxFloorCheckDistance * 6, floorLayer))
+            {
+                animController.SetFirstJump(true);
+            }
+            else
+            {
                 
+                animController.SetFirstJump(false);
+            }
+            
+
+        }
+
     }
     private void CheckRampMovement()
     {
@@ -343,14 +352,15 @@ public class BelethMovementController : MonoBehaviour
         //Si el player esta en el suelo esto hace que no se caiga por la gravedad y reseteamos los valores del salto (cantidad de saltos, coyote time ...)
         if (groundedPlayer && rb.velocity.y < 0)
         {
+            //Resetear doble salto, el coyote y de planeo
             doubleJumped = false;
             canCoyote = true;
             gliding = false;
+            //Poner la velocidad a 0
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-            // Setear el valor de la animacion de planear
+            // Setear el valor de la animacion de planear y resetear el trigger de planear para que no 
             animController.SetGliding(gliding);
-            animController.SetFirstJump(false);
-            
+            animController.ResetJumpTrigger();
 
 
         }
@@ -360,6 +370,7 @@ public class BelethMovementController : MonoBehaviour
         if (!groundedPlayer && canCoyote)
         {
             StartCoroutine(WaitForCoyoteTime());
+            
         }
 
         // En caso de estar tocando el suelo y que acabemos de tocar el suelo despues de saltar hacer que se ponga la velocidad de movimiento normal
@@ -396,7 +407,6 @@ public class BelethMovementController : MonoBehaviour
             }
         }
         
-        animController.SetSpeedValue(currentAccel);
     }
 
     #endregion
@@ -407,7 +417,8 @@ public class BelethMovementController : MonoBehaviour
         //Esperar el coyote time
 
         yield return new WaitForSeconds(coyoteTime);
-        canCoyote = false;   
+        canCoyote = false;
+
 
     }
 
@@ -431,7 +442,6 @@ public class BelethMovementController : MonoBehaviour
                     checkPointManager.SetNewRespawn(transform.position);
                 }
 
-                animController.SetFirstJump(false);
 
                 // En caso de que este en el suelo o aun este a tiempo de utilizar el coyote time haz el 1r salto
                 if (rb.velocity.y < 0)
@@ -441,8 +451,8 @@ public class BelethMovementController : MonoBehaviour
                 rb.AddForce(transform.up * jumpHeight * 10, ForceMode.Impulse);
                 canCoyote = false;
                 animController.JumpTrigger();
-
                 audioController.JumpSound();
+
             }
             else if (!doubleJumped)
             {
@@ -482,13 +492,14 @@ public class BelethMovementController : MonoBehaviour
             // Revisar segun si ha apretado el boton de correr o no empezara a correr o dejara de hacerlo solo si esta en el suelo
             if (runAction.ReadValue<float>() == 1)
             {
-                running = true;
+                running = false;
             }
             else
             {
-                running = false;
+                running = true;
             }
 
+            animController.SetRunning(running);
 
         }
 
@@ -521,7 +532,6 @@ public class BelethMovementController : MonoBehaviour
     public void AddImpulse(Vector3 _impulseDir, float _impulseForce) {
         //A�adir un impulso con la fuerza que te pasen
         rb.AddForce(_impulseDir * _impulseForce * 10, ForceMode.Impulse);
-        animController.SetFirstJump(false);
         canCoyote = false;
 
     }

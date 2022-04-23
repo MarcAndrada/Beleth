@@ -9,7 +9,7 @@ public class BelethHealthController : MonoBehaviour
     [SerializeField]
     private int maxHealthPoints;
     [SerializeField]
-    private int healthPoints;
+    public int healthPoints;
     [SerializeField]
     [Tooltip("Tiempo de invulnerabilidad despues de que te peguen")]
     private float inmortalTime;
@@ -20,7 +20,6 @@ public class BelethHealthController : MonoBehaviour
     private BelethAnimController animController;
     private BelethCheckPointManager checkPointManager;
     private BelethMovementController movementController;
-    private BelethAudioController audioController;
     WrathBossActivator activator;
     // Start is called before the first frame update
     void Start()
@@ -29,7 +28,6 @@ public class BelethHealthController : MonoBehaviour
         animController = GetComponent<BelethAnimController>();
         checkPointManager = GetComponent<BelethCheckPointManager>();
         movementController = GetComponent<BelethMovementController>();
-        audioController = GetComponentInChildren<BelethAudioController>();
         activator = FindObjectOfType<WrathBossActivator>();
         healthPoints = maxHealthPoints;
     }
@@ -76,13 +74,13 @@ public class BelethHealthController : MonoBehaviour
             if (isAlive)
             {
                 Die();
-                audioController.soundCont.BelethDeath();
+                SoundManager._SOUND_MANAGER.BelethDeath();
 
             }
         }
         else
         {
-            audioController.soundCont.BelethDamaged();
+            SoundManager._SOUND_MANAGER.BelethDamaged();
             StartCoroutine(WaitToMoveAgain());
         }
     }
@@ -108,7 +106,7 @@ public class BelethHealthController : MonoBehaviour
         movementController.SetCanMove(true);
         checkPointManager.GoLastCheckPoint();
         isAlive = true;
-        audioController.soundCont.ReviveSound();
+        SoundManager._SOUND_MANAGER.ReviveSound();
         healthPoints = maxHealthPoints;
         animController.SetHealthValue(healthPoints);
 

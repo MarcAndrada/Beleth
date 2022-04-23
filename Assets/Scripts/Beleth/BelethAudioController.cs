@@ -11,29 +11,26 @@ public class BelethAudioController : MonoBehaviour
     [SerializeField]
     private AudioSource attackAS;
     
-    [HideInInspector]
-    public SoundManager soundCont;
 
     void Awake()
     {
-        soundCont = GameObject.FindGameObjectWithTag("SoundManager").GetComponent<SoundManager>();
 
     }
 
 
     public void FootstepSound() 
     {
-        soundCont.SoundRandomFootstep(feetAS);
+        SoundManager._SOUND_MANAGER.SoundRandomFootstep(feetAS);
     }
 
     public void JumpSound() 
     {
-        soundCont.Jump(attackAS);
+        SoundManager._SOUND_MANAGER.Jump(attackAS);
     }
 
     public void WingSound() 
     {
-        soundCont.WingsSound(wingAS);
+        SoundManager._SOUND_MANAGER.WingsSound(wingAS);
     }
 
     public void AttackSound(int _currentAttack) 
@@ -41,10 +38,10 @@ public class BelethAudioController : MonoBehaviour
         switch (_currentAttack)
         {
             case 0:
-                soundCont.NormalAttackSound(attackAS);
+                SoundManager._SOUND_MANAGER.NormalAttackSound(attackAS);
                 break;
             case 1:
-                soundCont.WrathAttackSound(attackAS);
+                SoundManager._SOUND_MANAGER.WrathAttackSound(attackAS);
                 break;
             default:
                 break;

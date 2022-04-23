@@ -8,7 +8,6 @@ public class BelethAnimController : MonoBehaviour
     private Animator animator;
     private BelethMovementController movmentController;
 
-    private bool touchedFloor = false;
 
     // Start is called before the first frame update
     void Start()
@@ -16,41 +15,25 @@ public class BelethAnimController : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         movmentController = GetComponent<BelethMovementController>();
         animator.SetBool("OnFloor", true);
-
+        
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        SetOnAir(); 
-    }
-
 
     #region Movement Animations
     public void SetMovmentInput(bool _movingInputPressed) {
         animator.SetBool("UsingInput", _movingInputPressed);
     }
-    public void SetSpeedValue(float _playerSpeed) {
-        animator.SetFloat("Speed", _playerSpeed);
+    public void SetRunning(bool _running) {
+        animator.SetBool("Running", _running);
 
     }
     #endregion
 
     #region Air Animations
-    private void SetOnAir()
+    public void SetOnAir()
     {
-        if ( movmentController.groundedPlayer && !touchedFloor)
-        {
-            animator.ResetTrigger("Jump");
-            SetFirstJump(false);
-            touchedFloor = true;
-        }
-        else if (!movmentController.groundedPlayer)
-        {
-            touchedFloor = true;
-
-        }
+    
         animator.SetBool("OnFloor", movmentController.groundedPlayer);
+    
     }
     public void SetOnPlatform(bool _isOnPlatform)
     {
@@ -59,19 +42,16 @@ public class BelethAnimController : MonoBehaviour
     public void JumpTrigger() {
 
         animator.SetTrigger("Jump");
-        StartCoroutine(WaitForJump());
+
+    }
+    public void ResetJumpTrigger() 
+    {
+        animator.ResetTrigger("Jump");
 
     }
     public void SetFirstJump(bool _didFirstJump) 
     {
         animator.SetBool("FirstJump", _didFirstJump);
-    }
-
-    IEnumerator WaitForJump() {
-
-        yield return new WaitForSeconds(0.1f);
-        SetFirstJump(true);
-
     }
 
     public void SetGliding(bool _isGliding) {

@@ -5,6 +5,9 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
 
+    public static SoundManager _SOUND_MANAGER;
+
+
     private AudioSource audioSource2D;
     [Header("Music")]
     [SerializeField]
@@ -50,9 +53,24 @@ public class SoundManager : MonoBehaviour
     private AudioClip hoverSound;
 
 
+    private void Awake()
+    {
+        if (SoundManager._SOUND_MANAGER != null)
+        {
+            Destroy(gameObject);
+
+        }
+        else
+        {
+            _SOUND_MANAGER = this;
+
+        }
+
+        audioSource2D = GetComponent<AudioSource>();
+    }
+
     private void Start()
     {
-        audioSource2D = GetComponent<AudioSource>();
         musicAudioSource.clip = musicClip;
     }
 

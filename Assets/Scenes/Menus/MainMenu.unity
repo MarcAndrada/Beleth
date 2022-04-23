@@ -264,7 +264,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -1014.36005, y: -132.36499}
+  m_AnchoredPosition: {x: -1014.3601, y: -132.36499}
   m_SizeDelta: {x: 1575.76, y: 472.73}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &322589128
@@ -662,7 +662,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 586641635}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: Credits
+        m_MethodName: GoCreditsScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1404,7 +1404,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 586641635}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: Settings
+        m_MethodName: GoSettingsScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1537,7 +1537,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 586641635}
         m_TargetAssemblyTypeName: MenuManager, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: GoWrathLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

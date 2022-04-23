@@ -120,10 +120,5 @@ public class TridentController : MonoBehaviour
         timeWaitedTridentPos = 0;
     }
 
-    public void SetOnFloor() 
-    {
-        belethAnimController.SetFirstJump(false);
-    }
-
 
 }

@@ -6,22 +6,32 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    [Header("Play")]
-    [SerializeField]
-    string level;
+    //[Header("Play")]
+    //[SerializeField]
+    //private string wrathLevel;
 
-
-    public void Play()
+    private void Awake()
     {
-        SceneManager.LoadScene(level);
+
     }
 
-    public void Settings()
+
+    public void GoWrathLevel()
+    {
+        SceneManager.LoadScene("NuevoNivelTest");
+    }
+
+    public void GoMainMenuScene() 
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void GoSettingsScene()
     {
         SceneManager.LoadScene("Settings");
     }
 
-    public void Credits()
+    public void GoCreditsScene()
     {
         SceneManager.LoadScene("Credits");
     }

@@ -14,7 +14,9 @@ public class BelethUIController : MonoBehaviour
     [SerializeField]
     GameObject pauseCanvas;
     [SerializeField]
-    GameObject hudCanvas;
+    GameObject settingsCanvas;
+    [SerializeField]
+    private CameraSpeedController cameraSpeedController;
 
     [Header("Stamina Bar")]
     [SerializeField]
@@ -29,7 +31,7 @@ public class BelethUIController : MonoBehaviour
     private GameObject[] collectables;
     [SerializeField]
     private TextMeshProUGUI coinText;
-    
+
 
     PlayerInput playerInput;
     InputAction pauseAction;
@@ -46,7 +48,7 @@ public class BelethUIController : MonoBehaviour
         pauseAction.started += _ => CheckIfPaused();
         belethController = GetComponent<BelethMovementController>();
         belethHealthController = GetComponent<BelethHealthController>();
-        
+
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -129,7 +131,7 @@ public class BelethUIController : MonoBehaviour
 
     #region Collectables UI
 
-    public void ObtainedCollectable(int _collectableID) 
+    public void ObtainedCollectable(int _collectableID)
     {
         collectables[_collectableID].SetActive(true);
     }
@@ -181,12 +183,11 @@ public class BelethUIController : MonoBehaviour
 
     #region Pause UI
 
-
-    private void CheckIfPaused() 
+    private void CheckIfPaused()
     {
         if (!isPaused)
         {
-           Pause();
+            Pause();
 
         }
         else
@@ -195,31 +196,38 @@ public class BelethUIController : MonoBehaviour
         }
     }
 
-    public void Pause() 
+    public void Pause()
     {
         isPaused = true;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
         pauseCanvas.SetActive(true);
-        
+
     }
 
-    public void UnPause() 
+    public void UnPause()
     {
         isPaused = false;
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         pauseCanvas.SetActive(false);
-
+        settingsCanvas.SetActive(false);
+        cameraSpeedController.enabled = false;
 
     }
 
-    public void SettingsGame()
+    public void ShowSettings()
     {
-        UnPause();
-        SceneManager.LoadScene("Settings");
+        settingsCanvas.SetActive(true);
+        cameraSpeedController.enabled = true;
+    }
+
+    public void HideSettings() 
+    {
+        settingsCanvas.SetActive(false);
+        cameraSpeedController.enabled = false;
     }
 
     public void QuitGame()

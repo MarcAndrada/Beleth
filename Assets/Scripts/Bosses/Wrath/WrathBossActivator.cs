@@ -33,7 +33,7 @@ public class WrathBossActivator : MonoBehaviour
         StartCoroutine(boss.StopFight());
         door.transform.position = new Vector3(door.transform.position.x, -30 , door.transform.position.z);
         Debug.Log("Sale");
-        boss.player.GetComponentInChildren<BelethAudioController>().soundCont.ChangeMusicLevel();
+        SoundManager._SOUND_MANAGER.ChangeMusicLevel();
 
     }
 
@@ -44,7 +44,7 @@ public class WrathBossActivator : MonoBehaviour
             StartCoroutine(boss.StartFight());
             BossCanvas.SetActive(true);
             door.transform.position = new Vector3(door.transform.position.x, 0, door.transform.position.z);
-            boss.player.GetComponentInChildren<BelethAudioController>().soundCont.ChangeMusicBoss();
+            SoundManager._SOUND_MANAGER.ChangeMusicBoss();
 
         }
     }

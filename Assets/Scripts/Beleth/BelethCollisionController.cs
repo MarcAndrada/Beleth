@@ -29,7 +29,7 @@ public class BelethCollisionController : MonoBehaviour
         if (other.gameObject.tag == "DeadZone")
         {
             healthController.GetDamage(1);
-            if (healthController.GetHealthPoints() > 0)
+            if (healthController.healthPoints > 0)
             {
                 checkPointManager.GoLastRespawn();
             }
