@@ -73,6 +73,11 @@ public class BelethAnimController : MonoBehaviour
     #endregion
 
     #region Attack Anims
+    
+    public void SetIsAttacking(bool _isAttacking) 
+    {
+        animator.SetBool("isAttacking", _isAttacking);
+    }
     public void AttackTrigger() {
 
         animator.SetTrigger("Attack");

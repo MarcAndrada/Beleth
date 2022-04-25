@@ -12,6 +12,8 @@ public class BelethAttackController : MonoBehaviour
     [SerializeField]
     private float wrathAttackCD;
     [SerializeField]
+    private float normalAttackDuration;
+    [SerializeField]
     private float wrathAttackDuration;
 
 
@@ -62,6 +64,9 @@ public class BelethAttackController : MonoBehaviour
                     animController.AttackTrigger();
                     //Empezar el CD del ataque
                     StartCoroutine(WaitAttackCD(attackCD));
+                    //Poner en estado de atacando hasta que acabe
+                    StartCoroutine(movementController.DoAttack(wrathAttackDuration, true));
+
                     break;
 
                 case 1:
@@ -78,7 +83,7 @@ public class BelethAttackController : MonoBehaviour
                         animController.WrathAttackTrigger();
 
                         //Congelar el movimiento durante un tiempo mientras hace el ataque
-                        StartCoroutine(movementController.DoAttack(wrathAttackDuration));
+                        StartCoroutine(movementController.DoAttack(wrathAttackDuration, false));
                         //Empezar el CD del ataque
                         StartCoroutine(WaitAttackCD(wrathAttackCD));
 

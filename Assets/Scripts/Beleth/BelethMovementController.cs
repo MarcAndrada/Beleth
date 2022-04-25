@@ -550,15 +550,25 @@ public class BelethMovementController : MonoBehaviour
 
     }
 
-    public IEnumerator DoAttack(float _timeToWait) {
+    public IEnumerator DoAttack(float _timeToWait, bool _canMove) {
 
-
+        
         isAttacking = true;
-        rb.velocity = Vector3.zero;
-        canMove = false;
+        animController.SetIsAttacking(isAttacking);
+        if (!_canMove)
+        {
+            rb.velocity = Vector3.zero;
+            canMove = false;
+        }
+        
         yield return new WaitForSeconds(_timeToWait);
         isAttacking = false;
-        canMove = true;
+        animController.SetIsAttacking(isAttacking);
+        if (!_canMove)
+        {
+            canMove = true;
+        }
+
     }
 
     #endregion
