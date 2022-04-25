@@ -35,7 +35,7 @@ public class TridentController : MonoBehaviour
     {
         tridentCollider = trident.GetComponent<CapsuleCollider>();
         belethAnimController = GetComponentInParent<BelethAnimController>();
-        //wrathParticles.SetActive(false);
+
     }
 
     private void Update() {

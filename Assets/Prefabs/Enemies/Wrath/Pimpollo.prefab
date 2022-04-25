@@ -111,7 +111,7 @@ NavMeshAgent:
   m_Speed: 20
   m_Acceleration: 40
   avoidancePriority: 50
-  m_AngularSpeed: 300000
+  m_AngularSpeed: 3000
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
@@ -132,12 +132,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48898ab4872503e4ba938598a693079f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hide: 1
+  hide: 0
   meshPimpollo: {fileID: 3523632924491975147}
   unHideCollider: {fileID: 1695704238}
-  timeToWait: 1
+  timeToWait: 2
   detectionColl: {fileID: 2082943486}
-  maxTimeChasing: 4
+  maxTimeChasing: 2.5
   distanceToAttack: 3
   attackSpeed: 0.5
   maxAttackPercent: 0.15

@@ -35,7 +35,12 @@ public class BelethHealthController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.V))
+        {
+            GetDamage(1);
+        }
+
+
     }
 
     public void GetDamage(int _damageDeal, bool _doHurtAnim = true)

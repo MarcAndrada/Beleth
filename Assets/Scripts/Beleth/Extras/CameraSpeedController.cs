@@ -12,16 +12,20 @@ public class CameraSpeedController : MonoBehaviour
     private void Awake()
     {
         cinemachineCamera = GetComponent<CinemachineFreeLook>();
+        
+        if (SettingsController._SETTINGS_CONTROLLER != null)
+        {
+            cinemachineCamera.m_XAxis.m_MaxSpeed = SettingsController._SETTINGS_CONTROLLER.mouseSpeedX;
+            cinemachineCamera.m_YAxis.m_MaxSpeed = SettingsController._SETTINGS_CONTROLLER.mouseSpeedY;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetSpeedOnCamera() 
     {
         if (SettingsController._SETTINGS_CONTROLLER != null)
         {
             cinemachineCamera.m_XAxis.m_MaxSpeed = SettingsController._SETTINGS_CONTROLLER.mouseSpeedX;
             cinemachineCamera.m_YAxis.m_MaxSpeed = SettingsController._SETTINGS_CONTROLLER.mouseSpeedY;
         }
-
     }
 }

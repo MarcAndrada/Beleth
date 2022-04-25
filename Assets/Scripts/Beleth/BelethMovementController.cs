@@ -22,6 +22,8 @@ public class BelethMovementController : MonoBehaviour
     [SerializeField]
     private Transform[] floorRayPlaces;
     [SerializeField]
+    private Transform[] rampRayPlaces;
+    [SerializeField]
     private bool canMove = true;
     [SerializeField]
     [Tooltip("Velocidad en la que el personaje gira a los lados")]
@@ -44,7 +46,7 @@ public class BelethMovementController : MonoBehaviour
     [Tooltip("Velocidad en la que el personaje acelera estando en el aire")]
     private float glidingSpeed;
     [SerializeField]
-    private LayerMask floorLayer;
+    private LayerMask walkableLayers;
     private bool running;
     public bool onPlatform = false;
     private bool onRamp;
@@ -158,6 +160,7 @@ public class BelethMovementController : MonoBehaviour
             MovePlayer();
         }
 
+
         CheckRampMovement();
         
 
@@ -237,9 +240,32 @@ public class BelethMovementController : MonoBehaviour
     private void CheckIfGrounded() 
     {
         // Detecta si esta tocando el suelo
-        Ray floorRay = new Ray(floorRayPlaces[0].position, -transform.up);
-        if (Physics.Raycast(floorRay, out groundHit, maxFloorCheckDistance, floorLayer))
+        bool isGroundedNow = false;
+        int rayCounter = 0;
+        Ray[] floorRay = new Ray[floorRayPlaces.Length];
+        floorRay[0] = new Ray(floorRayPlaces[0].position, -transform.up);
+        floorRay[1] = new Ray(floorRayPlaces[1].position, -transform.up);
+        floorRay[2] = new Ray(floorRayPlaces[2].position, -transform.up);
+        floorRay[3] = new Ray(floorRayPlaces[3].position, -transform.up);
+        floorRay[4] = new Ray(floorRayPlaces[4].position, -transform.up);
+
+        foreach (Ray item in floorRay)
         {
+            rayCounter++;
+            if (Physics.Raycast(item, out groundHit, maxFloorCheckDistance, walkableLayers))
+            {
+                isGroundedNow = true;
+                break;
+            }
+        }
+
+        if (isGroundedNow)
+        {
+            for (int i = 0; i < rayCounter; i++)
+            {
+                Debug.DrawRay(floorRayPlaces[i].position, -transform.up, Color.blue);
+            }
+
             groundedPlayer = true;
             animController.SetOnAir();
             animController.SetFirstJump(true);
@@ -248,17 +274,8 @@ public class BelethMovementController : MonoBehaviour
         {
             groundedPlayer = false;
             animController.SetOnAir();
+            animController.SetFirstJump(false);
 
-            if (Physics.Raycast(floorRay, out groundHit, maxFloorCheckDistance * 6, floorLayer))
-            {
-                animController.SetFirstJump(true);
-            }
-            else
-            {
-                
-                animController.SetFirstJump(false);
-            }
-            
 
         }
 
@@ -268,62 +285,59 @@ public class BelethMovementController : MonoBehaviour
 
         float angleFloor = Vector3.Angle(groundHit.normal, Vector3.up);
 
-
-
-
-
+        //Si se esta moviendo y estas en un suelo que esta inclinado
         if (movementInput != Vector3.zero && angleFloor != 0)
         {
-
-            Debug.DrawRay(floorRayPlaces[0].position, -transform.up, Color.blue);
-            Debug.DrawRay(floorRayPlaces[1].position, floorRayPlaces[1].forward, Color.red);
-            Debug.DrawRay(floorRayPlaces[2].position, floorRayPlaces[2].forward, Color.red);
-            Debug.DrawRay(floorRayPlaces[1].position, floorRayPlaces[3].forward, Color.red);
-            Debug.DrawRay(floorRayPlaces[2].position, floorRayPlaces[4].forward, Color.green);
+            //Dibujar los gizmos de los rayos de deteccion de las rampas
+            Debug.DrawRay(rampRayPlaces[0].position, rampRayPlaces[0].forward, Color.red);
+            Debug.DrawRay(rampRayPlaces[1].position, rampRayPlaces[1].forward, Color.red);
+            Debug.DrawRay(rampRayPlaces[2].position, rampRayPlaces[2].forward, Color.red);
+            Debug.DrawRay(rampRayPlaces[3].position, rampRayPlaces[3].forward, Color.green);
 
 
             RaycastHit groundHit2;
             Vector3 slopeOffset;
-            bool bajada = false;
+            bool goingDown = false;
 
             //Esta subiendo
-            if (Physics.Raycast(new Ray(floorRayPlaces[1].position, floorRayPlaces[1].forward), out groundHit2, maxRampCheckDistance))
+            if (Physics.Raycast(new Ray(rampRayPlaces[0].position, rampRayPlaces[0].forward), out groundHit2, maxRampCheckDistance))
             {
 
                 angleFloor = Vector3.Angle(groundHit2.normal, Vector3.up);
                 slopeOffset = new Vector3(movementDirection.x * (currentAccel * 1.2f), angleFloor * 2, movementDirection.z * (currentAccel * 1.2f));
 
             }
-            else if (Physics.Raycast(new Ray(floorRayPlaces[2].position, floorRayPlaces[2].forward), out groundHit2, maxRampCheckDistance))
+            else if (Physics.Raycast(new Ray(rampRayPlaces[1].position, rampRayPlaces[1].forward), out groundHit2, maxRampCheckDistance))
             {
                 angleFloor = Vector3.Angle(groundHit2.normal, Vector3.up);
                 slopeOffset = new Vector3(movementDirection.x * (currentAccel * 1.2f), angleFloor * 2, movementDirection.z * (currentAccel * 1.2f));
 
             }
-            else if (Physics.Raycast(new Ray(floorRayPlaces[3].position, floorRayPlaces[3].forward), out groundHit2, maxRampCheckDistance))
+            else if (Physics.Raycast(new Ray(rampRayPlaces[2].position, rampRayPlaces[2].forward), out groundHit2, maxRampCheckDistance))
             {
                 angleFloor = Vector3.Angle(groundHit2.normal, Vector3.up);
                 slopeOffset = new Vector3(movementDirection.x * (currentAccel * 1.2f), angleFloor * 2, movementDirection.z * (currentAccel * 1.2f));
 
             }
-            //Esta bajando
             else
             {
 
+                //Esta bajando
                 RaycastHit groundHit3;
 
 
-                if (Physics.Raycast(new Ray(floorRayPlaces[4].position, floorRayPlaces[4].forward), out groundHit3, maxRampCheckDistance))
+                if (Physics.Raycast(new Ray(rampRayPlaces[3].position, rampRayPlaces[3].forward), out groundHit3, maxRampCheckDistance))
                 {
-                    if (groundHit3.distance > maxRampCheckDistance / 2 && !groundedPlayer)
+                    //// En caso de que se separe un poco del suelo se teletransportara al suelo
+                    if (groundHit3.distance > maxRampCheckDistance / 2f && !groundedPlayer)
                     {
                         transform.position = new Vector3(transform.position.x, groundHit3.point.y + (coll.height / 2), transform.position.z);
                     }
 
                     //Si ha dejado de tocar el suelo comprueba si hay algo en diagonal hacia atras si es asi envialo hacia abajo
                     angleFloor = -Vector3.Angle(groundHit3.normal, Vector3.up);
-                    slopeOffset = new Vector3(0, angleFloor / 2f, 0);
-                    bajada = true;
+                    slopeOffset = new Vector3(0, angleFloor / 2.5f, 0);
+                    goingDown = true;
 
                 }
                 else
@@ -335,7 +349,7 @@ public class BelethMovementController : MonoBehaviour
 
             }
 
-            if (!bajada)
+            if (!goingDown)
             {
                 rb.AddForce(slopeOffset, ForceMode.Force);
             }
@@ -541,10 +555,10 @@ public class BelethMovementController : MonoBehaviour
 
         isAttacking = true;
         rb.velocity = Vector3.zero;
+        canMove = false;
         yield return new WaitForSeconds(_timeToWait);
-
         isAttacking = false;
-
+        canMove = true;
     }
 
     #endregion

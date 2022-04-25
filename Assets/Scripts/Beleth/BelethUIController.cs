@@ -49,6 +49,7 @@ public class BelethUIController : MonoBehaviour
         belethController = GetComponent<BelethMovementController>();
         belethHealthController = GetComponent<BelethHealthController>();
 
+        cameraSpeedController.SetSpeedOnCamera();
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -203,7 +204,7 @@ public class BelethUIController : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Confined;
         pauseCanvas.SetActive(true);
-
+        cameraSpeedController.SetSpeedOnCamera();
     }
 
     public void UnPause()
@@ -215,6 +216,7 @@ public class BelethUIController : MonoBehaviour
         pauseCanvas.SetActive(false);
         settingsCanvas.SetActive(false);
         cameraSpeedController.enabled = false;
+        cameraSpeedController.SetSpeedOnCamera();
 
     }
 
