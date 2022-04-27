@@ -24,17 +24,19 @@ public class TridentController : MonoBehaviour
     [SerializeField]
     private float timeToWaitTridentPos;
 
+    [SerializeField]
+    private GameObject normalAttackCollider;
+    [SerializeField]
+    private GameObject wrathAttackCollider;
+
     private float tridentPlaceState = 0;
     private bool moving = false;
     private bool countingForTridentPos = false;
     private float timeWaitedTridentPos = 0;
-    private CapsuleCollider tridentCollider;
-    private BelethAnimController belethAnimController;
+
     // Start is called before the first frame update
     void Start()
     {
-        tridentCollider = trident.GetComponent<CapsuleCollider>();
-        belethAnimController = GetComponentInParent<BelethAnimController>();
 
     }
 
@@ -57,21 +59,33 @@ public class TridentController : MonoBehaviour
 
     }
 
-    public void StartTridentAttack() {
-        tridentCollider.enabled = true;
+    public void StartNormalAttack()
+    {
 
-        if (trident.tag == "Wrath")
-        {
-            foreach (var item in wrathParticles)
-            {
-                item.Play();
-            }
-        }
+        normalAttackCollider.SetActive(true);
+
     }
 
-    public void EndTridentAttack()
+    public void EndNormalAttack()
     {
-        tridentCollider.enabled = false;
+        normalAttackCollider.SetActive(false);
+    }
+
+
+    public void StartWrathAttack() {
+
+        wrathAttackCollider.SetActive(true);
+
+        foreach (var item in wrathParticles)
+        {
+            item.Play();
+        }
+        
+    }
+
+    public void EndWrathAttack()
+    {
+        wrathAttackCollider.SetActive(false);
     }
 
     public void ChangeTridentTag(string _newTag) {

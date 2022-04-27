@@ -11,114 +11,71 @@ public class PlatformController : MonoBehaviour
     [SerializeField]
     private float speed;
     [SerializeField]
-    private float maxPointDist;
-    [SerializeField]
     private float timeToWaitAtPoint;
     [SerializeField]
     [Tooltip("Si esta activado cuando llegue al ultimo punto volvera a empezar desde el 1 si no ira marcha atras \n Ej: El ultimo punto es el 8, en vez de ir al 1 va al 7 despues al 6 ...")]
     private bool restartWhenEnd;
 
+    [SerializeField]
     private int index = 0;
-    private Rigidbody rb;
-    private float[] directions = new float[3];
-    private bool[] reachedPoints = new bool[3];
+    [SerializeField]
+    private float placeToGoState = 0;
+    private Transform playerParent;
+    private float timeWaitedAtPoint = 0;
     private bool ascending;
     private bool canMove = true;
-    private CharacterController cc;
     private BelethMovementController playerCont;
     private BelethAnimController animController;
-
+    private Rigidbody playerRb;
+    private Rigidbody rb;
+    private Vector3 offsetPlayer;
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
         ascending = true;
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
         if (canMove)
-        { 
-            SetPlatformVelocities();
-            StartCoroutine(CheckIfReachedPoints());
-        }
-
-        SetRBVelocities();
-    }
-
-    private void SetPlatformVelocities() {
-
-        if (transform.position.x - placeToGo[index].transform.position.x > maxPointDist)
         {
-            directions[0] = -speed;
-        }
-        else if (transform.position.x - placeToGo[index].transform.position.x < -maxPointDist)
-        {
-            directions[0] = speed;
+            MoveNextPoint();
         }
         else
         {
-            directions[0] = 0;
-            reachedPoints[0] = true;
+            WaitToGoNextPoint();
         }
 
-        if (transform.position.y - placeToGo[index].transform.position.y > maxPointDist)
-        {
-           
-            directions[1] = -speed;
-        }
-        else if (transform.position.y - placeToGo[index].transform.position.y < -maxPointDist)
-        {
-            directions[1] = speed;
-        }
-        else
-        {
-            directions[1] = 0;
-            reachedPoints[1] = true;
-        }
-
-        if (transform.position.z - placeToGo[index].transform.position.z > maxPointDist)
-        {
-            directions[2] = -speed;
-        }
-        else if (transform.position.z - placeToGo[index].transform.position.z < -maxPointDist)
-        {
-            directions[2] = speed;
-        }
-        else
-        {
-            directions[2] = 0;
-            reachedPoints[2] = true;
-        }
 
     }
 
-    private void SetRBVelocities() {
-
-        rb.velocity = new Vector3(directions[0], directions[1], directions[2]);
-
-    }
-
-    private IEnumerator CheckIfReachedPoints() {
-        
-        if (reachedPoints[0] && reachedPoints[1] && reachedPoints[2])
+    private void MoveNextPoint() 
+    {
+        placeToGoState += (speed / 100) * Time.deltaTime;
+        //transform.position = Vector3.Lerp(transform.position, placeToGo[index].position, placeToGoState);
+        rb.MovePosition(Vector3.Lerp(transform.position, placeToGo[index].position, placeToGoState));
+        if (placeToGoState >= 0.03f)
         {
             canMove = false;
-            yield return new WaitForSeconds(timeToWaitAtPoint);
+        }
+
+    }
+
+    private void WaitToGoNextPoint() 
+    {
+        timeWaitedAtPoint += Time.deltaTime;
+
+        if (timeWaitedAtPoint >= timeToWaitAtPoint) 
+        {
             GoNextPoint();
-            for (int i = 0; i < reachedPoints.Length; i++)
-            {
-                reachedPoints[i] = false;
-            }
+            placeToGoState = 0;
             canMove = true;
+            timeWaitedAtPoint = 0;
 
         }
-        else
-        {
-            yield return null;
-        }
-    
+
     }
 
     private void GoNextPoint() {
@@ -155,6 +112,7 @@ public class PlatformController : MonoBehaviour
                 }
             }
         }
+
     }
 
 
@@ -163,35 +121,41 @@ public class PlatformController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player") {
-            cc = other.GetComponent<CharacterController>();
-            playerCont = other.GetComponent<BelethMovementController>();
-            animController = other.GetComponent<BelethAnimController>();
+            if (playerCont == null || animController == null)
+            {
+                playerCont = other.GetComponent<BelethMovementController>();
+                animController = other.GetComponent<BelethAnimController>();
+            }
             animController.SetOnPlatform(true);
-            other.gameObject.GetComponent<BelethMovementController>().onPlatform = true;
+            playerCont.onPlatform = true;
+            //playerParent = other.gameObject.transform.parent;
+            //playerParent.SetParent(gameObject.transform);
+            offsetPlayer = other.transform.position - transform.position;
+            playerRb =other.GetComponent<Rigidbody>();
         }
     }
+
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player" & cc)
+        if (other.tag == "Player")
         {
-            //if (rb.velocity.y <= 0)
-            //{
-            //    cc.Move(new Vector3(rb.velocity.x, rb.velocity.y, rb.velocity.z) * Time.deltaTime);
-            //}
-            //else
-            //{
-            //}
-            cc.Move(new Vector3(rb.velocity.x, -0.0001f, rb.velocity.z) * Time.deltaTime);
-
+            offsetPlayer = other.transform.position - transform.position;
+            if (placeToGoState < 0.03f)
+            {
+                playerRb.MovePosition(Vector3.Lerp(transform.position, placeToGo[index].position, placeToGoState) + offsetPlayer);
+            }
         }
+
     }
+
     private void OnTriggerExit(Collider other)
     {
 
         if (other.tag == "Player")
         {
-            animController.SetOnPlatform(false);
-            other.gameObject.GetComponent<BelethMovementController>().onPlatform = false;
+            //animController.SetOnPlatform(false);
+            //playerCont.onPlatform = false;
+            //playerParent.SetParent(null);
         }
 
     }

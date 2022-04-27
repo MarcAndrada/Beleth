@@ -54,8 +54,6 @@ public class BelethAttackController : MonoBehaviour
             {
                 case 0:
                     // En caso de que sea un ataque normal
-                    //Cambiarle el tag al tridente para saber el tipo de ataque
-                    tridentController.ChangeTridentTag("Trident");
                     //Poner el tridente en su posicion
                     tridentController.SetTridentPos(1);
                     //Reproducir sonido
@@ -71,10 +69,10 @@ public class BelethAttackController : MonoBehaviour
 
                 case 1:
                     // En caso de que sea un ataque con ira
+                    // Si esta en el suelo
                     if (movementController.groundedPlayer)
                     {
-                        //Cambiarle el tag al tridente para saber el tipo de ataque
-                        tridentController.ChangeTridentTag("Wrath");
+                        
                         //Poner el tridente en su posicion
                         tridentController.SetTridentPos(2);
                         //Reproducir sonido
