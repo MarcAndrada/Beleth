@@ -8,6 +8,7 @@ public class BelethCollisionController : MonoBehaviour
     private BelethHealthController healthController;
     private CoinController coinController;
     private BelethUIController uIController;
+    BelethMovementController movementController;
 
     private void Start()
     {
@@ -15,7 +16,7 @@ public class BelethCollisionController : MonoBehaviour
         healthController = GetComponent<BelethHealthController>();
         coinController = GetComponent<CoinController>();
         uIController = GetComponent<BelethUIController>();
-
+        movementController = GetComponent<BelethMovementController>();
 
     }
 
@@ -50,16 +51,21 @@ public class BelethCollisionController : MonoBehaviour
             currentCollectable.DisableCollectable();
         }
 
+        if (other.gameObject.tag == "BossAttack" || other.gameObject.tag == "Boss" || other.gameObject.tag == "Lava")
+        {
+            healthController.GetDamage(1);
+            Vector3 knockback = transform.position - other.transform.position;
+            if (other.gameObject.tag != "Boss")
+            {
+                movementController.AddImpulse(knockback, 2);
+            }
+        }
 
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "BossAttack" || other.gameObject.tag == "Boss" || other.gameObject.tag == "Lava")
-        {
-            healthController.GetDamage(1);
-
-        }
+        
     }
 
     private void OnParticleCollision(GameObject other)
@@ -67,7 +73,8 @@ public class BelethCollisionController : MonoBehaviour
         if (other.gameObject.tag == "BossAttack")
         {
             healthController.GetDamage(1);
-
+            Vector3 knockback = transform.position - other.transform.position;
+            movementController.AddImpulse(knockback, 2);
         }
     }
 

@@ -4818,7 +4818,7 @@ GameObject:
   - component: {fileID: 1944540135520179765}
   - component: {fileID: 1332532191530554689}
   - component: {fileID: -122981825603007150}
-  - component: {fileID: 8544901219386274782}
+  - component: {fileID: 7641179355066343107}
   m_Layer: 10
   m_Name: Meteor
   m_TagString: Untagged
@@ -4931,13 +4931,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f959a75d7876ae94e9b9a70f0dd5ce1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallingSpeed: 3
-  rotationSpeed: 2
+  fallingSpeed: 6
+  rotationSpeed: 3
   collisionMarkPrefab: {fileID: 7719785554100584558, guid: 5738bea72616e0045bee8d6dd2d8a4ce, type: 3}
+  floorLayer:
+    serializedVersion: 2
+    m_Bits: 8
   explosion:
   - {fileID: 2297049997465237482, guid: fbd78d9827db233449b0f878657425f4, type: 3}
   - {fileID: 3204722725349598820, guid: fe225e7a66fd0434ab5db24c08538a22, type: 3}
---- !u!114 &8544901219386274782
+--- !u!114 &7641179355066343107
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4946,11 +4949,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5952174810769810554}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20f254c735a52ef4d893c006e772cda6, type: 3}
+  m_Script: {fileID: 11500000, guid: cb0e5252798611441b1667146bf4be5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 3
-  force: 900
+  radius: 2
+  force: 10
   hole: {fileID: 3216362137383509398, guid: 8dc70f4167efbfd47ac8ba8cf2f6c76b, type: 3}
   brokenObject: {fileID: 5955764633137073346, guid: 73a6e2d7bf9678047942190aff7a913a, type: 3}
   wrathRock: {fileID: 983499171468384822, guid: 7162373b253918b4387fed0fb8fb9b83, type: 3}

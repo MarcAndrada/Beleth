@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 267049994851441543}
   - component: {fileID: 3785948619087665212}
   - component: {fileID: -3217973640704290622}
-  - component: {fileID: 524622515}
   m_Layer: 0
   m_Name: WrathRock
   m_TagString: Untagged
@@ -128,28 +127,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f38d9467846c2114eb8e059ccf6fccf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selfDestroy: 1
   moveHimself: 0
   timeToExplode: 0
   radius: 15
-  strenght: 70
-  upStrenght: 60
+  strenght: 0
+  upStrenght: 0
   playerImpulse: 0
-  bossDamage: 10
+  bossDamage: 13
   wrathVFX: {fileID: 2702810133988349118}
   explosionWrathVFX: {fileID: 2297049997465237482, guid: 8339f47f1106b48418e69581db7b4773, type: 3}
---- !u!114 &524622515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 983499171468384822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6b5b7323e89f8a4abbe5371cca95d22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeToDie: 15
 --- !u!1001 &5761263068275831215
 PrefabInstance:
   m_ObjectHideFlags: 0

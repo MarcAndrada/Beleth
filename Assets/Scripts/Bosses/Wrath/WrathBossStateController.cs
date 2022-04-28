@@ -37,7 +37,7 @@ public class WrathBossStateController : MonoBehaviour
 
     [Header("Meteoritos Fase 3")]
     [SerializeField]
-    private GameObject RocksManager;
+    public GameObject rocksManager;
 
     [Header("Audios")]
     [SerializeField]
@@ -63,7 +63,7 @@ public class WrathBossStateController : MonoBehaviour
 
         player = GameObject.FindWithTag("Player");
 
-        RocksManager.SetActive(false);
+        rocksManager.SetActive(false);
     }
 
 
@@ -133,7 +133,7 @@ public class WrathBossStateController : MonoBehaviour
                     //Hacer muerte del boss
                     currentFase = BossFase.NONE;
                     //Lamar a la funcion de muerte
-                    RocksManager.SetActive(false);
+                    rocksManager.SetActive(false);
                     animator.SetBool("Dead", true);
                     audiosource.PlayOneShot(deathSound);
 
@@ -203,27 +203,16 @@ public class WrathBossStateController : MonoBehaviour
         // hará el ataque de caída de piedras y topo truco. 
         //Durante esta fase el mundo entrara en ira y el “coliseo de pelea” tendrá la mecánica del nivel.
         //El jugador deberá huir/ esquivar durante estos ataques.Pero podrá atacar atrayendo al boss a las rocas restantes de la caída de piedras y/ o a las subidas de lava.
-
-        if (!RocksManager.activeInHierarchy)
-        {
-            DoCurrentAttack(fase3Patron[attackIndex], true);
-        }
-        else
-        {
-            CheckAttackIndex(2);
-
-            DoCurrentAttack(fase3Patron[attackIndex]);
-        }
-       
-
+        CheckAttackIndex(2);
+        DoCurrentAttack(fase3Patron[attackIndex]);
 
     }
 
     IEnumerator WaitForStopMeteorAnim() 
     {
         animator.SetTrigger("MeteorSummon");
-        RocksManager.SetActive(true);
-        yield return new WaitForSeconds(3f);
+        rocksManager.SetActive(true);
+        yield return new WaitForSeconds(8f);
 
         isDoingAction = false;
     
@@ -258,12 +247,12 @@ public class WrathBossStateController : MonoBehaviour
         }
     }
 
-    private void DoCurrentAttack(BossActions _attack, bool _doMeteors = false) 
+    private void DoCurrentAttack(BossActions _attack) 
     {
 
         isDoingAction = true;
         attackIndex++;
-        if (!_doMeteors)
+        if (rocksManager.activeInHierarchy)
         {
             switch (_attack)
             {
@@ -335,11 +324,14 @@ public class WrathBossStateController : MonoBehaviour
         currentFase = BossFase.NONE;
         currentAction = BossActions.NONE;
         DoCurrentAttack(BossActions.RESET_POS);
+        rocksManager.SetActive(false);
         yield return new WaitForSeconds(0.5f);
         isDoingAction = false;
         fighting = false;
         currentFase = BossFase.NONE;
         currentAction = BossActions.NONE;
+        rocksManager.SetActive(false);
+
     }
 
     #endregion

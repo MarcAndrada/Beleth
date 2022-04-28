@@ -128,10 +128,9 @@ public class PlatformController : MonoBehaviour
             }
             animController.SetOnPlatform(true);
             playerCont.onPlatform = true;
-            //playerParent = other.gameObject.transform.parent;
-            //playerParent.SetParent(gameObject.transform);
+            
             offsetPlayer = other.transform.position - transform.position;
-            playerRb =other.GetComponent<Rigidbody>();
+            playerRb = other.GetComponent<Rigidbody>();
         }
     }
 
@@ -144,18 +143,6 @@ public class PlatformController : MonoBehaviour
             {
                 playerRb.MovePosition(Vector3.Lerp(transform.position, placeToGo[index].position, placeToGoState) + offsetPlayer);
             }
-        }
-
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-
-        if (other.tag == "Player")
-        {
-            //animController.SetOnPlatform(false);
-            //playerCont.onPlatform = false;
-            //playerParent.SetParent(null);
         }
 
     }

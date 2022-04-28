@@ -12,9 +12,14 @@ public class VesselController : MonoBehaviour
     [Range(0, 5)]
     private int coinsIntoVassel;
     [SerializeField]
-    private float coinSpawnOffset; 
+    private float coinSpawnOffset;
+    private BrokenPiecesController brokenPieces;
 
-    
+    private void Awake()
+    {
+        brokenPieces = GetComponent<BrokenPiecesController>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -85,8 +90,7 @@ public class VesselController : MonoBehaviour
 
         }
 
-        Destroy(gameObject);
-
+        brokenPieces.Break();
     }
 }
 

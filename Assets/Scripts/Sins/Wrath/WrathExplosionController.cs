@@ -7,6 +7,8 @@ public class WrathExplosionController : MonoBehaviour
 {
     [Header("Variables")]
     [SerializeField]
+    private bool selfDestroy;
+    [SerializeField]
     bool moveHimself;
     [SerializeField]
     float timeToExplode;
@@ -73,15 +75,9 @@ public class WrathExplosionController : MonoBehaviour
                 hit.gameObject.GetComponentInParent<WrathBossStateController>().GetDamage(bossDamage, gameObject);
             }
 
-            if (hit.gameObject.tag == "Breakable")
+            if (hit.gameObject.tag == "Breakable" || hit.gameObject.tag == "Muro")
             {
-                hit.gameObject.GetComponent<MeteorFragmentController>().Break();
-
-            }
-
-            if (hit.gameObject.tag == "Muro")
-            {
-                hit.gameObject.GetComponent<WallController>().Break();
+                hit.gameObject.GetComponent<BrokenPiecesController>().Break();
             }
 
 
@@ -95,7 +91,14 @@ public class WrathExplosionController : MonoBehaviour
             }
         }
 
-        SetNormal();
+        if (selfDestroy)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            SetNormal();
+        }
     }
 
     private void SetWrath(BelethSinsController _player)

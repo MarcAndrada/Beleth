@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallController : MonoBehaviour
+public class BrokenPiecesController : MonoBehaviour
 {
     [SerializeField]
-    GameObject BrokeWall;
+    GameObject BrokePiece;
     [SerializeField]
-    GameObject existingBrokeWall;
+    GameObject existingBrokenPiece;
 
     bool can;
 
@@ -15,13 +15,13 @@ public class WallController : MonoBehaviour
     {
         if (!can)
         {
-            if (existingBrokeWall != null)
+            if (existingBrokenPiece != null)
             {
-                existingBrokeWall.SetActive(true);
+                existingBrokenPiece.SetActive(true);
             }
             else
             {
-                Instantiate(BrokeWall);
+                Instantiate(BrokePiece);
             }            
             can = true;
             Destroy(gameObject);

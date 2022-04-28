@@ -41,10 +41,11 @@ public class FallingrockManager : MonoBehaviour
     IEnumerator rockTimer()
     {
         actualRocks++;
+        
+        yield return new WaitForSeconds(timeToSpawn);
         Vector3 pos = posToSpawn();
         Instantiate(fallingRock, pos, Quaternion.identity);
-        yield return new WaitForSeconds(timeToSpawn);
-        
+
     }
 
     Vector3 posToSpawn()

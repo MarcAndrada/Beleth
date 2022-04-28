@@ -189,7 +189,7 @@ public class BelethMovementController : MonoBehaviour
 
 
             // Cambiara la velocidad de rotacion en caso de si estamos en el suelo o no
-            if (groundedPlayer)
+            if (groundedPlayer || onPlatform)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, floorRotationSpeed * Time.fixedDeltaTime);
             }
@@ -420,7 +420,7 @@ public class BelethMovementController : MonoBehaviour
     }
     private void CheckAccelSpeed()
     {
-        if (groundedPlayer)
+        if (groundedPlayer || onPlatform )
         {
             if (!running)
             {
@@ -525,7 +525,7 @@ public class BelethMovementController : MonoBehaviour
     private void SetRunning()
     {
 
-        if (groundedPlayer)
+        if (groundedPlayer || onPlatform)
         {
             // Revisar segun si ha apretado el boton de correr o no empezara a correr o dejara de hacerlo solo si esta en el suelo
             if (runAction.ReadValue<float>() == 1)
