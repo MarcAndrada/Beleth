@@ -10,12 +10,10 @@ public class BelethAnimController : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake() 
     {
         animator = GetComponentInChildren<Animator>();
         movmentController = GetComponent<BelethMovementController>();
-        animator.SetBool("OnFloor", true);
-        
     }
 
     #region Movement Animations

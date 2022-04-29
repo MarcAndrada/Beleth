@@ -7,12 +7,12 @@ public class WrathBossAnimEvents : MonoBehaviour
 
     [SerializeField]
     private GameObject parent;
+    private WrathBossStateController bossController;
     private WrathBossAttackController wrathBossAttackController;
-    private AudioSource audiosource;
-    private void Start()
+    private void Awake()
     {
+        bossController = GetComponentInParent<WrathBossStateController>();
         wrathBossAttackController = GetComponentInParent<WrathBossAttackController>();
-        audiosource = GetComponentInParent<AudioSource>();
 
     }
 
@@ -21,6 +21,10 @@ public class WrathBossAnimEvents : MonoBehaviour
         wrathBossAttackController.BrakeFloorAttakAction();
     }
 
+    public void StopBeginDamaged() 
+    {
+        bossController.isDamaged = false;
+    }
 
     public void DestroyBoss() 
     {

@@ -40,23 +40,24 @@ public class WrathBossStateController : MonoBehaviour
     public GameObject rocksManager;
 
     [Header("Audios")]
-    [SerializeField]
-    private AudioClip damagedSound;
-    [SerializeField]
-    private AudioClip deathSound;
+    
 
+    [HideInInspector]
     public bool isDoingAction = false;
+    [HideInInspector]
+    public bool isDamaged = false;
 
-    private WrathBossAttackController attackController;
+    [HideInInspector]
     public GameObject player;
+    private WrathBossAttackController attackController;
     private Animator animator;
-    private AudioSource audiosource;
+    private AudioSource audioSource;
 
     private void Awake()
     {
         attackController = GetComponent<WrathBossAttackController>();
         animator = GetComponentInChildren<Animator>();
-        audiosource = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
 
 
         currentHP = maxHP;
@@ -69,7 +70,7 @@ public class WrathBossStateController : MonoBehaviour
 
     private void Update()
     {
-        if (fighting)
+        if (fighting && !isDamaged)
         {
             CheckCurrentFase();
             DoCurrentFase();
@@ -135,7 +136,7 @@ public class WrathBossStateController : MonoBehaviour
                     //Lamar a la funcion de muerte
                     rocksManager.SetActive(false);
                     animator.SetBool("Dead", true);
-                    audiosource.PlayOneShot(deathSound);
+                    SoundManager._SOUND_MANAGER.WrathBossDeadSound(audioSource);
 
                 }
                 break;
@@ -282,33 +283,32 @@ public class WrathBossStateController : MonoBehaviour
             StartCoroutine(WaitForStopMeteorAnim());
         }
     }
-    IEnumerator WaitWhileDamaged()
-    {
-        attackController.SetIsAttacking(false);
-        attackIndex = 0;
-        isDoingAction = true;
-        audiosource.PlayOneShot(damagedSound);
 
-        yield return new WaitForSeconds(3.5f);
-
-        isDoingAction = false;
-
-    }
 
     #endregion
 
     #region ExternActions
     public void GetDamage(float _damageDealt, GameObject _obj) {
 
+        //Hacer que deje de atacar
+        attackController.SetIsAttacking(false);
+        //Que deje de hacer cualquier ataque
+        isDoingAction = false;
+        //Reproducir Sonido
+        SoundManager._SOUND_MANAGER.WrathBossDamagedSound(audioSource);
+        //Quitarle vida
         currentHP -= _damageDealt;
+        //Activar la animacion
         animator.SetTrigger("Damaged");
-        audiosource.PlayOneShot(damagedSound);
-        StartCoroutine(WaitWhileDamaged());
+        //Decirle que ha sido dañado
+        isDamaged = true;
+
     }
 
     public IEnumerator StartFight() 
     {
         fighting = true;
+        isDamaged = false;
         yield return new WaitForSeconds(2.5f);
         currentAction = BossActions.BRAKE_FLOOR;
         currentFase = BossFase.FASE_1;

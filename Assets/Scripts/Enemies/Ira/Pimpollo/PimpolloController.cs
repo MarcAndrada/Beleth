@@ -49,17 +49,7 @@ public class PimpolloController : MonoBehaviour
 
 
     [Header("Sound")]
-    [SerializeField]
-    private AudioClip unHideSound;
-    [SerializeField]
-    private AudioClip chaseSound;
-    [SerializeField]
-    private AudioClip jumpSound;
-    [SerializeField]
-    private AudioClip explosionSound;
-    [SerializeField]
-    private AudioClip deathSound;
-    private AudioSource audioSource;
+    
 
 
 
@@ -71,9 +61,9 @@ public class PimpolloController : MonoBehaviour
 
     private NavMeshAgent navMesh;
     private GameObject player;
-   
     private Animator animator;
     private Rigidbody rb;
+    private AudioSource audioSource;
 
     // Start is called before the first frame update
     void Start()
@@ -130,7 +120,8 @@ public class PimpolloController : MonoBehaviour
             navMesh.enabled = false;
             if (attackTranscurse <= 0)
             {
-                audioSource.PlayOneShot(jumpSound);
+                SoundManager._SOUND_MANAGER.PimpolloJumpSound(audioSource);
+
             }
 
             if (attackTranscurse < maxAttackPercent)
@@ -142,8 +133,8 @@ public class PimpolloController : MonoBehaviour
                 if (!destroying)
                 {
                     SelfDestroy();
-                    
-                    audioSource.PlayOneShot(explosionSound);
+
+                    SoundManager._SOUND_MANAGER.WrathBossEnemieCircleSound(audioSource);
                     Destroy(gameObject);
                 }
             }
@@ -182,7 +173,7 @@ public class PimpolloController : MonoBehaviour
         yield return new WaitForSeconds(timeToWait);
         chasePlayer = true;
         StartCoroutine(WaitToExplode());
-        audioSource.PlayOneShot(chaseSound);
+        SoundManager._SOUND_MANAGER.PimpolloChaseSound(audioSource);
     }
 
     private IEnumerator WaitToExplode()
@@ -196,7 +187,7 @@ public class PimpolloController : MonoBehaviour
     private IEnumerator WaitToDeathSound(float _timeToWait) 
     {
         yield return new WaitForSeconds(_timeToWait);
-        audioSource.PlayOneShot(deathSound);
+        SoundManager._SOUND_MANAGER.PimpolloDeathSound(audioSource);
     }
     private IEnumerator WaitToDestroy(float _timeToWait) 
     {
@@ -209,8 +200,7 @@ public class PimpolloController : MonoBehaviour
         animator.SetBool("Hide", false);
         yield return new WaitForSeconds(0.2f);
         hide = false;
-        audioSource.PlayOneShot(unHideSound);
-
+        SoundManager._SOUND_MANAGER.PimpolloUnHideSound(audioSource);
     }
 
 

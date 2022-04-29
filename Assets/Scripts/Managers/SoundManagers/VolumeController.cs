@@ -25,7 +25,7 @@ public class VolumeController : MonoBehaviour
     [SerializeField]
     private Slider sfxSlider;
 
-    private float multiplier = 20;
+    private float multiplier = 35;
 
     // Start is called before the first frame update
     private void Awake()

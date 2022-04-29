@@ -10,17 +10,28 @@ public class BelethHealthController : MonoBehaviour
     private int maxHealthPoints;
     [SerializeField]
     public int healthPoints;
+    
     [SerializeField]
     [Tooltip("Tiempo de invulnerabilidad despues de que te peguen")]
-    private float inmortalTime;
+    private float timeToWaitInmortal;
+    [SerializeField]
+    [Tooltip("Tiempo en el que tarda en reaparecer")]
+    private float timeToWaitDead;
+    [SerializeField]
+    [Tooltip("Tiempo en el que tarda en devolver el movimiento tras ser golpeado")]
+    private float timeToWaitDamaged;
 
     private bool canBeDamaged = true;
     private bool isAlive = true;
+    private bool isDamaged = false;
+    private float timeWaitedImortal = 0;
+    private float timeWaitedDead = 0;
+    private float timeWaitedDamaged = 0;
     private BelethUIController uiController;
     private BelethAnimController animController;
     private BelethCheckPointManager checkPointManager;
     private BelethMovementController movementController;
-    WrathBossActivator activator;
+    private WrathBossActivator activator;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +51,46 @@ public class BelethHealthController : MonoBehaviour
             GetDamage(1);
         }
 
+        if (!canBeDamaged && isAlive)
+        {
+            timeWaitedImortal += Time.deltaTime;
+            if (timeWaitedImortal >= timeToWaitInmortal)
+            {
+                canBeDamaged = true;
+                timeWaitedImortal = 0;
+            }
+        }
+
+        if (isDamaged && isAlive)
+        {
+            timeWaitedDamaged += Time.deltaTime;
+            if (timeWaitedDamaged >= timeToWaitDamaged)
+            {
+                movementController.SetCanMove(true);
+                isDamaged = false;
+                timeWaitedDamaged = 0;
+
+            }
+
+        }
+        
+        if (!isAlive)
+        {
+            timeWaitedDead += Time.deltaTime;
+
+            if (timeWaitedDead >= timeToWaitDead)
+            {
+                movementController.SetCanMove(true);
+                checkPointManager.GoLastCheckPoint();
+                isAlive = true;
+                SoundManager._SOUND_MANAGER.ReviveSound();
+                healthPoints = maxHealthPoints;
+                animController.SetHealthValue(healthPoints);
+                timeWaitedDead = 0;
+            }
+
+
+        }
 
     }
 
@@ -57,17 +108,9 @@ public class BelethHealthController : MonoBehaviour
             }
 
             canBeDamaged = false;
-            movementController.SetCanMove(false);
             CheckHP();
-            StartCoroutine(WaitForInmortalFrames());
 
         }
-    }
-
-    IEnumerator WaitForInmortalFrames() 
-    {
-        yield return new WaitForSeconds(inmortalTime);
-        canBeDamaged = true;
     }
 
     private void CheckHP()
@@ -86,7 +129,8 @@ public class BelethHealthController : MonoBehaviour
         else
         {
             SoundManager._SOUND_MANAGER.BelethDamaged();
-            StartCoroutine(WaitToMoveAgain());
+            isDamaged = true;
+            movementController.SetCanMove(false);
         }
     }
 
@@ -99,32 +143,14 @@ public class BelethHealthController : MonoBehaviour
         //Hacer la animacion de muerte
         
         //Debug.Log("Has muerto");
-        StartCoroutine(Respawn());
         activator.PlayerExit();
 
 
     }
 
-    private IEnumerator Respawn() {
-
-        yield return new WaitForSeconds(2f);
-        movementController.SetCanMove(true);
-        checkPointManager.GoLastCheckPoint();
-        isAlive = true;
-        SoundManager._SOUND_MANAGER.ReviveSound();
-        healthPoints = maxHealthPoints;
-        animController.SetHealthValue(healthPoints);
-
-    }
 
     public int GetHealthPoints() { 
         return healthPoints;
     }
 
-    private IEnumerator WaitToMoveAgain() { 
-
-        yield return new WaitForSeconds (0.5f);
-        
-        movementController.SetCanMove(true);
-    }
 }

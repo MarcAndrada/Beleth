@@ -18,35 +18,60 @@ public class SoundManager : MonoBehaviour
     private AudioClip bossMusicClip;
 
 
-    [Header("Sounds")]
+    [Header("BelethSounds")]
     [SerializeField]
-    private float[] maxAndMinPitch;
+    private float[] actionsPitch;
     [SerializeField]
     private float[] voicePitch;
     [SerializeField]
-    private AudioClip[] footsteps;
+    private AudioClip[] beleth_Footsteps;
     [SerializeField]
-    private AudioClip[] wingFlap;
+    private AudioClip[] beleth_WingFlap;
     [SerializeField]
-    private AudioClip normalAttack;
+    private AudioClip beleth_NormalAttack;
     [SerializeField]
-    private AudioClip wrathAttack;
+    private AudioClip beleth_WrathAttack;
     [SerializeField]
-    private AudioClip wrathActivation;
+    private AudioClip beleth_WrathActivation;
     [SerializeField]
-    private AudioClip jump;
+    private AudioClip beleth_Jump;
     [SerializeField]
-    private AudioClip belethDamage;
+    private AudioClip beleth_Damage;
     [SerializeField]
-    private AudioClip belethDeath;
+    private AudioClip beleth_Death;
     [SerializeField]
-    private AudioClip revive;
+    private AudioClip beleth_Revive;
     [SerializeField]
     private AudioClip checkPoint;
+    
 
+    [Header("WrathBoss Sounds")]
     [SerializeField]
-    private AudioClip wrathExplosion; 
+    private AudioClip wrathBoss_GoBelowFloor;
+    [SerializeField]
+    private AudioClip wrathBoss_ReturnBelowFloor;
+    [SerializeField]
+    private AudioClip wrathBoss_LavaCircle;
+    [SerializeField]
+    private AudioClip wrathBoss_EnemieCircle;
+    [SerializeField]
+    private AudioClip wrathBoss_Damaged;
+    [SerializeField]
+    private AudioClip wrathBoss_Death;
 
+    [Header("Pimpollo Sounds")]
+    [SerializeField]
+    private AudioClip pimpollo_UnHide;
+    [SerializeField]
+    private AudioClip pimpollo_Chase;
+    [SerializeField]
+    private AudioClip pimpollo_Jump;
+    [SerializeField]
+    private AudioClip pimpollo_Explosion;
+    [SerializeField]
+    private AudioClip pimpollo_Death;
+
+    [Header("Menu Sounds")]
     [SerializeField]
     private AudioClip clickSound;
     [SerializeField]
@@ -78,32 +103,32 @@ public class SoundManager : MonoBehaviour
 
     public void SoundRandomFootstep(AudioSource _currentAS)
     {
-        _currentAS.pitch = Random.Range(maxAndMinPitch[0], maxAndMinPitch[1]);
-        _currentAS.PlayOneShot(footsteps[Random.Range(0, footsteps.Length - 1)]);
+        _currentAS.pitch = Random.Range(actionsPitch[0], actionsPitch[1]);
+        _currentAS.PlayOneShot(beleth_Footsteps[Random.Range(0, beleth_Footsteps.Length - 1)]);
     }
 
     public void Jump(AudioSource _currentAS)
     {
         _currentAS.pitch = Random.Range(voicePitch[0], voicePitch[1]);
-        _currentAS.PlayOneShot(jump);
+        _currentAS.PlayOneShot(beleth_Jump);
     }
 
     public void WingsSound(AudioSource _currentAS)
     {
-        _currentAS.pitch = Random.Range(maxAndMinPitch[0], maxAndMinPitch[1]);
-        _currentAS.PlayOneShot(wingFlap[Random.Range(0, wingFlap.Length - 1)]);
+        _currentAS.pitch = Random.Range(actionsPitch[0], actionsPitch[1]);
+        _currentAS.PlayOneShot(beleth_WingFlap[Random.Range(0, beleth_WingFlap.Length - 1)]);
     }
 
     public void NormalAttackSound(AudioSource _currentAS)
     {
         _currentAS.pitch = Random.Range(voicePitch[0], voicePitch[1]);
-        _currentAS.PlayOneShot(normalAttack);
+        _currentAS.PlayOneShot(beleth_NormalAttack);
     }
 
     public void WrathAttackSound(AudioSource _currentAS)
     {
         _currentAS.pitch = Random.Range(voicePitch[0], voicePitch[1]);
-        _currentAS.PlayOneShot(wrathAttack);
+        _currentAS.PlayOneShot(beleth_WrathAttack);
 
     }
 
@@ -111,7 +136,7 @@ public class SoundManager : MonoBehaviour
     {
         if (_numList > 0)
         {
-            audioSource2D.PlayOneShot(wrathActivation);
+            audioSource2D.PlayOneShot(beleth_WrathActivation);
         }
         else
         {
@@ -122,23 +147,79 @@ public class SoundManager : MonoBehaviour
 
     public void BelethDamaged()
     {
-        audioSource2D.PlayOneShot(belethDamage);
+        audioSource2D.PlayOneShot(beleth_Damage);
     }
 
     public void BelethDeath()
     {
-        audioSource2D.PlayOneShot(belethDeath);
+        audioSource2D.PlayOneShot(beleth_Death);
     }
 
     public void ReviveSound()
     {
-        audioSource2D.PlayOneShot(revive);
+        audioSource2D.PlayOneShot(beleth_Revive);
     }
 
     public void CheckPointSound()
     {
         audioSource2D.PlayOneShot(checkPoint);
 
+    }
+
+    #endregion
+
+    #region Boss Sounds
+    public void WrathBossGoBelowFloorSound(AudioSource _currentAS)
+    {
+        _currentAS.PlayOneShot(wrathBoss_GoBelowFloor);
+    }
+    public void WrathBossReturnBelowFloorSound(AudioSource _currentAS)
+    {
+        if (true)
+        {
+
+        }
+        _currentAS.PlayOneShot(wrathBoss_ReturnBelowFloor);
+    }
+    public void WrathBossLavaCircleSound(AudioSource _currentAS)
+    {
+        _currentAS.PlayOneShot(wrathBoss_LavaCircle);
+    }
+    public void WrathBossEnemieCircleSound(AudioSource _currentAS)
+    {
+        _currentAS.PlayOneShot(wrathBoss_EnemieCircle);
+    }
+    public void WrathBossDamagedSound(AudioSource _currentAS)
+    {
+        _currentAS.PlayOneShot(wrathBoss_Damaged);
+    }
+    public void WrathBossDeadSound(AudioSource _currentAS)
+    {
+        _currentAS.PlayOneShot(wrathBoss_Death);
+    }
+
+    #endregion
+
+    #region Pimpollo Sounds
+    public void PimpolloUnHideSound(AudioSource _currentAS)
+    {
+        _currentAS.PlayOneShot(pimpollo_UnHide);
+    }
+    public void PimpolloChaseSound(AudioSource _currentAS)
+    {
+        _currentAS.PlayOneShot(pimpollo_Chase);
+    }
+    public void PimpolloJumpSound(AudioSource _currentAS)
+    {
+        _currentAS.PlayOneShot(pimpollo_Jump);
+    }
+    public void PimpolloExplosionSound(AudioSource _currentAS)
+    {
+        _currentAS.PlayOneShot(pimpollo_Explosion);
+    }
+    public void PimpolloDeathSound(AudioSource _currentAS)
+    {
+        _currentAS.PlayOneShot(pimpollo_Death);
     }
 
     #endregion
@@ -164,8 +245,8 @@ public class SoundManager : MonoBehaviour
     {
         if (_currentAS != null)
         {
-            _currentAS.pitch = Random.Range(maxAndMinPitch[0], maxAndMinPitch[1]);
-            _currentAS.PlayOneShot(wrathActivation);
+            _currentAS.pitch = Random.Range(actionsPitch[0], actionsPitch[1]);
+            _currentAS.PlayOneShot(beleth_WrathActivation);
         }
         
     }

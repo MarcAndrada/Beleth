@@ -46,7 +46,7 @@ public class BelethMovementController : MonoBehaviour
     [Tooltip("Velocidad en la que el personaje acelera estando en el aire")]
     private float glidingSpeed;
     [SerializeField]
-    private LayerMask walkableLayers;
+    public LayerMask walkableLayers;
     private bool running;
     public bool onPlatform = false;
     private bool onRamp;
@@ -64,7 +64,7 @@ public class BelethMovementController : MonoBehaviour
     [SerializeField]
     private float jumpImpulse;
     [SerializeField]
-    private float maxFloorCheckDistance;
+    public float maxFloorCheckDistance;
     [SerializeField]
     private float maxRampCheckDistance;
     [SerializeField]
@@ -146,6 +146,7 @@ public class BelethMovementController : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         //Comprobar si esta en el suelo y se le debe quitar la grabedad (para las rampas)
         if (movementInput != Vector3.zero  && onRamp || !onRamp) 
         {
@@ -154,7 +155,7 @@ public class BelethMovementController : MonoBehaviour
 
         //rb.AddForce(transform.forward * axis.y * 200,ForceMode.Acceleration);
 
-        if (canMove)
+        if (canMove && !CinematicsController._CINEMATICS_CONTROLLER.isPlayingCinematic)
         {
             RotatePlayer();
             MovePlayer();
@@ -220,7 +221,7 @@ public class BelethMovementController : MonoBehaviour
 
     private void CheckMovementInput() 
     {
-        if (recibedInputs.x != 0 && canMove || recibedInputs.y != 0 && canMove)
+        if (recibedInputs.x != 0 && canMove && !CinematicsController._CINEMATICS_CONTROLLER.isPlayingCinematic || recibedInputs.y != 0 && canMove && !CinematicsController._CINEMATICS_CONTROLLER.isPlayingCinematic)
         {
             movementInput = Quaternion.Euler(0, followCamera.transform.eulerAngles.y, 0) * new Vector3(recibedInputs.x, 0, recibedInputs.y);
             animController.SetMovmentInput(true);
@@ -525,7 +526,7 @@ public class BelethMovementController : MonoBehaviour
     private void SetRunning()
     {
 
-        if (groundedPlayer || onPlatform)
+        if (groundedPlayer || onPlatform )
         {
             // Revisar segun si ha apretado el boton de correr o no empezara a correr o dejara de hacerlo solo si esta en el suelo
             if (runAction.ReadValue<float>() == 1)
@@ -564,6 +565,7 @@ public class BelethMovementController : MonoBehaviour
             return false;
         }
     }
+
     #endregion
 
     #region Extern Actions

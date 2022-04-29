@@ -8,22 +8,24 @@ public class BelethCheckPointManager : MonoBehaviour
     private float timeSetNewRespawn;
 
     [SerializeField]
-    private float maxFallDistance;
-    [SerializeField]
-    private int voidFallDamage;
+    private Transform[] respawnPointCheckers;
 
+   
 
+    private float timeWaitedToNewRespawn = 0;
+    private bool canSaveRespawnPoint = true;
     private Vector3 lastRespawn;
     private Vector3 lastCheckPoint;
-
-    private bool canSaveRespawnPoint = true;
-    private BelethHealthController healthController;
     private BelethMovementController movementController;
+
+    private void Awake()
+    {
+        movementController = GetComponent<BelethMovementController>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        healthController = GetComponent<BelethHealthController>();
-        movementController = GetComponent<BelethMovementController>();
 
         lastCheckPoint = transform.position;
         lastRespawn = transform.position;
@@ -32,29 +34,43 @@ public class BelethCheckPointManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (canSaveRespawnPoint && !movementController.onPlatform && movementController.groundedPlayer)
+        if (!canSaveRespawnPoint)
         {
-            StartCoroutine(WaitForSetNewPoint());
-        }
+            timeWaitedToNewRespawn += Time.deltaTime;
 
-        if (transform.position.y < lastRespawn.y + maxFallDistance)
-        {
-            healthController.GetDamage(voidFallDamage, false);
-
-            if (healthController.GetHealthPoints() > 0)
+            if (timeWaitedToNewRespawn >= timeSetNewRespawn)
             {
-                GoLastRespawn();
-
+                canSaveRespawnPoint = true;
+                timeWaitedToNewRespawn = 0;
             }
         }
 
-
+        if (canSaveRespawnPoint && !movementController.onPlatform && movementController.groundedPlayer)
+        {
+            SetNewRespawn(transform.position);
+        }
 
     }
     
-
     public void SetNewRespawn(Vector3 _newRecoverZonePos) {
-        lastRespawn = _newRecoverZonePos;
+
+        bool canSave = true;
+
+        foreach (Transform item in respawnPointCheckers)
+        {
+            if (!Physics.Raycast(new Ray(item.position, -transform.up), movementController.maxFloorCheckDistance, movementController.walkableLayers))
+            {
+                canSave = false;
+                break;
+            }
+        }
+
+        if (canSave)
+        {
+            lastRespawn = _newRecoverZonePos;
+            canSaveRespawnPoint = false;
+        }
+        
 
     }
 
@@ -77,16 +93,5 @@ public class BelethCheckPointManager : MonoBehaviour
        
 
     }
-
-    private IEnumerator WaitForSetNewPoint() {
-
-        SetNewRespawn(transform.position);
-        canSaveRespawnPoint = false;
-        yield return new WaitForSeconds(timeSetNewRespawn);
-        canSaveRespawnPoint = true;
-
-
-    }
-
 
 }

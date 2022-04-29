@@ -13,12 +13,6 @@ public class ExplosionController : MonoBehaviour
         StartCoroutine(StopCollision());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     IEnumerator StopCollision() { 
 
         yield return new WaitForSeconds(0.4f);
