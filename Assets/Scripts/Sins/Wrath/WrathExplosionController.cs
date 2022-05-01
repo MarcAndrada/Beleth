@@ -60,7 +60,7 @@ public class WrathExplosionController : MonoBehaviour
 
         if (gameObject.tag == "Activator")
         {
-            gameObject.GetComponent<ActivatorsController>().ActivateCurrentArm();
+            gameObject.GetComponent<ActivatorController>().ActivatorUsed();
         }
 
         foreach (Collider hit in colliders)

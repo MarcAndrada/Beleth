@@ -9,6 +9,8 @@ public class MeteorFragmentController : MonoBehaviour
     float radius;
     [SerializeField]
     float force;
+    [SerializeField]
+    private int spawnRate;
 
     [Header("GameObjects")]
     [SerializeField]
@@ -34,7 +36,7 @@ public class MeteorFragmentController : MonoBehaviour
         }
 
         int i = 1;
-        if (Random.Range(0, 8) == i) Instantiate(wrathRock, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
+        if (Random.Range(0, spawnRate) == i) Instantiate(wrathRock, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
 
         Destroy(gameObject);
     }

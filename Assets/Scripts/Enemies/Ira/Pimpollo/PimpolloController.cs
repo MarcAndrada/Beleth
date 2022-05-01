@@ -65,13 +65,19 @@ public class PimpolloController : MonoBehaviour
     private Rigidbody rb;
     private AudioSource audioSource;
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void Awake()
     {
         navMesh = GetComponent<NavMeshAgent>();
         animator = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
 
         if (hide)
         {

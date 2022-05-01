@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BelethAnimController : MonoBehaviour
 {
-
+    [SerializeField]
     private Animator animator;
     private BelethMovementController movmentController;
 
@@ -12,7 +12,6 @@ public class BelethAnimController : MonoBehaviour
     // Start is called before the first frame update
     void Awake() 
     {
-        animator = GetComponentInChildren<Animator>();
         movmentController = GetComponent<BelethMovementController>();
     }
 

@@ -11,20 +11,9 @@ public class WrathBossActivator : MonoBehaviour
 
     [Header("Door")]
     [SerializeField]
-    private GameObject door;
+    private DoorController door;
+
     private BelethHealthController playerHealth;
-    private Vector3 doorStarterPoint;
-    private Rigidbody doorRigidBody;
-    private bool doorClosing = false;
-    private float doorCloseState = 0;
-    [SerializeField]
-    private float doorCloseSpeed;
-
-    private void Awake()
-    {
-        doorRigidBody = door.GetComponent<Rigidbody>();
-
-    }
 
     private void Start()
     {
@@ -32,12 +21,8 @@ public class WrathBossActivator : MonoBehaviour
 
 
         BossCanvas.SetActive(false);
-        doorStarterPoint = door.transform.position;
 
         boss.rocksManager.SetActive(false);
-        doorClosing = false;
-        doorRigidBody.MovePosition(new Vector3(doorStarterPoint.x, doorStarterPoint.y - 30, doorStarterPoint.z));
-        doorCloseState = 0;
 
     }
 
@@ -49,26 +34,35 @@ public class WrathBossActivator : MonoBehaviour
             PlayerExit();
         }
 
-        if (doorClosing)
-        {
-            doorCloseState += doorCloseSpeed/100 * Time.deltaTime;
-            doorRigidBody.MovePosition(Vector3.Lerp(door.transform.position, new Vector3(doorStarterPoint.x, doorStarterPoint.y, doorStarterPoint.z), doorCloseState));
-            if (doorCloseState >= 1)
-            {
-                doorClosing = false;
-            }
-        }
+        //if (doorClosing)
+        //{
+        //    doorCloseState += doorCloseSpeed/100 * Time.deltaTime;
+        //    doorRigidBody.MovePosition(Vector3.Lerp(door.transform.position, new Vector3(doorStarterPoint.x, doorStarterPoint.y, doorStarterPoint.z), doorCloseState));
+        //    if (doorCloseState >= 1)
+        //    {
+        //        doorClosing = false;
+        //    }
+        //}
 
+    }
+
+    private void PlayerEnter() 
+    {
+        StartCoroutine(boss.StartFight());
+        BossCanvas.SetActive(true);
+        SoundManager._SOUND_MANAGER.ChangeMusicBoss();
+        door.CloseDoor();
     }
 
     public void PlayerExit()
     {
-        doorClosing = false;
         StartCoroutine(boss.StopFight());
-        doorRigidBody.MovePosition(new Vector3(doorStarterPoint.x, doorStarterPoint.y - 30, doorStarterPoint.z)); 
+        //doorRigidBody.MovePosition(new Vector3(doorStarterPoint.x, doorStarterPoint.y - 30, doorStarterPoint.z)); 
         Debug.Log("Sale");
+        BossCanvas.SetActive(false);
         SoundManager._SOUND_MANAGER.ChangeMusicLevel();
-        doorCloseState = 0;
+        door.OpenDoor();
+
 
     }
 
@@ -76,12 +70,7 @@ public class WrathBossActivator : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            StartCoroutine(boss.StartFight());
-            BossCanvas.SetActive(true);
-            doorRigidBody.MovePosition(doorStarterPoint);
-            SoundManager._SOUND_MANAGER.ChangeMusicBoss();
-            doorClosing = true;
-
+            PlayerEnter();
         }
     }
 
@@ -90,7 +79,6 @@ public class WrathBossActivator : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             PlayerExit();
-            BossCanvas.SetActive(false);
         }
     }
 }

@@ -47,7 +47,7 @@ public class BelethAttackController : MonoBehaviour
 
     public void AttackAction_started(int _attackType)
     {
-        if (canAttack && Time.timeScale > 0)
+        if (canAttack && Time.timeScale > 0 && !CinematicsController._CINEMATICS_CONTROLLER.isPlayingCinematic)
         {
             //Segun el tipo de ataque cambiara el tag del tridente
             switch (_attackType)

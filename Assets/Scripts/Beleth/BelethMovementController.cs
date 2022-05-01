@@ -306,20 +306,20 @@ public class BelethMovementController : MonoBehaviour
                 bool goingDown = false;
 
                 //Esta subiendo
-                if (Physics.Raycast(new Ray(rampRayPlaces[0].position, rampRayPlaces[0].forward), out groundHit2, maxRampCheckDistance))
+                if (Physics.Raycast(new Ray(rampRayPlaces[0].position, rampRayPlaces[0].forward), out groundHit2, maxRampCheckDistance, walkableLayers))
                 {
                     //Se aplica el movimiento de subida segun el angulo de la subida
                     angleFloor = Vector3.Angle(groundHit2.normal, Vector3.up);
                     slopeOffset = new Vector3(movementDirection.x * currentAccel, angleFloor / 2f, movementDirection.z * currentAccel );
 
                 }
-                else if (Physics.Raycast(new Ray(rampRayPlaces[1].position, rampRayPlaces[1].forward), out groundHit2, maxRampCheckDistance))
+                else if (Physics.Raycast(new Ray(rampRayPlaces[1].position, rampRayPlaces[1].forward), out groundHit2, maxRampCheckDistance, walkableLayers))
                 {
                     //Se aplica el movimiento de subida segun el angulo de la subida
                     angleFloor = Vector3.Angle(groundHit2.normal, Vector3.up);
                     slopeOffset = new Vector3(movementDirection.x * currentAccel, angleFloor / 2f, movementDirection.z * currentAccel);
                 }
-                else if (Physics.Raycast(new Ray(rampRayPlaces[2].position, rampRayPlaces[2].forward), out groundHit2, maxRampCheckDistance))
+                else if (Physics.Raycast(new Ray(rampRayPlaces[2].position, rampRayPlaces[2].forward), out groundHit2, maxRampCheckDistance, walkableLayers))
                 {
                     //Se aplica el movimiento de subida segun el angulo de la subida
                     angleFloor = Vector3.Angle(groundHit2.normal, Vector3.up);
@@ -332,7 +332,7 @@ public class BelethMovementController : MonoBehaviour
                     RaycastHit groundHit3;
 
 
-                    if (Physics.Raycast(new Ray(rampRayPlaces[3].position, rampRayPlaces[3].forward), out groundHit3, maxRampCheckDistance))
+                    if (Physics.Raycast(new Ray(rampRayPlaces[3].position, rampRayPlaces[3].forward), out groundHit3, maxRampCheckDistance, walkableLayers))
                     {
                         //// En caso de que se separe un poco del suelo se teletransportara al suelo
                         //if (groundHit3.distance > maxRampCheckDistance / 2f && !groundedPlayer)
@@ -471,7 +471,7 @@ public class BelethMovementController : MonoBehaviour
     }
     private void Jump(InputAction.CallbackContext obj)
     {
-        if (canMove)
+        if (canMove && !CinematicsController._CINEMATICS_CONTROLLER.isPlayingCinematic)
         {
             if (groundedPlayer && !isAttacking || canCoyote && !isAttacking)
             {

@@ -44,15 +44,28 @@ public class CinematicsController : MonoBehaviour
     {
         switch (_currentCinematic)
         {
-            case "WrathPuzle1":
+            case "WrathPuzleSerpiDead":
                 director.playableAsset = timeLines[0];
-                director.Play();
-                isPlayingCinematic = true;
+                
+                break;
+            case "WrathPuzleActivatorL":
+                director.playableAsset = timeLines[1];
+                break;
+            case "WrathPuzleActivatorR":
+                director.playableAsset = timeLines[2];
+                break;
+            case "WrathPuzleSerpiTrapped":
+                director.playableAsset = timeLines[3];
+                break;
+            case "WrathBossOpenDoor":
+                director.playableAsset = timeLines[4];
                 break;
 
             default:
                 break;
         }
+        director.Play();
+        isPlayingCinematic = true;
     }
 
 
