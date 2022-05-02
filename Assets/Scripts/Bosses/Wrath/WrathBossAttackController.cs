@@ -202,6 +202,7 @@ public class WrathBossAttackController : MonoBehaviour
                             Vector3 targetPos = new Vector3(posToEmerge.x, starterPos.y, posToEmerge.z);
                             transform.position = Vector3.Lerp(transform.position, targetPos, placeToGoState);
                             belowFloor_Particles.SetActive(false);
+                            SoundManager._SOUND_MANAGER.WrathBossReturnBelowFloorSound(audioSource);
 
                         }
                     }

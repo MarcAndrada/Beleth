@@ -25,7 +25,7 @@ public class VolumeController : MonoBehaviour
     [SerializeField]
     private Slider sfxSlider;
 
-    private float multiplier = 35;
+    private float multiplier = 30;
 
     // Start is called before the first frame update
     private void Awake()
@@ -43,11 +43,23 @@ public class VolumeController : MonoBehaviour
         }
 
 
+       
+
+
+
+    }
+
+    private void Start()
+    {
+        mixer.SetFloat(masterVolumeParameter, Mathf.Log10(PlayerPrefs.GetFloat(masterVolumeParameter)) * multiplier);
+        mixer.SetFloat(musicVolumeParameter, Mathf.Log10(PlayerPrefs.GetFloat(musicVolumeParameter)) * multiplier);
+        mixer.SetFloat(sfxVolumeParameter, Mathf.Log10(PlayerPrefs.GetFloat(sfxVolumeParameter)) * multiplier);
     }
 
 
     private void HandleSliderValueChangedMaster(float _value)
     {
+        
         mixer.SetFloat(masterVolumeParameter, Mathf.Log10(_value) * multiplier);
         PlayerPrefs.SetFloat(masterVolumeParameter, masterSlider.value);
         PlayerPrefs.Save();

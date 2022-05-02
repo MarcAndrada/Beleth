@@ -90,8 +90,11 @@ public class SoundManager : MonoBehaviour
             _SOUND_MANAGER = this;
 
         }
-
         audioSource2D = GetComponent<AudioSource>();
+
+
+
+
     }
 
     private void Start()
@@ -175,11 +178,10 @@ public class SoundManager : MonoBehaviour
     }
     public void WrathBossReturnBelowFloorSound(AudioSource _currentAS)
     {
-        if (true)
+        if (!_currentAS.isPlaying)
         {
-
+            _currentAS.PlayOneShot(wrathBoss_ReturnBelowFloor);
         }
-        _currentAS.PlayOneShot(wrathBoss_ReturnBelowFloor);
     }
     public void WrathBossLavaCircleSound(AudioSource _currentAS)
     {

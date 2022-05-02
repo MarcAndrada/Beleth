@@ -3,7 +3,42 @@ guid: 70fedf2ab5bb7b84caa30b5b722ffaa0
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Columnas
+    second: {fileID: 2100000, guid: ed369a3d0039ea14fb2c0132170aeed1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cupula
+    second: {fileID: 2100000, guid: 83c10bfc3aeb39a4e9753d279a014218, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Entradas
+    second: {fileID: 2100000, guid: a16ff439c7279ba4396dc9c516ef2ff3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pilares
+    second: {fileID: 2100000, guid: 59947509ae0e7a646b00d708a49ea30a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Suelo
+    second: {fileID: 2100000, guid: f12e985b8643df640a5d099ce163456d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Techardo
+    second: {fileID: 2100000, guid: a68f6ff22625a7c458e26c17e4a15645, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Techo
+    second: {fileID: 2100000, guid: ad42bf6882f5adf4ea725e6110b8a9b9, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -44,8 +79,8 @@ ModelImporter:
     importCameras: 1
     importLights: 1
     fileIdsGeneration: 2
-    swapUVChannels: 0
-    generateSecondaryUV: 0
+    swapUVChannels: 1
+    generateSecondaryUV: 1
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
@@ -57,11 +92,11 @@ ModelImporter:
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
-    secondaryUVAreaDistortion: 15.000001
+    secondaryUVAreaDistortion: 15
     secondaryUVHardAngle: 88
     secondaryUVMarginMethod: 1
     secondaryUVMinLightmapResolution: 40
-    secondaryUVMinObjectScale: 1
+    secondaryUVMinObjectScale: 0.5
     secondaryUVPackMargin: 4
     useFileScale: 1
   tangentSpace:

@@ -21,7 +21,7 @@ public class StarterVolume : MonoBehaviour
     private float sfxVolume;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
 
         masterValue = PlayerPrefs.GetFloat(masterParameter);
