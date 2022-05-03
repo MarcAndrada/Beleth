@@ -7,6 +7,8 @@ public class WrathExplosionController : MonoBehaviour
 {
     [Header("Variables")]
     [SerializeField]
+    public bool canBeTriggered = true;
+    [SerializeField]
     private bool selfDestroy;
     [SerializeField]
     bool moveHimself;

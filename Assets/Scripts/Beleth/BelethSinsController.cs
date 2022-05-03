@@ -63,7 +63,7 @@ public class BelethSinsController : MonoBehaviour
             }
         }
 
-        if (!_same) 
+        if (!_same && _objComponent.canBeTriggered) 
         {
             wrathManager.Add(_objComponent);
         }

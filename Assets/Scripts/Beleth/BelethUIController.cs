@@ -28,6 +28,8 @@ public class BelethUIController : MonoBehaviour
     [SerializeField]
     GameObject[] hearts;
     [SerializeField]
+    private GameObject[] emptyHearts;
+    [SerializeField]
     private GameObject[] collectables;
     [SerializeField]
     private TextMeshProUGUI coinText;
@@ -80,6 +82,12 @@ public class BelethUIController : MonoBehaviour
                 {
                     item.SetActive(false);
                 }
+
+                foreach (var item in emptyHearts)
+                {
+                    item.SetActive(true);
+                }
+
                 break;
             case 1:
                 hearts[0].SetActive(true);
@@ -88,33 +96,78 @@ public class BelethUIController : MonoBehaviour
                 hearts[3].SetActive(false);
                 hearts[4].SetActive(false);
                 hearts[5].SetActive(false);
+
+                emptyHearts[0].SetActive(false);
+                emptyHearts[1].SetActive(true);
+                emptyHearts[2].SetActive(true);
+                emptyHearts[3].SetActive(true);
+                emptyHearts[4].SetActive(true);
+                emptyHearts[5].SetActive(true);
+
                 break;
             case 2:
+                hearts[0].SetActive(true);
                 hearts[1].SetActive(true);
                 hearts[2].SetActive(false);
                 hearts[3].SetActive(false);
                 hearts[4].SetActive(false);
                 hearts[5].SetActive(false);
+
+                emptyHearts[0].SetActive(false);
+                emptyHearts[1].SetActive(false);
+                emptyHearts[2].SetActive(true);
+                emptyHearts[3].SetActive(true);
+                emptyHearts[4].SetActive(true);
+                emptyHearts[5].SetActive(true);
                 break;
             case 3:
+                hearts[0].SetActive(true);
+                hearts[1].SetActive(true);
                 hearts[2].SetActive(true);
                 hearts[3].SetActive(false);
                 hearts[4].SetActive(false);
                 hearts[5].SetActive(false);
+
+                emptyHearts[0].SetActive(false);
+                emptyHearts[1].SetActive(false);
+                emptyHearts[2].SetActive(false);
+                emptyHearts[3].SetActive(true);
+                emptyHearts[4].SetActive(true);
+                emptyHearts[5].SetActive(true);
                 break;
             case 4:
                 hearts[3].SetActive(true);
                 hearts[4].SetActive(false);
                 hearts[5].SetActive(false);
+
+
+                emptyHearts[0].SetActive(false);
+                emptyHearts[1].SetActive(false);
+                emptyHearts[2].SetActive(false);
+                emptyHearts[3].SetActive(false);
+                emptyHearts[4].SetActive(true);
+                emptyHearts[5].SetActive(true);
                 break;
             case 5:
                 hearts[4].SetActive(true);
                 hearts[5].SetActive(false);
+
+                emptyHearts[0].SetActive(false);
+                emptyHearts[1].SetActive(false);
+                emptyHearts[2].SetActive(false);
+                emptyHearts[3].SetActive(false);
+                emptyHearts[4].SetActive(false);
+                emptyHearts[5].SetActive(true);
                 break;
             case 6:
                 foreach (var item in hearts)
                 {
                     item.SetActive(true);
+                }
+
+                foreach (var item in emptyHearts)
+                {
+                    item.SetActive(false);
                 }
                 break;
             default:

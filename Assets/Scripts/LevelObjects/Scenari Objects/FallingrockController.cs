@@ -16,6 +16,8 @@ public class FallingrockController : MonoBehaviour
     GameObject collisionMarkPrefab;
     [SerializeField]
     private LayerMask floorLayer;
+    [SerializeField]
+    private float minAltitude;
     [Header("VFX")]
     [SerializeField]
     ParticleSystem[] explosion;
@@ -40,10 +42,16 @@ public class FallingrockController : MonoBehaviour
         }
     }
 
+
     private void Update()
     {
         transform.Rotate(Vector3.forward, 100 * Time.deltaTime);
         transform.Rotate(Vector3.right, 50.3f * Time.deltaTime);
+
+        if (transform.position.y < minAltitude)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnDestroy()
