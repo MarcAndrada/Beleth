@@ -27,6 +27,7 @@ public class ParticleController : MonoBehaviour
     [Header("Attack")]
     [SerializeField] VisualEffect AttackVFX;
     [SerializeField] VisualEffect WrathAttackVFX;
+    [SerializeField] GameObject WrathSphere;
 
     [Header("Damage")]
     [SerializeField] ParticleSystem DamageVFX;
@@ -73,6 +74,12 @@ public class ParticleController : MonoBehaviour
     public void ActivateWrathAttack()
     {
         WrathAttackVFX.Play();
+        WrathSphere.SetActive(true);
+    }
+
+    public void DeactivateWrathAttack()
+    {
+        WrathSphere?.SetActive(false);
     }
 
     //IEnumerator Wait()
