@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class ParticleController : MonoBehaviour
 {
@@ -24,8 +25,8 @@ public class ParticleController : MonoBehaviour
     [SerializeField] ParticleSystem FallDust;
 
     [Header("Attack")]
-    [SerializeField] ParticleSystem AttackVFX;
-    [SerializeField] Transform HandSocket;
+    [SerializeField] VisualEffect AttackVFX;
+    [SerializeField] VisualEffect WrathAttackVFX;
 
     [Header("Damage")]
     [SerializeField] ParticleSystem DamageVFX;
@@ -67,8 +68,11 @@ public class ParticleController : MonoBehaviour
 
     public void ActivateAttack()
     {
-        Instantiate(AttackVFX, HandSocket.position, HandSocket.rotation);
-
+        AttackVFX.Play();
+    }
+    public void ActivateWrathAttack()
+    {
+        WrathAttackVFX.Play();
     }
 
     //IEnumerator Wait()
