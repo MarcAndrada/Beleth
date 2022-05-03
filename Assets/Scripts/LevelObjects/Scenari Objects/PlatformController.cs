@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlatformController : MonoBehaviour
 {
-    
+    public enum MovementType { WAIT_PLAYER, MOVE_ALLWAYS };
 
+    [SerializeField]
+    public MovementType currentMovement;
     [SerializeField]
     private Transform[] placeToGo;
     [SerializeField]
@@ -13,17 +15,19 @@ public class PlatformController : MonoBehaviour
     [SerializeField]
     private float timeToWaitAtPoint;
     [SerializeField]
-    [Tooltip("Si esta activado cuando llegue al ultimo punto volvera a empezar desde el 1 si no ira marcha atras \n Ej: El ultimo punto es el 8, en vez de ir al 1 va al 7 despues al 6 ...")]
     private bool restartWhenEnd;
+    [SerializeField]
+    [Tooltip("Si esta activado cuando llegue al ultimo punto volvera a empezar desde el 1 si no ira marcha atras \n Ej: El ultimo punto es el 8, en vez de ir al 1 va al 7 despues al 6 ...")]
+    private bool backTrackRestart;
 
     [SerializeField]
     private int index = 0;
     [SerializeField]
     private float placeToGoState = 0;
-    private Transform playerParent;
     private float timeWaitedAtPoint = 0;
     private bool ascending;
     private bool canMove = true;
+    private bool playerAboard = false;
     private BelethMovementController playerCont;
     private BelethAnimController animController;
     private Rigidbody playerRb;
@@ -39,13 +43,32 @@ public class PlatformController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canMove)
+        switch (currentMovement)
         {
-            MoveNextPoint();
-        }
-        else
-        {
-            WaitToGoNextPoint();
+            case MovementType.WAIT_PLAYER:
+                if (playerAboard)
+                {
+                    if (canMove)
+                    {
+                        MoveNextPoint();
+                    }
+                    else
+                    {
+                        WaitToGoNextPoint();
+                    }
+                }
+                else
+                {
+                    index = 0;
+                    MoveNextPoint();
+
+                }
+                break;
+            case MovementType.MOVE_ALLWAYS:
+               
+                break;
+            default:
+                break;
         }
 
 
@@ -80,12 +103,19 @@ public class PlatformController : MonoBehaviour
 
     private void GoNextPoint() {
 
-        if (restartWhenEnd)
+        if (backTrackRestart)
         {
             index++;
             if (index > placeToGo.Length - 1)
             {
-                index = 0;
+                if (restartWhenEnd)
+                {
+                    index = 0;
+                }
+                else
+                {
+                    index--;
+                }
             }
         }
         else
@@ -95,9 +125,16 @@ public class PlatformController : MonoBehaviour
             {
                 index++;
 
-                if (index == placeToGo.Length - 1)
+                if (index >= placeToGo.Length - 1)
                 {
-                    ascending = false;
+                    if (restartWhenEnd)
+                    {
+                        ascending = false;
+                    }
+                    else
+                    {
+                        index = placeToGo.Length - 1;
+                    }
                 }
 
 
@@ -131,6 +168,7 @@ public class PlatformController : MonoBehaviour
             
             offsetPlayer = other.transform.position - transform.position;
             playerRb = other.GetComponent<Rigidbody>();
+            playerAboard = true;
         }
     }
 
@@ -145,6 +183,13 @@ public class PlatformController : MonoBehaviour
             }
         }
 
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            playerAboard = false;
+        }
     }
 
 
