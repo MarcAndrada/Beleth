@@ -10,7 +10,8 @@ public class StatueGemController : MonoBehaviour
     private WrathExplosionController specialDoor;
     [SerializeField]
     private Material whiteMat;
-
+    [SerializeField]
+    private string cinematicName;
     private MeshRenderer meshRenderer;
     private bool gemObtined = false;
 
@@ -19,13 +20,6 @@ public class StatueGemController : MonoBehaviour
     {
         meshRenderer = GetComponent<MeshRenderer>();    
     }
-    
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
 
     private void PlayerGetGem() 
@@ -33,6 +27,9 @@ public class StatueGemController : MonoBehaviour
         gemObtined = true;
         specialDoor.canBeTriggered = true;
         meshRenderer.material = whiteMat;
+        //Hacer cinematica
+        CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic(cinematicName);
+        bossDoor.BrokenBar();
     }
 
     private void OnTriggerEnter(Collider other)

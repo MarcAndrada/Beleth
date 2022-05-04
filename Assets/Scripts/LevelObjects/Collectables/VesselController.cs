@@ -69,19 +69,19 @@ public class VesselController : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    Instantiate(coin, transform.position, transform.rotation);
+                    Instantiate(coin, transform.position, Quaternion.Euler(-transform.rotation.x, -transform.rotation.y, -transform.rotation.z));
                     break;
                 case 1:
-                    Instantiate(coin, new Vector3(transform.position.x + coinSpawnOffset, transform.position.y, transform.position.z), Quaternion.Euler(0,0,0));
+                    Instantiate(coin, new Vector3(transform.position.x + coinSpawnOffset, transform.position.y, transform.position.z), Quaternion.Euler(-transform.rotation.x, -transform.rotation.y, -transform.rotation.z));
                     break;
                 case 2:
-                    Instantiate(coin, new Vector3(transform.position.x, transform.position.y, transform.position.z + coinSpawnOffset), Quaternion.Euler(0, 0, 0));
+                    Instantiate(coin, new Vector3(transform.position.x, transform.position.y, transform.position.z + coinSpawnOffset), Quaternion.Euler(-transform.rotation.x, -transform.rotation.y, -transform.rotation.z));
                     break;
                 case 3:
-                    Instantiate(coin, new Vector3(transform.position.x - coinSpawnOffset, transform.position.y, transform.position.z), Quaternion.Euler(0, 0, 0));
+                    Instantiate(coin, new Vector3(transform.position.x - coinSpawnOffset, transform.position.y, transform.position.z), Quaternion.Euler(-transform.rotation.x, -transform.rotation.y, -transform.rotation.z));
                     break;
                 case 4:
-                    Instantiate(coin, new Vector3(transform.position.x ,transform.position.y, transform.position.z - coinSpawnOffset), Quaternion.Euler(0, 0, 0));
+                    Instantiate(coin, new Vector3(transform.position.x ,transform.position.y, transform.position.z - coinSpawnOffset), Quaternion.Euler(-transform.rotation.x, -transform.rotation.y, -transform.rotation.z));
                     break;
                 default:
                     break;
@@ -89,6 +89,8 @@ public class VesselController : MonoBehaviour
 
 
         }
+
+        brokenPieces.existingBrokenPiece.transform.position = transform.position;
 
         brokenPieces.Break();
     }

@@ -24,6 +24,8 @@ public class PlatformController : MonoBehaviour
     private int index = 0;
     [SerializeField]
     private float placeToGoState = 0;
+    [SerializeField]
+    private float minPlaceToGoState;
     private float timeWaitedAtPoint = 0;
     private bool ascending;
     private bool canMove = true;
@@ -65,7 +67,14 @@ public class PlatformController : MonoBehaviour
                 }
                 break;
             case MovementType.MOVE_ALLWAYS:
-               
+                if (canMove)
+                {
+                    MoveNextPoint();
+                }
+                else
+                {
+                    WaitToGoNextPoint();
+                }
                 break;
             default:
                 break;
@@ -77,9 +86,8 @@ public class PlatformController : MonoBehaviour
     private void MoveNextPoint() 
     {
         placeToGoState += (speed / 100) * Time.deltaTime;
-        //transform.position = Vector3.Lerp(transform.position, placeToGo[index].position, placeToGoState);
         rb.MovePosition(Vector3.Lerp(transform.position, placeToGo[index].position, placeToGoState));
-        if (placeToGoState >= 0.03f)
+        if (placeToGoState >= minPlaceToGoState)
         {
             canMove = false;
         }
@@ -152,9 +160,6 @@ public class PlatformController : MonoBehaviour
 
     }
 
-
-
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player") {
@@ -177,7 +182,7 @@ public class PlatformController : MonoBehaviour
         if (other.tag == "Player")
         {
             offsetPlayer = other.transform.position - transform.position;
-            if (placeToGoState < 0.03f)
+            if (placeToGoState < minPlaceToGoState)
             {
                 playerRb.MovePosition(Vector3.Lerp(transform.position, placeToGo[index].position, placeToGoState) + offsetPlayer);
             }
@@ -188,7 +193,9 @@ public class PlatformController : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+            playerCont.onPlatform = false;
             playerAboard = false;
+            placeToGoState = 0;
         }
     }
 

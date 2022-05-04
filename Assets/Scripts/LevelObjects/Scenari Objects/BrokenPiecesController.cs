@@ -7,7 +7,7 @@ public class BrokenPiecesController : MonoBehaviour
     [SerializeField]
     GameObject BrokePiece;
     [SerializeField]
-    GameObject existingBrokenPiece;
+    public GameObject existingBrokenPiece;
 
     bool can;
 

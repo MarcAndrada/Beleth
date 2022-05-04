@@ -18,6 +18,8 @@ public class GuideAIController : MonoBehaviour
     private float timeToWait;
 
     private bool canMove = true;
+    [HideInInspector]
+    public bool guidingPlayer = false;
     private int index = 0;
     private bool farFromPlayer = false;
     private float timeWaited;
@@ -125,6 +127,7 @@ public class GuideAIController : MonoBehaviour
         canMove = false;
         transform.position = placesToGo[0].position;
         index = 0;
+        guidingPlayer = false;
         yield return new WaitForEndOfFrame();
         gameObject.SetActive(false);
 
@@ -137,6 +140,7 @@ public class GuideAIController : MonoBehaviour
         {
             canMove = true;
             MoveNextPlace();
+            guidingPlayer = true;
         }
         
     }

@@ -60,6 +60,9 @@ public class CinematicsController : MonoBehaviour
             case "WrathBossOpenDoor":
                 director.playableAsset = timeLines[4];
                 break;
+            case "WrathDungeonEnd":
+                director.playableAsset = timeLines[5];
+                break;
 
             default:
                 break;

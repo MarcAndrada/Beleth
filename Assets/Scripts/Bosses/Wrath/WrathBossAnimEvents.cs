@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class WrathBossAnimEvents : MonoBehaviour
 {
@@ -26,9 +27,11 @@ public class WrathBossAnimEvents : MonoBehaviour
         bossController.isDamaged = false;
     }
 
-    public void DestroyBoss() 
+    public void BossDead() 
     {
-        Destroy(parent);
+        BelethUIController endGameControll = FindObjectOfType<BelethUIController>();
+
+        endGameControll.QuitGame();
     }
 
 

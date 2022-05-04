@@ -1,21 +1,69 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class GuideStarterPosController : MonoBehaviour
 {
 
     [SerializeField]
     private GameObject ghost;
+    [SerializeField]
+    private Text followMeText;
+    [SerializeField]
+    private float fadeInSpeed;
+    [SerializeField]
+    private float fadeOutSpeed;
 
     [HideInInspector]
     public GameObject player;
     private GuideAIController guideAIController;
-
+    private bool showingText = false;
+    private bool fadingIn;
+    private float currentTextAlpha = 0f;
     private void Awake()
     {
         guideAIController = ghost.GetComponent<GuideAIController>();
     }
+
+
+    private void Update()
+    {
+        if (showingText)
+        {
+            if (fadingIn)
+            {
+                followMeText.color = new Color(followMeText.color.r, followMeText.color.g, followMeText.color.b, followMeText.color.a + (fadeInSpeed * Time.deltaTime));
+                if (followMeText.color.a >= 1)
+                {
+                    fadingIn = false;
+                }
+            }
+            else
+            {
+                followMeText.color = new Color(followMeText.color.r, followMeText.color.g, followMeText.color.b, followMeText.color.a - (fadeOutSpeed * Time.deltaTime));
+                if (followMeText.color.a <= 0)
+                {
+                    showingText = false;
+                }
+            }
+        }
+    }
+
+    private void StartGuidePlayer() 
+    {
+        ghost.SetActive(true);
+        if (!guideAIController.guidingPlayer)
+        {
+            showingText = true;
+            fadingIn = true;
+        }
+        guideAIController.StartGuide();
+        
+    
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -26,8 +74,7 @@ public class GuideStarterPosController : MonoBehaviour
                 player = other.gameObject;
             }
 
-            ghost.SetActive(true);
-            guideAIController.StartGuide();
+            StartGuidePlayer();
         }
     }
 

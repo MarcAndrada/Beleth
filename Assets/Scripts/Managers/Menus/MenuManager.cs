@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
-    //[Header("Play")]
-    //[SerializeField]
-    //private string wrathLevel;
 
     private void Awake()
     {
