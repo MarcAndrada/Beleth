@@ -29,7 +29,8 @@ public class WrathExplosionController : MonoBehaviour
     [SerializeField]
     GameObject wrathVFX;
     [SerializeField]
-    ParticleSystem explosionWrathVFX;
+    GameObject explosionWrathVFX;
+    [SerializeField] Transform SocketVFX;
 
     private WrathExplosionController explosionController;
     private Rigidbody rigidB;
@@ -54,7 +55,7 @@ public class WrathExplosionController : MonoBehaviour
     {
         //Implosione
 
-        Instantiate(explosionWrathVFX, transform.position, transform.rotation);
+        Instantiate(explosionWrathVFX, SocketVFX);
 
 
         Vector3 explosionPosition = gameObject.transform.position;

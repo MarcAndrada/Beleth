@@ -52,7 +52,7 @@ public class SettingsController : MonoBehaviour
         PlayerPrefs.Save();
 
         mouseSpeedX = mouseXSlider.value;
-        mouseXText.text = mouseXSlider.value.ToString();
+        mouseXText.text = mouseSpeedX.ToString();
     }
     private void HandleSliderValueChangedYSpeed(float _value)
     {
@@ -60,7 +60,7 @@ public class SettingsController : MonoBehaviour
         PlayerPrefs.Save();
 
         mouseSpeedY = mouseYSlider.value;
-        mouseYText.text = mouseYSlider.value.ToString(); ;
+        mouseYText.text = mouseSpeedY.ToString();
 
     }
 
