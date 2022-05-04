@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f38d9467846c2114eb8e059ccf6fccf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeTriggered: 1
   selfDestroy: 1
   moveHimself: 0
   timeToExplode: 0
@@ -147,6 +148,10 @@ PrefabInstance:
     - target: {fileID: 7671408364980266257, guid: bb564afab8485e8469aa68e7f232132c, type: 3}
       propertyPath: m_Name
       value: WrathRock_vfx
+      objectReference: {fileID: 0}
+    - target: {fileID: 7671408364980266257, guid: bb564afab8485e8469aa68e7f232132c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7671408364980266262, guid: bb564afab8485e8469aa68e7f232132c, type: 3}
       propertyPath: m_RootOrder
@@ -203,6 +208,22 @@ PrefabInstance:
     - target: {fileID: 7671408364980266262, guid: bb564afab8485e8469aa68e7f232132c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7671408365257741893, guid: bb564afab8485e8469aa68e7f232132c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.078
+      objectReference: {fileID: 0}
+    - target: {fileID: 7671408365257741893, guid: bb564afab8485e8469aa68e7f232132c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 7671408365257741893, guid: bb564afab8485e8469aa68e7f232132c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.081
+      objectReference: {fileID: 0}
+    - target: {fileID: 7671408365257741899, guid: bb564afab8485e8469aa68e7f232132c, type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 1.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb564afab8485e8469aa68e7f232132c, type: 3}
