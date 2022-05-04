@@ -9,6 +9,7 @@ public class BelethCollisionController : MonoBehaviour
     private CoinController coinController;
     private BelethUIController uIController;
     BelethMovementController movementController;
+  
 
     private void Start()
     {
@@ -40,7 +41,7 @@ public class BelethCollisionController : MonoBehaviour
         if (other.gameObject.tag == "Coin")
         {
             coinController.AddCoin();
-            //Hacer algo con la moneda que encontremos 
+            SoundManager._SOUND_MANAGER.SoulGet(SoundManager._SOUND_MANAGER.audioSource2D);
             other.gameObject.SetActive(false);
         }
 

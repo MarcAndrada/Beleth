@@ -16,6 +16,8 @@ public class GuideStarterPosController : MonoBehaviour
     [SerializeField]
     private float fadeOutSpeed;
 
+    private AudioSource audioSource;
+
     [HideInInspector]
     public GameObject player;
     private GuideAIController guideAIController;
@@ -25,6 +27,7 @@ public class GuideStarterPosController : MonoBehaviour
     private void Awake()
     {
         guideAIController = ghost.GetComponent<GuideAIController>();
+        audioSource = GetComponent<AudioSource>();
     }
 
 
@@ -53,6 +56,7 @@ public class GuideStarterPosController : MonoBehaviour
 
     private void StartGuidePlayer() 
     {
+        SoundManager._SOUND_MANAGER.PhantomApears(audioSource);
         ghost.SetActive(true);
         if (!guideAIController.guidingPlayer)
         {

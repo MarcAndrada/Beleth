@@ -8,7 +8,7 @@ public class SoundManager : MonoBehaviour
     public static SoundManager _SOUND_MANAGER;
 
 
-    private AudioSource audioSource2D;
+    public AudioSource audioSource2D;
     [Header("Music")]
     [SerializeField]
     private AudioSource musicAudioSource;
