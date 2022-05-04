@@ -20,4 +20,6 @@ public class MouseSpeedConfigurationController : MonoBehaviour
     {
         SettingsController._SETTINGS_CONTROLLER.ChangeMouseSpeedSliders(mouseXSlider, mouseYSlider, mouseXText, mouseYText);
     }
+
+
 }
