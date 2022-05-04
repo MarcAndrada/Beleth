@@ -56,7 +56,7 @@ public class WrathBossActivator : MonoBehaviour
 
     public void PlayerExit()
     {
-        StartCoroutine(boss.StopFight());
+        boss.StopFight();
         //doorRigidBody.MovePosition(new Vector3(doorStarterPoint.x, doorStarterPoint.y - 30, doorStarterPoint.z)); 
         Debug.Log("Sale");
         BossCanvas.SetActive(false);

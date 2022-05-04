@@ -299,6 +299,18 @@ public class WrathBossAttackController : MonoBehaviour
 
 
     }
+
+    public void PlayerDead() 
+    {
+        transform.position = starterPos;
+        isAttacking = false;
+        resetPosition = false;
+        timeWatied = 0;
+        timeToWait = 0;
+        isBelowFloor = false;
+        movingOnY = false;
+        placeToGoState = 0;
+    }
     #endregion
 
     #region Setters & Getters

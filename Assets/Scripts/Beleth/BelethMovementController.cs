@@ -176,7 +176,7 @@ public class BelethMovementController : MonoBehaviour
         }
         else
         {
-            rb.AddForce(new Vector3(-rb.velocity.x, 0, -rb.velocity.z) * 10);    
+            rb.AddForce(new Vector3(-rb.velocity.x, 0, -rb.velocity.z) * 30);    
         }
 
     }

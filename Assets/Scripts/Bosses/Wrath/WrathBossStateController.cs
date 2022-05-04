@@ -137,6 +137,7 @@ public class WrathBossStateController : MonoBehaviour
                     rocksManager.SetActive(false);
                     animator.SetBool("Dead", true);
                     SoundManager._SOUND_MANAGER.WrathBossDeadSound(audioSource);
+                    SoundManager._SOUND_MANAGER.ChangeMusicLevel();
 
                 }
                 break;
@@ -317,17 +318,11 @@ public class WrathBossStateController : MonoBehaviour
     
     }
 
-    public IEnumerator StopFight() 
+    public void StopFight() 
     {
+        attackController.PlayerDead();
         fighting = false;
         isDoingAction = true;
-        currentFase = BossFase.NONE;
-        currentAction = BossActions.NONE;
-        DoCurrentAttack(BossActions.RESET_POS);
-        rocksManager.SetActive(false);
-        yield return new WaitForSeconds(0.5f);
-        isDoingAction = false;
-        fighting = false;
         currentFase = BossFase.NONE;
         currentAction = BossActions.NONE;
         rocksManager.SetActive(false);
