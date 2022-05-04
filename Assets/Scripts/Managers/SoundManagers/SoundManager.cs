@@ -97,6 +97,11 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private AudioClip getFavor;
 
+    [Header("Phantom")]
+    [SerializeField]
+    private AudioClip phantomAppears;
+ 
+
 
 
 
@@ -309,10 +314,25 @@ public class SoundManager : MonoBehaviour
             _currentAS.PlayOneShot(getSoul);
           }
     }
-#endregion
-#region Menu Sounds
+    #endregion
 
-public void HoverMenu() {
+    #region Phantom
+    public void PhantomApears(AudioSource _currentAS)
+    {
+
+
+        if (_currentAS != null)
+        {
+
+            _currentAS.PlayOneShot(phantomAppears);
+        }
+    }
+
+        #endregion
+
+    #region Menu Sounds
+
+        public void HoverMenu() {
         audioSource2D.PlayOneShot(hoverSound);
     }
 
