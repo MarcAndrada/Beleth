@@ -11,6 +11,8 @@ public class CollectableController : MonoBehaviour
     private GameObject firstVfx;
     [SerializeField]
     private GameObject secondVfx;
+    [SerializeField]
+    private AudioSource audioSource;
 
     private SphereCollider coll;
     private bool isDone;
@@ -21,6 +23,7 @@ public class CollectableController : MonoBehaviour
     {
         coll = GetComponent<SphereCollider>();
         firstVfx.SetActive(false);
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Start()
@@ -45,6 +48,7 @@ public class CollectableController : MonoBehaviour
 
     public void DisableCollectable() 
     {
+        SoundManager._SOUND_MANAGER.FavorGet(audioSource);
         firstVfx.SetActive(true);
         coll.enabled = false;
         breakObject.SetActive(false);

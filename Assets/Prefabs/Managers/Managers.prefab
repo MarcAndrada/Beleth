@@ -115,9 +115,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -5664213350457621546, guid: 07390c4d8baed5d4b881c0a7f5dab735, type: 2}
     - target: {fileID: 2204666115674027146, guid: b2314b2c34104d647befd69e567dca9b, type: 3}
+      propertyPath: getSoul
+      value: 
+      objectReference: {fileID: 8300000, guid: aa12778a89107a5489711eccf738dca6, type: 3}
+    - target: {fileID: 2204666115674027146, guid: b2314b2c34104d647befd69e567dca9b, type: 3}
+      propertyPath: getFavor
+      value: 
+      objectReference: {fileID: 8300000, guid: 26cac725c0d31d34a8e85f658b56f641, type: 3}
+    - target: {fileID: 2204666115674027146, guid: b2314b2c34104d647befd69e567dca9b, type: 3}
       propertyPath: beleth_Jump
       value: 
       objectReference: {fileID: 8300000, guid: b8f999aeb4465a14aa06e52e2e911f64, type: 3}
+    - target: {fileID: 2204666115674027146, guid: b2314b2c34104d647befd69e567dca9b, type: 3}
+      propertyPath: vesselBreak
+      value: 
+      objectReference: {fileID: 8300000, guid: 60f083201f257ea46a4fe90be9ba07f5, type: 3}
     - target: {fileID: 2204666115674027146, guid: b2314b2c34104d647befd69e567dca9b, type: 3}
       propertyPath: beleth_Death
       value: 
@@ -187,6 +199,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2204666115674027146, guid: b2314b2c34104d647befd69e567dca9b, type: 3}
+      propertyPath: beleth_Damage.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2204666115674027146, guid: b2314b2c34104d647befd69e567dca9b, type: 3}
       propertyPath: actionsPitch.Array.data[0]
       value: 0.8
       objectReference: {fileID: 0}
@@ -202,6 +218,18 @@ PrefabInstance:
       propertyPath: wrathBoss_ReturnBelowFloor
       value: 
       objectReference: {fileID: 8300000, guid: 51336a5c07473fa47a8ac5d13b040ab8, type: 3}
+    - target: {fileID: 2204666115674027146, guid: b2314b2c34104d647befd69e567dca9b, type: 3}
+      propertyPath: beleth_Damage.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 120aeadd84bba9f4d9e44350307ad637, type: 3}
+    - target: {fileID: 2204666115674027146, guid: b2314b2c34104d647befd69e567dca9b, type: 3}
+      propertyPath: beleth_Damage.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 54e2e3f184ddf374cb90a8dbc42578d0, type: 3}
+    - target: {fileID: 2204666115674027146, guid: b2314b2c34104d647befd69e567dca9b, type: 3}
+      propertyPath: beleth_Damage.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 54d136f1f7e0dcb41880be303ac0e6f1, type: 3}
     - target: {fileID: 2204666115674027146, guid: b2314b2c34104d647befd69e567dca9b, type: 3}
       propertyPath: beleth_Footsteps.Array.size
       value: 10

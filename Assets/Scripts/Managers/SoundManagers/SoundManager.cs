@@ -36,7 +36,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private AudioClip beleth_Jump;
     [SerializeField]
-    private AudioClip beleth_Damage;
+    private AudioClip[] beleth_Damage;
     [SerializeField]
     private AudioClip beleth_Death;
     [SerializeField]
@@ -76,6 +76,28 @@ public class SoundManager : MonoBehaviour
     private AudioClip clickSound;
     [SerializeField]
     private AudioClip hoverSound;
+
+    [Header("Ambience Sounds")]
+    [SerializeField]
+    private AudioClip lavaFlow;
+
+    [Header("Snake Sounds")]
+    [SerializeField]
+    private AudioClip snakeAttack;
+    [SerializeField]
+    private AudioClip chainActivation;
+
+    [Header("Vessel")]
+    [SerializeField]
+    private AudioClip vesselBreak;
+
+    [Header("Collectable")]
+    [SerializeField]
+    private AudioClip getSoul;
+    [SerializeField]
+    private AudioClip getFavor;
+
+
 
 
     private void Awake()
@@ -150,7 +172,7 @@ public class SoundManager : MonoBehaviour
 
     public void BelethDamaged()
     {
-        audioSource2D.PlayOneShot(beleth_Damage);
+        audioSource2D.PlayOneShot(beleth_Damage[Random.Range(0, beleth_Damage.Length)]);
     }
 
     public void BelethDeath()
@@ -255,9 +277,42 @@ public class SoundManager : MonoBehaviour
 
     #endregion
 
-    #region Menu Sounds
+    #region Vessel
+    public void VesselBreak(AudioSource _currentAS)
+    {
+        if (_currentAS != null)
+        {
 
-    public void HoverMenu() {
+            _currentAS.PlayOneShot(vesselBreak);
+        }
+
+    }
+
+    #endregion
+
+    #region Colletcables
+    public void FavorGet(AudioSource _currentAS)
+    {
+  
+
+        if (_currentAS != null)
+        {
+
+            _currentAS.PlayOneShot(getFavor);
+        }
+
+    }
+    public void SoulGet(AudioSource _currentAS) { 
+          if (_currentAS != null)
+          {
+
+            _currentAS.PlayOneShot(getSoul);
+          }
+    }
+#endregion
+#region Menu Sounds
+
+public void HoverMenu() {
         audioSource2D.PlayOneShot(hoverSound);
     }
 

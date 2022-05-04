@@ -14,10 +14,12 @@ public class VesselController : MonoBehaviour
     [SerializeField]
     private float coinSpawnOffset;
     private BrokenPiecesController brokenPieces;
+    AudioSource audioSource;
 
     private void Awake()
     {
         brokenPieces = GetComponent<BrokenPiecesController>();
+        audioSource = GetComponentInParent<AudioSource>();
     }
 
     // Start is called before the first frame update
@@ -64,6 +66,7 @@ public class VesselController : MonoBehaviour
 
     private void BreakVassel() 
     {
+        SoundManager._SOUND_MANAGER.VesselBreak(audioSource);
         for (int i = 0; i < coinsIntoVassel; i++)
         {
             switch (i)
