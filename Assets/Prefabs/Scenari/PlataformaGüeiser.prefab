@@ -5010,6 +5010,7 @@ Transform:
   m_LocalScale: {x: 2, y: 1.7114197, z: 1.7114197}
   m_Children:
   - {fileID: 3165401475667754344}
+  - {fileID: 4420211281224548106}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
@@ -5097,7 +5098,8 @@ MonoBehaviour:
   playerImpulse: 40
   bossDamage: 0
   wrathVFX: {fileID: 3165401475667754345}
-  explosionWrathVFX: {fileID: 2297049997465237482, guid: 8339f47f1106b48418e69581db7b4773, type: 3}
+  explosionWrathVFX: {fileID: 6315292352641791164, guid: f00802cd0bf102647bc79bf4f82e835e, type: 3}
+  SocketVFX: {fileID: 4420211281224548106}
 --- !u!82 &8730774452910487116
 AudioSource:
   m_ObjectHideFlags: 0
@@ -10056,3 +10058,33 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &5656132891733528320
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4420211281224548106}
+  m_Layer: 3
+  m_Name: VFXSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4420211281224548106
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5656132891733528320}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 0.45}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5616943048014879579}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

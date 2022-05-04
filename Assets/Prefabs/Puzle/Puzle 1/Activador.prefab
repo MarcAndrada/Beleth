@@ -10083,6 +10083,36 @@ Transform:
   m_Father: {fileID: 8677834431886928784}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7602339730570474052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8799996585793057777}
+  m_Layer: 0
+  m_Name: VFXSocket
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8799996585793057777
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7602339730570474052}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8677834431886928784}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8297333506115531050
 GameObject:
   m_ObjectHideFlags: 0
@@ -10118,6 +10148,7 @@ Transform:
   - {fileID: 1738584365787687718}
   - {fileID: 1697415886457362130}
   - {fileID: 5408437059855820383}
+  - {fileID: 8799996585793057777}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -10143,7 +10174,8 @@ MonoBehaviour:
   playerImpulse: 0
   bossDamage: 0
   wrathVFX: {fileID: 5408437059855820382}
-  explosionWrathVFX: {fileID: 2297049997465237482, guid: 8339f47f1106b48418e69581db7b4773, type: 3}
+  explosionWrathVFX: {fileID: 6315292352641791164, guid: f00802cd0bf102647bc79bf4f82e835e, type: 3}
+  SocketVFX: {fileID: 8799996585793057777}
 --- !u!114 &9216446269801319551
 MonoBehaviour:
   m_ObjectHideFlags: 0
