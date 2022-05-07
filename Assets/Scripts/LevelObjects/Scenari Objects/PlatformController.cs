@@ -29,6 +29,7 @@ public class PlatformController : MonoBehaviour
     private float timeWaitedAtPoint = 0;
     private bool ascending;
     private bool canMove = true;
+    [SerializeField]
     private bool playerAboard = false;
     private BelethMovementController playerCont;
     private BelethAnimController animController;
@@ -79,7 +80,6 @@ public class PlatformController : MonoBehaviour
             default:
                 break;
         }
-
 
     }
 
@@ -160,6 +160,7 @@ public class PlatformController : MonoBehaviour
 
     }
 
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player") {
@@ -168,7 +169,6 @@ public class PlatformController : MonoBehaviour
                 playerCont = other.GetComponent<BelethMovementController>();
                 animController = other.GetComponent<BelethAnimController>();
             }
-            animController.SetOnPlatform(true);
             playerCont.onPlatform = true;
             
             offsetPlayer = other.transform.position - transform.position;
@@ -176,7 +176,6 @@ public class PlatformController : MonoBehaviour
             playerAboard = true;
         }
     }
-
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Player")

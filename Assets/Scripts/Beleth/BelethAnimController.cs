@@ -32,10 +32,7 @@ public class BelethAnimController : MonoBehaviour
         animator.SetBool("OnFloor", movmentController.groundedPlayer);
     
     }
-    public void SetOnPlatform(bool _isOnPlatform)
-    {
-        animator.SetBool("OnPlatform", _isOnPlatform);
-    }
+    
     public void JumpTrigger() {
 
         animator.SetTrigger("Jump");

@@ -21,13 +21,16 @@ public class TutorialCanvas : MonoBehaviour
     [SerializeField]
     string text;
 
+    private bool played = false;
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && !played)
         {
             tutorialCanvas.SetActive(true);
             videoPlayer.clip = videoToPlay;
             tutorialCanvas.GetComponent<TutorialCanvasController>().SetThings();
+            played = true;
         }
     }
 

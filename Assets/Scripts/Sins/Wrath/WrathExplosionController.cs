@@ -55,10 +55,10 @@ public class WrathExplosionController : MonoBehaviour
     {
         //Implosione
 
-        Instantiate(explosionWrathVFX, SocketVFX);
+        Instantiate(explosionWrathVFX, transform.position, Quaternion.identity);
 
 
-        Vector3 explosionPosition = gameObject.transform.position;
+        Vector3 explosionPosition = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
         Collider[] colliders = Physics.OverlapSphere(explosionPosition, radius);
 
         if (gameObject.tag == "Activator")
@@ -84,13 +84,14 @@ public class WrathExplosionController : MonoBehaviour
             }
 
 
-            Rigidbody rb = hit.GetComponent<Rigidbody>();
 
-            
-
-            if (rb != null && rb != rigidB || rb != null && moveHimself)
+            if (hit.gameObject.tag == "Movable")
             {
-                rb.AddExplosionForce(strenght, explosionPosition, radius, upStrenght, ForceMode.Impulse);
+                Rigidbody rb = hit.GetComponent<Rigidbody>();
+                if (rb != null) 
+                {
+                    rb.AddExplosionForce(strenght, explosionPosition, radius, upStrenght, ForceMode.Impulse);
+                }
             }
         }
 

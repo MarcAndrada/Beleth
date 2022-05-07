@@ -48,6 +48,7 @@ public class BelethMovementController : MonoBehaviour
     [SerializeField]
     public LayerMask walkableLayers;
     private bool running;
+    [SerializeField]
     public bool onPlatform = false;
     private bool onRamp;
     #endregion

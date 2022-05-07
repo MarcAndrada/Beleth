@@ -80,9 +80,9 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 114685
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -192,6 +192,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 3d02a98235a8f6f44ba66c1a4a412802, type: 3}
       propertyPath: m_Name
       value: Antorcha
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3d02a98235a8f6f44ba66c1a4a412802, type: 3}
+      propertyPath: m_Layer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 3d02a98235a8f6f44ba66c1a4a412802, type: 3}
       propertyPath: m_StaticEditorFlags

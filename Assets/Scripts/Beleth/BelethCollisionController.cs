@@ -75,7 +75,7 @@ public class BelethCollisionController : MonoBehaviour
         {
             healthController.GetDamage(1);
             Vector3 knockback = transform.position - other.transform.position;
-            movementController.AddImpulse(knockback, 2);
+            movementController.AddImpulse(knockback, 1);
         }
     }
 

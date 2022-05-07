@@ -9,8 +9,6 @@ public class TutorialCanvasController : MonoBehaviour
     [SerializeField]
     TutorialCanvas m_Canvas;
     [SerializeField]
-    GameObject Player;
-    [SerializeField]
     VideoPlayer videoPlayer;
     [SerializeField]
     Text text;

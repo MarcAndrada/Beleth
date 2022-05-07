@@ -28,6 +28,12 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("Settings");
     }
 
+    public void GoControlsScene() 
+    {
+        SceneManager.LoadScene("Controls");
+    }
+
+
     public void GoCreditsScene()
     {
         SceneManager.LoadScene("Credits");

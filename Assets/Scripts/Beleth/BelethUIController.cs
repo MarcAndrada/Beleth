@@ -16,6 +16,8 @@ public class BelethUIController : MonoBehaviour
     [SerializeField]
     GameObject settingsCanvas;
     [SerializeField]
+    private GameObject controlsCanvas;
+    [SerializeField]
     private CameraSpeedController cameraSpeedController;
 
     [Header("Stamina Bar")]
@@ -195,28 +197,28 @@ public class BelethUIController : MonoBehaviour
     #region Stamina slider
     private void CheckStaminaSlider()
     {
-        if (belethController.GetGliding())
-        {
-            if (staminaAnimator.GetCurrentAnimatorStateInfo(0).IsName("GoingUp"))
-            {
-                PlayDown();
-            }
+        //if (belethController.GetGliding())
+        //{
+        //    if (staminaAnimator.GetCurrentAnimatorStateInfo(0).IsName("GoingUp"))
+        //    {
+        //        PlayDown();
+        //    }
 
-            staminaAnimator.SetBool("start", true);
-        }
-        else
-        {
-            if (staminaAnimator.GetCurrentAnimatorStateInfo(0).IsName("GoingDown"))
-            {
-                PlayUp();
-            }
+        //    staminaAnimator.SetBool("start", true);
+        //}
+        //else
+        //{
+        //    if (staminaAnimator.GetCurrentAnimatorStateInfo(0).IsName("GoingDown"))
+        //    {
+        //        PlayUp();
+        //    }
 
-            staminaAnimator.SetBool("start", false);
-        }
+        //    staminaAnimator.SetBool("start", false);
+        //}
     }
     public void PlayDown()
     {
-        staminaAnimator.Play("Base Layer.GoingDown", 0, 1 - slider.value);
+        //staminaAnimator.Play("Base Layer.GoingDown", 0, 1 - slider.value);
     }
     public void PlayUp()
     {
@@ -224,7 +226,7 @@ public class BelethUIController : MonoBehaviour
     }
     public void EmptyAnim()
     {
-        staminaAnimator.SetBool("start", false);
+        //staminaAnimator.SetBool("start", false);
 
         //Deja de planear aqui
     }
@@ -268,6 +270,7 @@ public class BelethUIController : MonoBehaviour
         Cursor.visible = false;
         pauseCanvas.SetActive(false);
         settingsCanvas.SetActive(false);
+        controlsCanvas.SetActive(false);
         cameraSpeedController.enabled = false;
         cameraSpeedController.SetSpeedOnCamera();
 
@@ -284,6 +287,17 @@ public class BelethUIController : MonoBehaviour
         settingsCanvas.SetActive(false);
         cameraSpeedController.enabled = false;
     }
+
+    public void ShowControls() 
+    {
+        controlsCanvas.SetActive(true);
+    }
+
+    public void HideControls()
+    {
+        controlsCanvas.SetActive(false);
+    }
+
 
     public void QuitGame()
     {
