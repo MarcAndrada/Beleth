@@ -42,7 +42,7 @@ public class BelethCollisionController : MonoBehaviour
         {
             coinController.AddCoin();
             SoundManager._SOUND_MANAGER.SoulGet(SoundManager._SOUND_MANAGER.audioSource2D);
-            other.gameObject.SetActive(false);
+            Destroy(other.gameObject);
         }
 
         if (other.gameObject.tag == "Collectable")

@@ -306,16 +306,12 @@ public class WrathBossStateController : MonoBehaviour
 
     }
 
-    public IEnumerator StartFight() 
+    public void StartFight() 
     {
         fighting = true;
         isDamaged = false;
-        yield return new WaitForSeconds(2.5f);
-        currentAction = BossActions.BRAKE_FLOOR;
-        currentFase = BossFase.FASE_1;
+        currentFase = BossFase.FASE_1;  
         
-        
-    
     }
 
     public void StopFight() 

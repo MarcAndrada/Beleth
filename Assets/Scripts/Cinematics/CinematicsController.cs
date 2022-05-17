@@ -40,24 +40,6 @@ public class CinematicsController : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            director.playableAsset = timeLines[6];
-            director.Play();
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            director.playableAsset = timeLines[7];
-            director.Play();
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            director.playableAsset = timeLines[8];
-        }
     }
     public void PlaySpecificCinematic(string _currentCinematic) 
     {

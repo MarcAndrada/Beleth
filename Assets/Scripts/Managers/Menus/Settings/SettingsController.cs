@@ -12,15 +12,12 @@ public class SettingsController : MonoBehaviour
     private string mouseSpeedXParameter;
     [SerializeField]
     private string mouseSpeedYParameter;
-    [SerializeField]
     private Slider mouseXSlider;
-    [SerializeField]
     private Slider mouseYSlider;
-    [SerializeField]
     private Text mouseXText;
-    [SerializeField]
     private Text mouseYText;
-    
+    private float mouseSpeedXDefault = 75;
+    private float mouseSpeedYDefault = 75;
     public float mouseSpeedX;
     public float mouseSpeedY;
 
@@ -28,6 +25,7 @@ public class SettingsController : MonoBehaviour
 
     void Awake()
     {
+
         if (SettingsController._SETTINGS_CONTROLLER != null)
         {
             Destroy(gameObject);
@@ -38,6 +36,16 @@ public class SettingsController : MonoBehaviour
             _SETTINGS_CONTROLLER = this;
 
         }
+
+        if (!PlayerPrefs.HasKey(mouseSpeedXParameter)) {
+            PlayerPrefs.SetFloat(mouseSpeedXParameter, mouseSpeedXDefault);
+        }
+
+        if (!PlayerPrefs.HasKey(mouseSpeedYParameter))
+        {
+            PlayerPrefs.SetFloat(mouseSpeedYParameter, mouseSpeedYDefault);
+        }
+
 
         mouseSpeedX = PlayerPrefs.GetFloat(mouseSpeedXParameter);
         mouseSpeedY = PlayerPrefs.GetFloat(mouseSpeedYParameter);

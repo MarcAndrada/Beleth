@@ -18,12 +18,13 @@ public class VolumeController : MonoBehaviour
     string sfxVolumeParameter;
     [SerializeField]
     private AudioMixer mixer;
-    [SerializeField]
     private Slider masterSlider;
-    [SerializeField]
     private Slider musicSlider;
-    [SerializeField]
     private Slider sfxSlider;
+
+    private float masterDefaultVolume = 0.5f;
+    private float musicDefaultVolume = 0.5f;
+    private float sfxDefaultVolume = 0.5f;
 
     private float multiplier = 30;
 
@@ -42,9 +43,20 @@ public class VolumeController : MonoBehaviour
 
         }
 
+        if (!PlayerPrefs.HasKey(masterVolumeParameter))
+        {
+            PlayerPrefs.SetFloat(masterVolumeParameter, masterDefaultVolume);
+        }
 
-       
+        if (!PlayerPrefs.HasKey(musicVolumeParameter))
+        {
+            PlayerPrefs.SetFloat(musicVolumeParameter, musicDefaultVolume);
+        }
 
+        if (!PlayerPrefs.HasKey(sfxVolumeParameter))
+        {
+            PlayerPrefs.SetFloat(sfxVolumeParameter, sfxDefaultVolume);
+        }
 
 
     }

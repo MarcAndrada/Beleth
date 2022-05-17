@@ -23,7 +23,7 @@ public class GuideStarterPosController : MonoBehaviour
     private GuideAIController guideAIController;
     private bool showingText = false;
     private bool fadingIn;
-    private float currentTextAlpha = 0f;
+
     private void Awake()
     {
         guideAIController = ghost.GetComponent<GuideAIController>();

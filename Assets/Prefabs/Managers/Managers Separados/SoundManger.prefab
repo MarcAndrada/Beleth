@@ -40,8 +40,8 @@ AudioSource:
   m_GameObject: {fileID: 1631338612}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 63b4d202daf63ed4f90a8d55ac08d635, type: 3}
+  OutputAudioMixerGroup: {fileID: -5664213350457621546, guid: 07390c4d8baed5d4b881c0a7f5dab735, type: 2}
+  m_audioClip: {fileID: 8300000, guid: ad935b9197496b840a252d004559ab4f, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.35
   m_Pitch: 1
@@ -172,16 +172,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51cdcd9ed68c56f40969dc8ded1bb35b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource2D: {fileID: 0}
   musicAudioSource: {fileID: 1631338614}
-  musicClip: {fileID: 8300000, guid: 63b4d202daf63ed4f90a8d55ac08d635, type: 3}
-  bossMusicClip: {fileID: 8300000, guid: 26bb334ea43176842b0f9e87e7fd8ee6, type: 3}
-  maxAndMinPitch:
-  - 0.5
-  - 1.5
+  musicClip: {fileID: 8300000, guid: ad935b9197496b840a252d004559ab4f, type: 3}
+  bossMusicClip: {fileID: 8300000, guid: 64357dae4eaa4a04499e931a32a14f4f, type: 3}
+  actionsPitch:
+  - 0.8
+  - 1.2
   voicePitch:
   - 0.9
   - 1.1
-  footsteps:
+  beleth_Footsteps:
   - {fileID: 8300000, guid: 208ea4fd9c43c02418a62277cb3193c0, type: 3}
   - {fileID: 8300000, guid: df729e660718d344eb113c1f51657501, type: 3}
   - {fileID: 8300000, guid: 5ee1cda4b5d614f46be23542e01a6b07, type: 3}
@@ -192,22 +193,42 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 59b18aaffb707dd49a188daddedb37cd, type: 3}
   - {fileID: 8300000, guid: 4ff395c53440ef64798752763ae8b9eb, type: 3}
   - {fileID: 8300000, guid: c7d674ad9caa3e84d9e20943b56a1e83, type: 3}
-  wingFlap:
+  beleth_WingFlap:
   - {fileID: 8300000, guid: fe914d19dc868f946bd4c5461cb178e1, type: 3}
   - {fileID: 8300000, guid: da094262dfe6b2a49ba9f40549d39368, type: 3}
   - {fileID: 8300000, guid: 8d4a2f3cb500a1e4baf8dac18d04571e, type: 3}
   - {fileID: 8300000, guid: c0b2b49f4d034414b9bf6aee23394dc2, type: 3}
-  normalAttack: {fileID: 8300000, guid: ecfdba29efe8ad442a1e3ca259d5401e, type: 3}
-  wrathAttack: {fileID: 8300000, guid: 2afb6274906328e498b8f5506c0152de, type: 3}
-  wrathActivation: {fileID: 8300000, guid: 308dce8f902aee04791e6b545effee79, type: 3}
-  jump: {fileID: 8300000, guid: b8f999aeb4465a14aa06e52e2e911f64, type: 3}
-  belethDamage: {fileID: 8300000, guid: efa8cec61dfb2ee40bcb0e1e88bc3480, type: 3}
-  belethDeath: {fileID: 8300000, guid: 203dd3d7f11d8d64fa857171d4a5377d, type: 3}
-  revive: {fileID: 8300000, guid: 83a8e138fac5c4c4c91363484f9bb8ea, type: 3}
+  beleth_NormalAttack: {fileID: 8300000, guid: ecfdba29efe8ad442a1e3ca259d5401e, type: 3}
+  beleth_WrathAttack: {fileID: 8300000, guid: 2afb6274906328e498b8f5506c0152de, type: 3}
+  beleth_WrathActivation: {fileID: 8300000, guid: 308dce8f902aee04791e6b545effee79, type: 3}
+  beleth_Jump: {fileID: 8300000, guid: b8f999aeb4465a14aa06e52e2e911f64, type: 3}
+  beleth_Damage:
+  - {fileID: 8300000, guid: 120aeadd84bba9f4d9e44350307ad637, type: 3}
+  - {fileID: 8300000, guid: 54e2e3f184ddf374cb90a8dbc42578d0, type: 3}
+  - {fileID: 8300000, guid: 54d136f1f7e0dcb41880be303ac0e6f1, type: 3}
+  beleth_Death: {fileID: 8300000, guid: 203dd3d7f11d8d64fa857171d4a5377d, type: 3}
+  beleth_Revive: {fileID: 8300000, guid: 83a8e138fac5c4c4c91363484f9bb8ea, type: 3}
   checkPoint: {fileID: 8300000, guid: debfc4eda9ab4544c910da738d91aa36, type: 3}
-  wrathExplosion: {fileID: 8300000, guid: 0c73279ecedb1ba4fa8046246297287f, type: 3}
+  wrathBoss_GoBelowFloor: {fileID: 8300000, guid: f444fb1c19764cb4c80e2de60a564e02, type: 3}
+  wrathBoss_ReturnBelowFloor: {fileID: 8300000, guid: 51336a5c07473fa47a8ac5d13b040ab8, type: 3}
+  wrathBoss_LavaCircle: {fileID: 8300000, guid: 4e264e9fa4486b845b9f5758ed579f21, type: 3}
+  wrathBoss_EnemieCircle: {fileID: 8300000, guid: 85c013834320e344b8332793c19ee7ca, type: 3}
+  wrathBoss_Damaged: {fileID: 8300000, guid: dc21f76d2eb4849438589dd24fc73e9d, type: 3}
+  wrathBoss_Death: {fileID: 8300000, guid: 8e006b18c8dd07e44a4bfe2f58e44c43, type: 3}
+  pimpollo_UnHide: {fileID: 8300000, guid: 7245c6fca8d144747b92aa5112d136e0, type: 3}
+  pimpollo_Chase: {fileID: 8300000, guid: c36d6c5d31d0105489aa902ae5ab25f2, type: 3}
+  pimpollo_Jump: {fileID: 8300000, guid: b11f4be13a240db43984f5b15c3a2215, type: 3}
+  pimpollo_Explosion: {fileID: 8300000, guid: 7ea1e997fbf2bb24ab60a1cce78eedd9, type: 3}
+  pimpollo_Death: {fileID: 8300000, guid: cd78fba51b7b4c642b5a46950611d881, type: 3}
   clickSound: {fileID: 0}
   hoverSound: {fileID: 0}
+  lavaFlow: {fileID: 0}
+  snakeAttack: {fileID: 0}
+  chainActivation: {fileID: 0}
+  vesselBreak: {fileID: 8300000, guid: 60f083201f257ea46a4fe90be9ba07f5, type: 3}
+  getSoul: {fileID: 8300000, guid: aa12778a89107a5489711eccf738dca6, type: 3}
+  getFavor: {fileID: 8300000, guid: 26cac725c0d31d34a8e85f658b56f641, type: 3}
+  phantomAppears: {fileID: 8300000, guid: 491b6ac84f8ec2546b8e4c499fb7dc23, type: 3}
 --- !u!82 &5322460044617139074
 AudioSource:
   m_ObjectHideFlags: 0
@@ -217,7 +238,7 @@ AudioSource:
   m_GameObject: {fileID: 2204666115674027149}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -5664213350457621546, guid: 07390c4d8baed5d4b881c0a7f5dab735, type: 2}
+  OutputAudioMixerGroup: {fileID: -1217269604852218736, guid: 07390c4d8baed5d4b881c0a7f5dab735, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.6

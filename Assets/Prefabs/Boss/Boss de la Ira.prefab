@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 198121156816897058}
   - component: {fileID: 198121156816897057}
   - component: {fileID: 198121156816897059}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Lava
   m_TagString: BossAttack
   m_Icon: {fileID: 0}
@@ -153,13 +153,12 @@ MonoBehaviour:
   fasesHealth:
   - 66
   - 33
-  fase1Patron: 05000000020000000500000002000000010000000400000002000000
-  fase2Patron: 05000000030000000100000004000000040000000200000002000000020000000500000002000000
-  fase3Patron: 0200000005000000
-  RocksManager: {fileID: 0}
-  damagedSound: {fileID: 8300000, guid: dc21f76d2eb4849438589dd24fc73e9d, type: 3}
-  deathSound: {fileID: 8300000, guid: 8e006b18c8dd07e44a4bfe2f58e44c43, type: 3}
+  fase1Patron: 050000000200000002000000010000000300000005000000
+  fase2Patron: 0500000001000000020000000100000003000000050000000200000005000000
+  fase3Patron: 020000000500000001000000030000000500000005000000050000000200000002000000
+  rocksManager: {fileID: 0}
   isDoingAction: 0
+  isDamaged: 0
   player: {fileID: 0}
 --- !u!114 &198121156970558808
 MonoBehaviour:
@@ -175,22 +174,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   belowSpeed: 1
   yOffset: 15
-  timeToWaitUnderPlayer: 3
-  timeWaitingToEmerge: 1
-  timeToWaitForNextAttack: 0.5
+  timeToWaitUnderPlayer: 2
+  timeWaitingToEmerge: 0.8
+  timeToWaitForNextAttack: 0.8
   belowFloor_Particles: {fileID: 7610500815143091398}
   lavaCircle_Attack: {fileID: 4385958683582065166, guid: 655e2841e42195a4c9b791e6fed23678, type: 3}
-  lavaCircle_Duration: 5
+  lavaCircle_Duration: 5.3
   enemiePrefab: {fileID: 6054063826292710471, guid: ccb2cc5d79598074f8c53667d97dd531, type: 3}
   enemieCircle_Duration: 11
   enemieCircle_Quantity: 10
   brakeFloor_Attack: {fileID: 2172381176274081856, guid: 0dd9b51e22c0e404cbff2bf61ceea218, type: 3}
-  brakeFloor_Duration: 3.5
+  brakeFloor_Duration: 3
   brakeFloorV2_Angle: 40
-  goBelowFloor: {fileID: 8300000, guid: f444fb1c19764cb4c80e2de60a564e02, type: 3}
-  returnBelowFloor: {fileID: 8300000, guid: 51336a5c07473fa47a8ac5d13b040ab8, type: 3}
-  lavaCircleSound: {fileID: 8300000, guid: 4e264e9fa4486b845b9f5758ed579f21, type: 3}
-  enemieCircleSound: {fileID: 8300000, guid: 85c013834320e344b8332793c19ee7ca, type: 3}
 --- !u!82 &1573139758
 AudioSource:
   m_ObjectHideFlags: 0
@@ -203,7 +198,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -1217269604852218736, guid: 07390c4d8baed5d4b881c0a7f5dab735, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -211,8 +206,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 10
-  MaxDistance: 80
+  MinDistance: 30
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

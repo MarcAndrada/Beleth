@@ -48,7 +48,7 @@ public class WrathBossActivator : MonoBehaviour
 
     private void PlayerEnter() 
     {
-        StartCoroutine(boss.StartFight());
+        boss.StartFight();
         BossCanvas.SetActive(true);
         SoundManager._SOUND_MANAGER.ChangeMusicBoss();
         door.CloseDoor();
