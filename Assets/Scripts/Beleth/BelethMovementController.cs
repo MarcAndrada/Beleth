@@ -168,7 +168,6 @@ public class BelethMovementController : MonoBehaviour
                 isGroundedNow = true;
                 Shadow.SetActive(true);
                 Shadow.transform.position = shadowHit.point;
-                Debug.Log("oli");
                 break;
             }
         }
@@ -176,7 +175,6 @@ public class BelethMovementController : MonoBehaviour
         if (!isGroundedNow)
         {
             Shadow.SetActive(false);
-            Debug.Log("suuu");
         }
     }
 
