@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using System;
 
 public class BelethMovementController : MonoBehaviour
 {
@@ -99,6 +100,13 @@ public class BelethMovementController : MonoBehaviour
     private bool isAttacking = false;
     #endregion
 
+    #region Shadow 
+    [Header("Shadow GameObject")]
+    [SerializeField] GameObject Shadow;
+    [SerializeField] LayerMask floorLayer;
+    [SerializeField] float maxShadowDistance;
+    #endregion
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -141,8 +149,35 @@ public class BelethMovementController : MonoBehaviour
         CheckAccelSpeed();
         CheckIfCanJump();
         CheckMovementInput();
-       
 
+        MoveShadow();
+    }
+
+    private void MoveShadow()
+    {
+        RaycastHit shadowHit;
+        bool isGroundedNow = false;
+
+        Ray[] floorRay = new Ray[floorRayPlaces.Length];
+        floorRay[0] = new Ray(floorRayPlaces[0].position, -transform.up);
+
+        foreach (Ray item in floorRay)
+        {
+            if (Physics.Raycast(item, out shadowHit, maxShadowDistance, floorLayer))
+            {
+                isGroundedNow = true;
+                Shadow.SetActive(true);
+                Shadow.transform.position = shadowHit.point;
+                Debug.Log("oli");
+                break;
+            }
+        }
+
+        if (!isGroundedNow)
+        {
+            Shadow.SetActive(false);
+            Debug.Log("suuu");
+        }
     }
 
     private void FixedUpdate()
