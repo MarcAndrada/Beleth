@@ -310,6 +310,7 @@ public class WrathBossStateController : MonoBehaviour
     {
         fighting = true;
         isDamaged = false;
+        isDoingAction = false;
         currentFase = BossFase.FASE_1;  
         
     }

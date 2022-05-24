@@ -15,8 +15,8 @@ public class CameraSpeedController : MonoBehaviour
         
         if (SettingsController._SETTINGS_CONTROLLER != null)
         {
-            cinemachineCamera.m_XAxis.m_MaxSpeed = SettingsController._SETTINGS_CONTROLLER.mouseSpeedX * 2;
-            cinemachineCamera.m_YAxis.m_MaxSpeed = SettingsController._SETTINGS_CONTROLLER.mouseSpeedY / 100;
+            cinemachineCamera.m_XAxis.m_MaxSpeed = SettingsController._SETTINGS_CONTROLLER.mouseSpeedX * 3f;
+            cinemachineCamera.m_YAxis.m_MaxSpeed = SettingsController._SETTINGS_CONTROLLER.mouseSpeedY / 50;
         }
     }
 
@@ -24,8 +24,8 @@ public class CameraSpeedController : MonoBehaviour
     {
         if (SettingsController._SETTINGS_CONTROLLER != null)
         {
-            cinemachineCamera.m_XAxis.m_MaxSpeed = SettingsController._SETTINGS_CONTROLLER.mouseSpeedX * 2;
-            cinemachineCamera.m_YAxis.m_MaxSpeed = SettingsController._SETTINGS_CONTROLLER.mouseSpeedY / 100;
+            cinemachineCamera.m_XAxis.m_MaxSpeed = SettingsController._SETTINGS_CONTROLLER.mouseSpeedX * 3f;
+            cinemachineCamera.m_YAxis.m_MaxSpeed = SettingsController._SETTINGS_CONTROLLER.mouseSpeedY / 50;
         }
     }
 }

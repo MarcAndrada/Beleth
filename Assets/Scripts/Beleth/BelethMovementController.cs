@@ -397,6 +397,8 @@ public class BelethMovementController : MonoBehaviour
                 {
                     rb.AddForce(slopeOffset, ForceMode.VelocityChange);
                 }
+
+                animController.SetGoingDown(goingDown);
             }
             else
             {
@@ -418,6 +420,16 @@ public class BelethMovementController : MonoBehaviour
         {
             onRamp = false;
         }
+
+        if (angleFloor > 2 || angleFloor < -2)
+        {
+            animController.SetOnRamp(onRamp);
+        }
+        else
+        {
+            animController.SetOnRamp(false);
+        }
+
     }
     private void CheckIfCanJump() {
 

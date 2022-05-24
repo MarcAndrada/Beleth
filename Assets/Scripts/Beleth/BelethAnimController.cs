@@ -23,6 +23,18 @@ public class BelethAnimController : MonoBehaviour
         animator.SetBool("Running", _running);
 
     }
+
+    public void SetOnRamp(bool _onRamp) 
+    {
+        animator.SetBool("OnRamp", _onRamp);
+    }
+
+    public void SetGoingDown(bool _goingDown) 
+    {
+        animator.SetBool("GoingDown", _goingDown);
+
+    }
+
     #endregion
 
     #region Air Animations
