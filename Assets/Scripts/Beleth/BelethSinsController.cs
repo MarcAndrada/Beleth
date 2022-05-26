@@ -6,16 +6,6 @@ using UnityEngine.InputSystem;
 
 public class BelethSinsController : MonoBehaviour
 {
-    /* Variables en caso de que el ataque con la ira tenga diferentes stats que el ataque normal
-     * 
-     * [SerializeField]
-     * private float wrathAttackCD;
-     * [SerializeField]
-     * private float wrathAttackDuration;
-     * [SerializeField]
-     * private float wrathAttackDecelSpeed;
-     * 
-    */
 
     [SerializeField]
     private GameObject followCamera;
@@ -24,11 +14,12 @@ public class BelethSinsController : MonoBehaviour
     private BelethAnimController animController;
     private BelethMovementController movementController;
     private BelethAttackController attackController;
+    private BelethUIController uiController;
     private PlayerInput playerInput;
     private InputAction wrathAttackAction;
     private InputAction wrathExplisionAction;
-    private List<WrathExplosionController> wrathManager = new List<WrathExplosionController>();
-
+    //[HideInInspector]
+    public WrathExplosionController[] wrathManager = new WrathExplosionController[5];
 
     // Start is called before the first frame update
     void Start()
@@ -37,21 +28,19 @@ public class BelethSinsController : MonoBehaviour
         animController = GetComponent<BelethAnimController>();
         movementController = GetComponent<BelethMovementController>();
         attackController = GetComponent<BelethAttackController>();
+        uiController = GetComponent<BelethUIController>();
 
         // Wrath Events
         wrathAttackAction = playerInput.actions["WrathAttack"];
         wrathAttackAction.started += _ => attackController.AttackAction_started(1);
-        wrathExplisionAction = playerInput.actions["WrathActive"];
+        wrathExplisionAction = playerInput.actions["WrathActiveAll"];
         wrathExplisionAction.started += _ => ExplodeAllObjects();
+        wrathExplisionAction = playerInput.actions["WrathActiveOne"];
+        wrathExplisionAction.started += _ => ExplodeOneObject();
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+    #region Wrath
     public void AddWrathObject(WrathExplosionController _objComponent) {
         bool _same = false;
 
@@ -65,28 +54,60 @@ public class BelethSinsController : MonoBehaviour
 
         if (!_same && _objComponent.canBeTriggered) 
         {
-            wrathManager.Add(_objComponent);
+            for (int i = 0; i < 5; i++)
+            {
+                if (wrathManager[i] == null) 
+                {
+                    wrathManager[i] = _objComponent;
+                    _objComponent.SetWrath();
+                    uiController.UpdateObjectList();
+                    break;
+                }
+
+            }
+           
+            
         }
 
     }
 
-    private void ExplodeAllObjects() {
-       foreach (var item in wrathManager)
-       {
-           if (item != null)
-           {
-                item.WrathExplosion();
-                SoundManager._SOUND_MANAGER.WrathExplosion(item.GetComponent<AudioSource>());
 
-           }
+    private void ExplodeOneObject() 
+    {
+        if (wrathManager.Length > 0 && wrathManager[uiController.wrathObjectIndex] != null)
+        {
+            wrathManager[uiController.wrathObjectIndex].WrathExplosion();
+            SoundManager._SOUND_MANAGER.WrathExplosion(wrathManager[uiController.wrathObjectIndex].gameObject.GetComponent<AudioSource>());
+            wrathManager[uiController.wrathObjectIndex] = null;
+            uiController.UpdateObjectList();
 
-       }
+        }
 
-        SoundManager._SOUND_MANAGER.WrathActivation(wrathManager.Count);
+        uiController.UpdateObjectList();
 
-       wrathManager.Clear();
 
     }
 
+    private void ExplodeAllObjects() {
 
+        bool willSound = false;
+        
+        for (int i = 0; i < wrathManager.Length; i++)
+        {
+            if (wrathManager[i] != null)
+            {
+                wrathManager[i].WrathExplosion();
+                SoundManager._SOUND_MANAGER.WrathExplosion(wrathManager[i].GetComponent<AudioSource>());
+                wrathManager[i] = null;
+                uiController.UpdateObjectList();
+
+            }
+        }
+
+        uiController.UpdateObjectList();
+        SoundManager._SOUND_MANAGER.WrathActivation(willSound);
+
+    }
+
+    #endregion
 }

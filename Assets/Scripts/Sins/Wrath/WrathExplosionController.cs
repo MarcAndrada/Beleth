@@ -32,6 +32,8 @@ public class WrathExplosionController : MonoBehaviour
     GameObject explosionWrathVFX;
     [SerializeField] Transform SocketVFX;
 
+    [SerializeField]
+    public string objectType;
     private WrathExplosionController explosionController;
     private Rigidbody rigidB;
 
@@ -105,7 +107,19 @@ public class WrathExplosionController : MonoBehaviour
         }
     }
 
-    private void SetWrath(BelethSinsController _player)
+    public void CheckOnWrath(BelethSinsController _player) 
+    {
+        if (objectType != "")
+        {
+            _player.AddWrathObject(explosionController);
+        }
+        else
+        {
+            Debug.LogError(gameObject + " No tiene un tipo asignado");
+        }
+    }
+
+    public void SetWrath()
     {
         if (wrathVFX)
         {
@@ -113,7 +127,7 @@ public class WrathExplosionController : MonoBehaviour
             InWrathAnim();
         }
 
-        _player.AddWrathObject(explosionController);
+        
     }
 
     private void SetNormal()
@@ -137,7 +151,7 @@ public class WrathExplosionController : MonoBehaviour
     {
         if (other.gameObject.tag == "Wrath")
         {
-            SetWrath(other.gameObject.GetComponentInParent<BelethSinsController>());
+            CheckOnWrath(other.gameObject.GetComponentInParent<BelethSinsController>());
         }
     }
 }

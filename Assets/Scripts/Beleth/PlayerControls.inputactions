@@ -62,9 +62,17 @@
                     "interactions": ""
                 },
                 {
-                    "name": "WrathActive",
+                    "name": "WrathActiveAll",
                     "type": "Button",
                     "id": "cf98824a-c12c-4be6-b75a-96e417ffdd4f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "WrathActiveOne",
+                    "type": "Button",
+                    "id": "cf0fcef4-4171-4dca-895d-4d10bce2ca4d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -73,6 +81,22 @@
                     "name": "Pause",
                     "type": "Button",
                     "id": "e0db6ec9-79db-43eb-98fb-47f2b9d9c9db",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "WrathListLeft",
+                    "type": "Button",
+                    "id": "1df879a3-9872-4054-a331-bf0f1e44f220",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "WrathListRight",
+                    "type": "Button",
+                    "id": "55dd1956-8dd8-44ab-bb87-f376507830a0",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -317,7 +341,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "WrathActive",
+                    "action": "WrathActiveAll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -328,7 +352,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "WrathActive",
+                    "action": "WrathActiveAll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -351,6 +375,72 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e5c03ea5-2e7f-43f7-b80c-ac0d54d1d24f",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WrathActiveOne",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "63d3d76f-babd-40b8-9483-1d820e31a9cb",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WrathActiveOne",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b7462c3b-f369-422c-96d6-a147c25f156d",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WrathListLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "db16f2e5-ecf7-4dc9-b349-df422c972780",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WrathListLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9bf102c9-81f4-482f-9f4f-b3bc85a5734a",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WrathListRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "466f63ca-c6c0-48d2-8f0e-6a894946a585",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WrathListRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

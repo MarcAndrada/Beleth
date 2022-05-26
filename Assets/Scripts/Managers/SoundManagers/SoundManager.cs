@@ -162,9 +162,9 @@ public class SoundManager : MonoBehaviour
 
     }
 
-    public void WrathActivation(int _numList)
+    public void WrathActivation(bool _doSound)
     {
-        if (_numList > 0)
+        if (_doSound)
         {
             audioSource2D.PlayOneShot(beleth_WrathActivation);
         }

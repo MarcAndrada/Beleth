@@ -153,31 +153,6 @@ public class BelethMovementController : MonoBehaviour
         MoveShadow();
     }
 
-    private void MoveShadow()
-    {
-        RaycastHit shadowHit;
-        bool isGroundedNow = false;
-
-        Ray[] floorRay = new Ray[floorRayPlaces.Length];
-        floorRay[0] = new Ray(floorRayPlaces[0].position, -transform.up);
-
-        foreach (Ray item in floorRay)
-        {
-            if (Physics.Raycast(item, out shadowHit, maxShadowDistance, floorLayer))
-            {
-                isGroundedNow = true;
-                Shadow.SetActive(true);
-                Shadow.transform.position = shadowHit.point;
-                break;
-            }
-        }
-
-        if (!isGroundedNow)
-        {
-            Shadow.SetActive(false);
-        }
-    }
-
     private void FixedUpdate()
     {
 
@@ -247,6 +222,30 @@ public class BelethMovementController : MonoBehaviour
             rb.AddForce(Physics.gravity * (rb.mass * rb.mass - glidingGravity));
         }
    
+    }
+    private void MoveShadow()
+    {
+        RaycastHit shadowHit;
+        bool isGroundedNow = false;
+
+        Ray[] floorRay = new Ray[floorRayPlaces.Length];
+        floorRay[0] = new Ray(floorRayPlaces[0].position, -transform.up);
+
+        foreach (Ray item in floorRay)
+        {
+            if (Physics.Raycast(item, out shadowHit, maxShadowDistance, floorLayer))
+            {
+                isGroundedNow = true;
+                Shadow.SetActive(true);
+                Shadow.transform.position = shadowHit.point;
+                break;
+            }
+        }
+
+        if (!isGroundedNow)
+        {
+            Shadow.SetActive(false);
+        }
     }
 
     #endregion
@@ -368,15 +367,11 @@ public class BelethMovementController : MonoBehaviour
 
                     if (Physics.Raycast(new Ray(rampRayPlaces[3].position, rampRayPlaces[3].forward), out groundHit3, maxRampCheckDistance, walkableLayers))
                     {
-                        //// En caso de que se separe un poco del suelo se teletransportara al suelo
-                        //if (groundHit3.distance > maxRampCheckDistance / 2f && !groundedPlayer)
-                        //{
-                        //    transform.position = new Vector3(transform.position.x, groundHit3.point.y + (coll.height / 2), transform.position.z);
-                        //}
-
-                        //Si ha dejado de tocar el suelo comprueba si hay algo en diagonal hacia atras si es asi envialo hacia abajo
                         angleFloor = -Vector3.Angle(groundHit3.normal, Vector3.up);
                         slopeOffset = new Vector3(0, angleFloor / 2f, 0);
+
+                        slopeOffset += -transform.forward * 1.2f;
+
                         goingDown = true;
 
                     }

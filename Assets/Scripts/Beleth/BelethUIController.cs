@@ -36,22 +36,54 @@ public class BelethUIController : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI coinText;
 
+    [SerializeField]
+    private GameObject wrathBar;
+    [SerializeField]
+    private float timeToWaitWrathBar;
+    private float timeWaitedWrathBar = 0;
+    [SerializeField]
+    private GameObject[] wrathUiPointers;
+    [SerializeField]
+    private Sprite[] wrathUISprites;
+    [SerializeField]
+    private Image[] wrathUIImages;
+    public int wrathObjectIndex = 0;
 
-    PlayerInput playerInput;
-    InputAction pauseAction;
 
-    BelethMovementController belethController;
-    BelethHealthController belethHealthController;
+    private PlayerInput playerInput;
+    private InputAction pauseAction;
+    private InputAction leftWrathListAction;
+    private InputAction rightWrathListAction;
+    
+    private BelethMovementController belethController;
+    private BelethHealthController belethHealthController;
+    private BelethSinsController sinsController;
 
     bool isPaused;
 
-    private void Start()
+    private void Awake()
     {
+
         playerInput = GetComponent<PlayerInput>();
-        pauseAction = playerInput.actions["Pause"];
-        pauseAction.started += _ => CheckIfPaused();
+        sinsController = GetComponent<BelethSinsController>();
         belethController = GetComponent<BelethMovementController>();
         belethHealthController = GetComponent<BelethHealthController>();
+
+        pauseAction = playerInput.actions["Pause"];
+        pauseAction.started += _ => CheckIfPaused();
+
+
+        leftWrathListAction = playerInput.actions["WrathListLeft"];
+        leftWrathListAction.started += _ => MoveWratPointerLeft();
+
+        rightWrathListAction = playerInput.actions["WrathListRight"];
+        rightWrathListAction.started += _ => MoveWratPointerRight();
+    }
+
+    private void Start()
+    {
+       
+        
 
         cameraSpeedController.SetSpeedOnCamera();
 
@@ -61,12 +93,23 @@ public class BelethUIController : MonoBehaviour
         pauseCanvas.SetActive(false);
 
 
+        wrathUiPointers[0].SetActive(true);
+        wrathUiPointers[1].SetActive(false);
+        wrathUiPointers[2].SetActive(false);
+        wrathUiPointers[3].SetActive(false);
+        wrathUiPointers[4].SetActive(false);
+
+        wrathObjectIndex = 0;
+
+
+
     }
 
     private void Update()
     {
         CheckStaminaSlider();
         SetHealthUI(CheckHealth());
+        WaitForDesapearWrathUI();
     }
 
     #region Health UI
@@ -297,8 +340,7 @@ public class BelethUIController : MonoBehaviour
     {
         controlsCanvas.SetActive(false);
     }
-
-
+    
     public void QuitGame()
     {
         
@@ -317,6 +359,123 @@ public class BelethUIController : MonoBehaviour
         //Hacer que las monedas se cambien en el canvas
         coinText.text = _currentCoins.ToString();
     }
+
+    #endregion
+
+    #region WrathBarUI
+
+    public void UpdateObjectList() 
+    {
+
+        for (int i = 0; i < 5; i++)
+        {
+            if (sinsController.wrathManager[i] != null)
+            {
+                switch (sinsController.wrathManager[i].objectType)
+                {
+                    case "Wall":
+                        wrathUIImages[i].sprite = wrathUISprites[0];
+                        wrathUIImages[i].color = new Color(1, 1, 1, 1);
+
+                        break;
+                    case "Platform":
+                        wrathUIImages[i].sprite = wrathUISprites[1];
+                        wrathUIImages[i].color = new Color(1, 1, 1, 1);
+                        break;
+                    case "Rock":
+                        wrathUIImages[i].sprite = wrathUISprites[2];
+                        wrathUIImages[i].color = new Color(1, 1, 1, 1);
+                        break;
+                    case "Activator":
+                        wrathUIImages[i].sprite = wrathUISprites[3];
+                        wrathUIImages[i].color = new Color(1, 1, 1, 1);
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                wrathUIImages[i].color = new Color(1, 1, 1, 0);
+            }
+        }
+       
+    }
+
+    private void MoveWratPointerLeft() 
+    {
+        if (wrathObjectIndex < 4) 
+        {
+            wrathObjectIndex++;
+
+        }
+        else
+        {
+            wrathObjectIndex = 0;
+        }
+
+        UpdatePointerPos();
+    }
+
+    private void MoveWratPointerRight()
+    {
+        if (wrathObjectIndex > 0)
+        {
+            wrathObjectIndex--;
+
+        }
+        else
+        {
+            wrathObjectIndex = 4;
+        }
+        
+        UpdatePointerPos();
+    }
+
+    private void UpdatePointerPos() 
+    {
+
+        wrathUiPointers[0].SetActive(false);
+        wrathUiPointers[1].SetActive(false);
+        wrathUiPointers[2].SetActive(false);
+        wrathUiPointers[3].SetActive(false);
+        wrathUiPointers[4].SetActive(false);
+ 
+
+        wrathUiPointers[wrathObjectIndex].SetActive(true);
+
+    }
+
+    private void WaitForDesapearWrathUI() 
+    {
+        bool isEmpty = true;
+        for (int i = 0; i < 5; i++)
+        {
+            if (sinsController.wrathManager[i] != null)
+            {
+                isEmpty = false;
+            }
+        }
+
+        if (!isEmpty)
+        {
+            //Hacerlo aparecer
+            wrathBar.SetActive(true);
+            timeWaitedWrathBar = 0;
+        }
+        else
+        {
+            //Empezar a contar para hacerlo desaparecer    
+            timeWaitedWrathBar += Time.deltaTime;
+
+            if (timeToWaitWrathBar <= timeWaitedWrathBar)
+            {
+                wrathBar.SetActive(false);
+            }
+        }
+    }
+
 
     #endregion
 

@@ -19,11 +19,17 @@ public class ActivatorController : MonoBehaviour
         }
         else if(currentType == ActivatorType.LEFT)
         {
-            serpiController.ActivateChain(0);
+            if (serpiController.currentSerpiState != SerpiController.SerpiStates.TRAPPED && serpiController.currentSerpiState != SerpiController.SerpiStates.DEAD)
+            {
+                serpiController.ActivateChain(0);
+            }
         }
         else if(currentType == ActivatorType.RIGHT)
         {
-            serpiController.ActivateChain(1);
+            if (serpiController.currentSerpiState != SerpiController.SerpiStates.TRAPPED && serpiController.currentSerpiState != SerpiController.SerpiStates.DEAD)
+            {
+                serpiController.ActivateChain(1);
+            }
 
         }
 
