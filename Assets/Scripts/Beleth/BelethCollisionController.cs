@@ -48,7 +48,7 @@ public class BelethCollisionController : MonoBehaviour
         if (other.gameObject.tag == "Collectable")
         {
             CollectableController currentCollectable = other.GetComponent<CollectableController>();
-            uIController.ObtainedCollectable(currentCollectable.collectableID);
+            uIController.ObtainedCollectable();
             currentCollectable.DisableCollectable();
         }
 

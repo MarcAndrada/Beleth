@@ -17,6 +17,22 @@ public class TutorialCanvasController : MonoBehaviour
     double timeToStop;
     float timer;
 
+    enum InputActions {JUMP, ATTACK, WRATH_ATTACK, ACTIVATE_WRATH , GLIDE };
+    [SerializeField]
+    InputActions[] inputActions;
+
+    [SerializeField]
+    private Image[] controllsImages;
+
+    [SerializeField]
+    private Sprite[] jumpSprites;
+    [SerializeField]
+    private Sprite[] attackSprites;
+    [SerializeField]
+    private Sprite[] wrathAttackSprites;
+    [SerializeField]
+    private Sprite[] activateWrathSprites;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +54,28 @@ public class TutorialCanvasController : MonoBehaviour
     public void SetThings()
     {
         timeToStop = videoPlayer.length * timesToPlay;
-        text.text = m_Canvas.GetText();
+
+        for (int i = 0; i < inputActions.Length; i++)
+        {
+            switch (inputActions[i])
+            {
+                case InputActions.JUMP:
+                    controllsImages[i].sprite = jumpSprites[SettingsController._SETTINGS_CONTROLLER.GetControlsType()]; 
+                    break;
+                case InputActions.ATTACK:
+                    controllsImages[i].sprite = attackSprites[SettingsController._SETTINGS_CONTROLLER.GetControlsType()];
+                    break;
+                case InputActions.WRATH_ATTACK:
+                    controllsImages[i].sprite = wrathAttackSprites[SettingsController._SETTINGS_CONTROLLER.GetControlsType()];
+                    break;
+                case InputActions.ACTIVATE_WRATH:
+                    controllsImages[i].sprite = activateWrathSprites[SettingsController._SETTINGS_CONTROLLER.GetControlsType()];
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+
     }
 }

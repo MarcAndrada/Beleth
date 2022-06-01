@@ -18,25 +18,15 @@ public class TutorialCanvas : MonoBehaviour
     [SerializeField]
     VideoClip videoToPlay;
 
-    [SerializeField]
-    string text;
-
-    private bool played = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player" && !played)
+        if (other.gameObject.tag == "Player")
         {
             tutorialCanvas.SetActive(true);
             videoPlayer.clip = videoToPlay;
             tutorialCanvas.GetComponent<TutorialCanvasController>().SetThings();
-            played = true;
         }
-    }
-
-    public string GetText()
-    {
-        return text;
     }
 }
 

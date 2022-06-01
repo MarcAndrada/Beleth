@@ -35,6 +35,8 @@ public class BelethUIController : MonoBehaviour
     private GameObject[] collectables;
     [SerializeField]
     private TextMeshProUGUI coinText;
+    private int collectableIndex;
+
 
     [SerializeField]
     private GameObject wrathBar;
@@ -230,9 +232,11 @@ public class BelethUIController : MonoBehaviour
 
     #region Collectables UI
 
-    public void ObtainedCollectable(int _collectableID)
+    public void ObtainedCollectable()
     {
-        collectables[_collectableID].SetActive(true);
+        collectables[collectableIndex].SetActive(true);
+
+        collectableIndex++;
     }
 
     #endregion
@@ -321,6 +325,7 @@ public class BelethUIController : MonoBehaviour
 
     public void ShowSettings()
     {
+        pauseCanvas.SetActive(false);
         settingsCanvas.SetActive(true);
         cameraSpeedController.enabled = true;
     }
@@ -329,18 +334,23 @@ public class BelethUIController : MonoBehaviour
     {
         settingsCanvas.SetActive(false);
         cameraSpeedController.enabled = false;
+        pauseCanvas.SetActive(true);
+
     }
 
     public void ShowControls() 
     {
+        pauseCanvas.SetActive(false);
         controlsCanvas.SetActive(true);
     }
 
     public void HideControls()
     {
         controlsCanvas.SetActive(false);
+        pauseCanvas.SetActive(true);
+
     }
-    
+
     public void QuitGame()
     {
         

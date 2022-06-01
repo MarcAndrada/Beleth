@@ -132,6 +132,8 @@ public class BelethMovementController : MonoBehaviour
         runAction = playerInput.actions["Run"];
         runAction.started += _ => SetRunning();
         runAction.canceled += _ => SetRunning();
+
+        
     }
 
     private void Start()
@@ -181,11 +183,13 @@ public class BelethMovementController : MonoBehaviour
     {
         if (movementInput != Vector3.zero)
         {
-            rb.AddForce(movementDirection * currentAccel, ForceMode.Acceleration);
+            rb.AddForce(movementDirection * currentAccel, ForceMode.VelocityChange);
+//            rb.MovePosition(rb.velocity);
+
         }
         else
         {
-            rb.AddForce(new Vector3(-rb.velocity.x, 0, -rb.velocity.z) * 30);    
+            rb.AddForce(new Vector3(-rb.velocity.x, 0, -rb.velocity.z) * 30);   
         }
 
     }
@@ -332,48 +336,74 @@ public class BelethMovementController : MonoBehaviour
                 Debug.DrawRay(rampRayPlaces[1].position, rampRayPlaces[1].forward, Color.red);
                 Debug.DrawRay(rampRayPlaces[2].position, rampRayPlaces[2].forward, Color.red);
                 Debug.DrawRay(rampRayPlaces[3].position, rampRayPlaces[3].forward, Color.green);
+                Debug.DrawRay(rampRayPlaces[4].position, rampRayPlaces[4].forward, Color.green);
+                Debug.DrawRay(rampRayPlaces[5].position, rampRayPlaces[5].forward, Color.green);
 
 
                 RaycastHit groundHit2;
                 Vector3 slopeOffset;
+                Vector3 keepBackForce = Vector3.zero;
                 bool goingDown = false;
 
+                float angleDivieder = 1f;
+                float accelMultiplier = 7f;
                 //Esta subiendo
                 if (Physics.Raycast(new Ray(rampRayPlaces[0].position, rampRayPlaces[0].forward), out groundHit2, maxRampCheckDistance, walkableLayers))
                 {
                     //Se aplica el movimiento de subida segun el angulo de la subida
                     angleFloor = Vector3.Angle(groundHit2.normal, Vector3.up);
-                    slopeOffset = new Vector3(movementDirection.x * currentAccel, angleFloor / 2f, movementDirection.z * currentAccel );
+                    slopeOffset = new Vector3(movementDirection.x * currentAccel * accelMultiplier, angleFloor / angleDivieder, movementDirection.z * currentAccel );
 
                 }
                 else if (Physics.Raycast(new Ray(rampRayPlaces[1].position, rampRayPlaces[1].forward), out groundHit2, maxRampCheckDistance, walkableLayers))
                 {
                     //Se aplica el movimiento de subida segun el angulo de la subida
                     angleFloor = Vector3.Angle(groundHit2.normal, Vector3.up);
-                    slopeOffset = new Vector3(movementDirection.x * currentAccel, angleFloor / 2f, movementDirection.z * currentAccel);
+                    slopeOffset = new Vector3(movementDirection.x * currentAccel * accelMultiplier, angleFloor / angleDivieder, movementDirection.z * currentAccel);
                 }
                 else if (Physics.Raycast(new Ray(rampRayPlaces[2].position, rampRayPlaces[2].forward), out groundHit2, maxRampCheckDistance, walkableLayers))
                 {
                     //Se aplica el movimiento de subida segun el angulo de la subida
                     angleFloor = Vector3.Angle(groundHit2.normal, Vector3.up);
-                    slopeOffset = new Vector3(movementDirection.x * currentAccel, angleFloor / 2f, movementDirection.z * currentAccel);
+                    slopeOffset = new Vector3(movementDirection.x * currentAccel * accelMultiplier, angleFloor / angleDivieder, movementDirection.z * currentAccel * accelMultiplier);
                 }
                 else
                 {
 
                     //Esta bajando
                     RaycastHit groundHit3;
+                    float angleMulioyplier = 30;
+                    float accelMultiplierDown = 15;
+                    float backForceMultiplyer = 1.5f;
 
 
-                    if (Physics.Raycast(new Ray(rampRayPlaces[3].position, rampRayPlaces[3].forward), out groundHit3, maxRampCheckDistance, walkableLayers))
+                    if (Physics.Raycast(new Ray(rampRayPlaces[3].position, rampRayPlaces[3].forward), out groundHit3, maxRampCheckDistance * 1.5f, walkableLayers))
                     {
                         angleFloor = -Vector3.Angle(groundHit3.normal, Vector3.up);
-                        slopeOffset = new Vector3(0, angleFloor / 2f, 0);
+                        slopeOffset = new Vector3(movementDirection.x * currentAccel * accelMultiplierDown, angleFloor * angleMulioyplier, movementDirection.z * currentAccel * accelMultiplierDown);
 
-                        slopeOffset += -transform.forward * 1.2f;
+                        keepBackForce += -transform.forward * backForceMultiplyer;
 
                         goingDown = true;
 
+                    }
+                    else if (Physics.Raycast(new Ray(rampRayPlaces[3].position, rampRayPlaces[4].forward), out groundHit3, maxRampCheckDistance * 1.5f, walkableLayers))
+                    {
+                        angleFloor = -Vector3.Angle(groundHit3.normal, Vector3.up);
+                        slopeOffset = new Vector3(movementDirection.x * currentAccel * accelMultiplierDown, angleFloor * angleMulioyplier, movementDirection.z * currentAccel * accelMultiplierDown);
+
+                        keepBackForce += -transform.forward * backForceMultiplyer;
+                        
+                        goingDown = true;
+                    }
+                    else if (Physics.Raycast(new Ray(rampRayPlaces[3].position, rampRayPlaces[5].forward), out groundHit3, maxRampCheckDistance * 1.5f, walkableLayers))
+                    {
+                        angleFloor = -Vector3.Angle(groundHit3.normal, Vector3.up);
+                        slopeOffset = new Vector3(movementDirection.x * currentAccel * accelMultiplierDown, angleFloor * angleMulioyplier, movementDirection.z * currentAccel * accelMultiplierDown);
+
+                        keepBackForce += -transform.forward * backForceMultiplyer;
+
+                        goingDown = true;
                     }
                     else
                     {
@@ -386,11 +416,13 @@ public class BelethMovementController : MonoBehaviour
 
                 if (!goingDown)
                 {
-                    rb.AddForce(slopeOffset, ForceMode.Force);
+                    rb.AddForce(slopeOffset, ForceMode.Acceleration);
                 }
                 else
                 {
-                    rb.AddForce(slopeOffset, ForceMode.VelocityChange);
+                    rb.AddForce(keepBackForce, ForceMode.Acceleration);
+                    rb.AddForce(slopeOffset, ForceMode.Acceleration);
+                    
                 }
 
                 animController.SetGoingDown(goingDown);

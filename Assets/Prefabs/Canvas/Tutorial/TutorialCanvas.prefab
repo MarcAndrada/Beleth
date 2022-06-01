@@ -256,10 +256,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1aff3f6fb580e04a879d4037049a262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
+  m_Canvas: {fileID: 0}
   videoPlayer: {fileID: 652161323360814872}
+  text: {fileID: 0}
   timesToPlay: 2
-  text_tmp: {fileID: 0}
+  inputActions: 
+  controllsImages: []
+  jumpSprites:
+  - {fileID: 21300000, guid: bfa1471eec17809499d1b198fd882c30, type: 3}
+  attackSprites:
+  - {fileID: 21300000, guid: ad863f26228afe044839ee841f721f2c, type: 3}
+  wrathAttackSprites:
+  - {fileID: 21300000, guid: 30daeb0528568474a9fee28fae0890ef, type: 3}
+  activateWrathSprites:
+  - {fileID: 21300000, guid: f1f99102992ce6445952fb0f1f6345a3, type: 3}
+  glideSprites:
+  - {fileID: 21300000, guid: bfa1471eec17809499d1b198fd882c30, type: 3}
 --- !u!1 &5156468988746626660
 GameObject:
   m_ObjectHideFlags: 0

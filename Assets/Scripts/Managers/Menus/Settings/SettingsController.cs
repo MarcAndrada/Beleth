@@ -22,6 +22,11 @@ public class SettingsController : MonoBehaviour
     public float mouseSpeedY;
 
 
+    public enum ControllerType { KEYBOARD, PLAYSTATION, XBOX };
+    public ControllerType controllerType;
+    [SerializeField]
+    private string controllerTypeParameter;
+    private int controllerTypeDefault = 0;
 
     void Awake()
     {
@@ -49,6 +54,27 @@ public class SettingsController : MonoBehaviour
 
         mouseSpeedX = PlayerPrefs.GetFloat(mouseSpeedXParameter);
         mouseSpeedY = PlayerPrefs.GetFloat(mouseSpeedYParameter);
+
+        if (!PlayerPrefs.HasKey(controllerTypeParameter))
+        {
+            PlayerPrefs.SetInt(controllerTypeParameter, controllerTypeDefault);
+        }
+
+        switch (PlayerPrefs.GetInt(controllerTypeParameter))
+        {
+            case 0:
+                controllerType = ControllerType.KEYBOARD;
+                break;
+            case 1:
+                controllerType = ControllerType.PLAYSTATION;
+                break;
+            case 2:
+                controllerType = ControllerType.XBOX;
+
+                break;
+            default:
+                break;
+        }
 
     }
 
@@ -96,5 +122,52 @@ public class SettingsController : MonoBehaviour
 
     #endregion
 
+    #region Controller Type
 
+    public void ChangeInputType(int _selectedType) 
+    {
+        switch (_selectedType)
+        {
+            case 0:
+                controllerType = ControllerType.KEYBOARD;
+                break;
+            case 1:
+                controllerType = ControllerType.PLAYSTATION;
+                break;
+            case 2:
+                controllerType = ControllerType.XBOX;
+
+                break;
+            default:
+                break;
+        }
+
+        PlayerPrefs.SetInt(controllerTypeParameter, _selectedType);
+
+    }
+
+    public int GetControlsType() 
+    {
+        int controlType = 0;
+
+        switch (controllerType)
+        {
+            case ControllerType.KEYBOARD:
+                controlType = 0;
+                break;
+            case ControllerType.PLAYSTATION:
+                controlType = 1;
+                break;
+            case ControllerType.XBOX:
+                controlType = 2;
+                break;
+            default:
+                break;
+        }
+
+
+        return controlType;
+    }
+
+    #endregion
 }
