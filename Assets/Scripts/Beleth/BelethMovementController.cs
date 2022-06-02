@@ -372,43 +372,48 @@ public class BelethMovementController : MonoBehaviour
 
                     //Esta bajando
                     RaycastHit groundHit3;
-                    float angleMulioyplier = 30;
-                    float accelMultiplierDown = 15;
-                    float backForceMultiplyer = 1.5f;
+                    
 
 
-                    if (Physics.Raycast(new Ray(rampRayPlaces[3].position, rampRayPlaces[3].forward), out groundHit3, maxRampCheckDistance * 1.5f, walkableLayers))
+                    if (Physics.Raycast(new Ray(rampRayPlaces[3].position, rampRayPlaces[3].forward), out groundHit3, maxRampCheckDistance * 1.5f, walkableLayers) ||
+                        Physics.Raycast(new Ray(rampRayPlaces[3].position, rampRayPlaces[4].forward), out groundHit3, maxRampCheckDistance * 1.5f, walkableLayers) ||
+                        Physics.Raycast(new Ray(rampRayPlaces[3].position, rampRayPlaces[5].forward), out groundHit3, maxRampCheckDistance * 1.5f, walkableLayers))
                     {
+
+                        float angleMultiplier = 25;
+                        float accelMultiplierDown = 5;
+                        float backForceMultiplyer = 25;
+
                         angleFloor = -Vector3.Angle(groundHit3.normal, Vector3.up);
-                        slopeOffset = new Vector3(movementDirection.x * currentAccel * accelMultiplierDown, angleFloor * angleMulioyplier, movementDirection.z * currentAccel * accelMultiplierDown);
-
-                        keepBackForce += -transform.forward * backForceMultiplyer;
-
-                        goingDown = true;
-
-                    }
-                    else if (Physics.Raycast(new Ray(rampRayPlaces[3].position, rampRayPlaces[4].forward), out groundHit3, maxRampCheckDistance * 1.5f, walkableLayers))
-                    {
-                        angleFloor = -Vector3.Angle(groundHit3.normal, Vector3.up);
-                        slopeOffset = new Vector3(movementDirection.x * currentAccel * accelMultiplierDown, angleFloor * angleMulioyplier, movementDirection.z * currentAccel * accelMultiplierDown);
-
-                        keepBackForce += -transform.forward * backForceMultiplyer;
                         
-                        goingDown = true;
-                    }
-                    else if (Physics.Raycast(new Ray(rampRayPlaces[3].position, rampRayPlaces[5].forward), out groundHit3, maxRampCheckDistance * 1.5f, walkableLayers))
-                    {
-                        angleFloor = -Vector3.Angle(groundHit3.normal, Vector3.up);
-                        slopeOffset = new Vector3(movementDirection.x * currentAccel * accelMultiplierDown, angleFloor * angleMulioyplier, movementDirection.z * currentAccel * accelMultiplierDown);
+                        if (angleFloor < -25)
+                        {
 
+                            angleMultiplier = 40;
+                            accelMultiplierDown = 5;
+                            backForceMultiplyer = 30;
+
+                        }
+                        else
+                        {
+                            angleMultiplier = 25;
+                            accelMultiplierDown = 5;
+                            backForceMultiplyer = 2;
+
+                        }
+
+
+                        slopeOffset = new Vector3(movementDirection.x * currentAccel * accelMultiplierDown, angleFloor * angleMultiplier, movementDirection.z * currentAccel * accelMultiplierDown);
                         keepBackForce += -transform.forward * backForceMultiplyer;
 
                         goingDown = true;
+
                     }
                     else
                     {
                         //Si no que no agregue ninguna fuerza
                         slopeOffset = Vector3.zero;
+                        angleFloor = 0;
                     }
 
 
@@ -420,9 +425,14 @@ public class BelethMovementController : MonoBehaviour
                 }
                 else
                 {
-                    rb.AddForce(keepBackForce, ForceMode.Acceleration);
-                    rb.AddForce(slopeOffset, ForceMode.Acceleration);
                     
+                    rb.AddForce(slopeOffset, ForceMode.Acceleration);
+
+                    if (angleFloor < -25)
+                    {
+                        rb.AddForce(keepBackForce, ForceMode.Acceleration);
+                        Debug.Log("Pasa");
+                    }
                 }
 
                 animController.SetGoingDown(goingDown);
