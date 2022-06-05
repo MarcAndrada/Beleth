@@ -16,6 +16,8 @@ public class CameraSettingsController : MonoBehaviour
     private float timeWaitedResetAccel = 0;
     [SerializeField]
     private float timeToWaitResetAccel = 0;
+    [SerializeField]
+    private float camSpeedMultiplier;
 
     private void Awake()
     {
@@ -34,7 +36,7 @@ public class CameraSettingsController : MonoBehaviour
     private void Update()
     {
 
-        Debug.Log(cinemachineCamera.m_XAxis.m_InputAxisValue);
+        //Debug.Log(cinemachineCamera.m_XAxis.m_InputAxisValue);
         SetCameraAccel();
         WaitToResetMouse();
     }
@@ -55,7 +57,7 @@ public class CameraSettingsController : MonoBehaviour
         {
             timeWaitedResetAccel = 0;
             cinemachineCamera.m_XAxis.m_AccelTime = 0.1f;
-            cinemachineCamera.m_XAxis.m_MaxSpeed = xMaxSpeed * 1.5f;
+            cinemachineCamera.m_XAxis.m_MaxSpeed = xMaxSpeed * camSpeedMultiplier;
         }
     }
 

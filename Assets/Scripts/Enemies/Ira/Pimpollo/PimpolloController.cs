@@ -162,7 +162,7 @@ public class PimpolloController : MonoBehaviour
         hitted = true;
         //Hacer que vaya parriba tambien
         rb.isKinematic = false;
-        rb.AddForce(player.transform.forward * knockBackForce + transform.up * knockUpForce, ForceMode.Impulse);
+        rb.AddForce(transform.position - player.transform.position * knockBackForce + transform.up * knockUpForce, ForceMode.Impulse);
         StartCoroutine(WaitToDeathSound(0.8f));
         StartCoroutine(WaitToDestroy(1.1f));
     }

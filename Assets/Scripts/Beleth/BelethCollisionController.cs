@@ -28,7 +28,7 @@ public class BelethCollisionController : MonoBehaviour
             checkPointManager.SetNewCheckPoint(other.transform.position, other.gameObject.GetComponent<Animation>());
         }
 
-        if (other.gameObject.tag == "DeadZone")
+        if (other.gameObject.tag == "DeadZone" || other.gameObject.tag == "Lava" || other.gameObject.tag == "Spike")
         {
             healthController.GetDamage(1);
             if (healthController.healthPoints > 0)
@@ -52,15 +52,16 @@ public class BelethCollisionController : MonoBehaviour
             currentCollectable.DisableCollectable();
         }
 
-        if (other.gameObject.tag == "BossAttack" || other.gameObject.tag == "Boss" || other.gameObject.tag == "Lava")
+        if (other.gameObject.tag == "BossAttack" || other.gameObject.tag == "Boss")
         {
             healthController.GetDamage(1);
-            Vector3 knockback = transform.position - other.transform.position;
             if (other.gameObject.tag != "Boss")
             {
+                Vector3 knockback = transform.position - other.transform.position;
                 movementController.AddImpulse(knockback, 2);
             }
         }
+
 
     }
 

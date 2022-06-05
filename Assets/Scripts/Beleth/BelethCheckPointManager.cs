@@ -58,11 +58,15 @@ public class BelethCheckPointManager : MonoBehaviour
 
         foreach (Transform item in respawnPointCheckers)
         {
-            if (!Physics.Raycast(new Ray(item.position, -transform.up), movementController.maxFloorCheckDistance, movementController.walkableLayers))
+            RaycastHit hit;
+            if (!Physics.Raycast(new Ray(item.position, -transform.up), out hit, movementController.maxFloorCheckDistance, movementController.walkableLayers) || hit.transform.gameObject.tag == "NoCheckPoint")
             {
                 canSave = false;
                 break;
             }
+
+
+
         }
 
         if (canSave)
