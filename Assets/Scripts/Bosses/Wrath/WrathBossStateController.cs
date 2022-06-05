@@ -278,6 +278,9 @@ public class WrathBossStateController : MonoBehaviour
                 default:
                     break;
             }
+
+            currentAction = _attack;
+
         }
         else
         {

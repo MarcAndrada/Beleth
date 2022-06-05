@@ -18,7 +18,7 @@ public class BelethUIController : MonoBehaviour
     [SerializeField]
     private GameObject controlsCanvas;
     [SerializeField]
-    private CameraSpeedController cameraSpeedController;
+    private CameraSettingsController cameraSpeedController;
 
     [Header("Stamina Bar")]
     [SerializeField]
@@ -318,7 +318,6 @@ public class BelethUIController : MonoBehaviour
         pauseCanvas.SetActive(false);
         settingsCanvas.SetActive(false);
         controlsCanvas.SetActive(false);
-        cameraSpeedController.enabled = false;
         cameraSpeedController.SetSpeedOnCamera();
 
     }
@@ -327,13 +326,11 @@ public class BelethUIController : MonoBehaviour
     {
         pauseCanvas.SetActive(false);
         settingsCanvas.SetActive(true);
-        cameraSpeedController.enabled = true;
     }
 
     public void HideSettings() 
     {
         settingsCanvas.SetActive(false);
-        cameraSpeedController.enabled = false;
         pauseCanvas.SetActive(true);
 
     }

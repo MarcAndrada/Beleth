@@ -431,7 +431,6 @@ public class BelethMovementController : MonoBehaviour
                     if (angleFloor < -25)
                     {
                         rb.AddForce(keepBackForce, ForceMode.Acceleration);
-                        Debug.Log("Pasa");
                     }
                 }
 

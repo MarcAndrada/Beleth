@@ -21,6 +21,8 @@ public class FallingrockController : MonoBehaviour
     [Header("VFX")]
     [SerializeField]
     ParticleSystem[] explosion;
+    [SerializeField]
+    private WrathBossStateController bossController;
 
     RaycastHit startRay;
 

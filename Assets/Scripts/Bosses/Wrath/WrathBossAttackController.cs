@@ -155,6 +155,7 @@ public class WrathBossAttackController : MonoBehaviour
                             placeToGoState = 0;
                             timeWatied = 0;
                             resetPosition = false;
+                            stateController.currentAction = WrathBossStateController.BossActions.NONE;
 
                         }
                         else
@@ -203,6 +204,7 @@ public class WrathBossAttackController : MonoBehaviour
                             transform.position = Vector3.Lerp(transform.position, targetPos, placeToGoState);
                             belowFloor_Particles.SetActive(false);
                             SoundManager._SOUND_MANAGER.WrathBossReturnBelowFloorSound(audioSource);
+                            stateController.currentAction = WrathBossStateController.BossActions.NONE;
 
                         }
                     }

@@ -19,7 +19,13 @@ public class MeteorFragmentController : MonoBehaviour
     GameObject brokenObject;
     [SerializeField]
     GameObject wrathRock;
-    
+    private WrathBossStateController bossController;
+
+    private void Awake()
+    {
+        bossController = FindObjectOfType<WrathBossStateController>();
+    }
+
     public void Break(Vector3 rayHit)
     {   
         Instantiate(hole, rayHit, Quaternion.Euler(0,0,0));
@@ -36,7 +42,13 @@ public class MeteorFragmentController : MonoBehaviour
         }
 
         int i = 1;
-        if (Random.Range(0, spawnRate) == i) Instantiate(wrathRock, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
+        if (Random.Range(0, spawnRate) == i) 
+        {
+            GameObject thisMeteor;
+            thisMeteor = Instantiate(wrathRock, new Vector3(transform.position.x, transform.position.y, transform.position.z), transform.rotation);
+
+            thisMeteor.GetComponent<ThrowRockController>().SetTarget(bossController.transform);
+        } 
 
         Destroy(gameObject);
     }

@@ -29,6 +29,8 @@ public class TridentController : MonoBehaviour
     [SerializeField]
     private GameObject wrathAttackCollider;
 
+    [SerializeField]
+    [Range(0,1)]
     private float tridentPlaceState = 0;
     private bool moving = false;
     private bool countingForTridentPos = false;

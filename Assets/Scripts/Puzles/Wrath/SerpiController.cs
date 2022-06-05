@@ -9,10 +9,6 @@ public class SerpiController : MonoBehaviour
     public SerpiStates currentSerpiState = SerpiStates.IDLE;
 
     [SerializeField]
-    private CapsuleCollider[] capsuleColl;
-    [SerializeField]
-    private SphereCollider[] sphereColl;
-    [SerializeField]
     private BoxCollider attackRangeColl;
     [SerializeField]
     private string[] serpiCinematicNames;
@@ -20,11 +16,19 @@ public class SerpiController : MonoBehaviour
     private DoorController bossDoor;
     private Animator animator;
     private bool[] activators = new bool[2];
+    [SerializeField]
+    private float timeToWaitTrapped;
+    private float timeWaitedTrapped = 0;
 
     // Start is called before the first frame update
     void Awake()
     {
         animator = GetComponent<Animator>();
+    }
+
+    private void Update()
+    {
+        WaitForUnTrap();
     }
 
     private void LateUpdate()
@@ -34,36 +38,41 @@ public class SerpiController : MonoBehaviour
 
     private void CheckTotalChains() 
     {
-        if (activators[0] && activators[1])
+        if (currentSerpiState != SerpiStates.TRAPPED && currentSerpiState != SerpiStates.DEAD)
         {
-            //Hacer cinematica de serpi atrapada
 
-            TrapSerpi();
-            CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic(serpiCinematicNames[3]);
-            activators[0] = false;
-            activators[1] = false;
 
-        }
-        else
-        {
-            if (activators[0])
+            if (activators[0] && activators[1])
             {
-                //Hacer cinematica viendo como en la izquierda pasa algo
-                CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic(serpiCinematicNames[1]);
+                //Hacer cinematica de serpi atrapada
+
+                TrapSerpi();
+                CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic(serpiCinematicNames[3]);
                 activators[0] = false;
-            }
-            else if (activators[1])
-            {
-                //Hacer cinematica viendo como en la derecha pasa algo
-                CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic(serpiCinematicNames[2]);
                 activators[1] = false;
+
             }
             else
             {
-                activators[0] = false;
-                activators[1] = false;
+                if (activators[0])
+                {
+                    //Hacer cinematica viendo como en la izquierda pasa algo
+                    CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic(serpiCinematicNames[1]);
+                    activators[0] = false;
+                }
+                else if (activators[1])
+                {
+                    //Hacer cinematica viendo como en la derecha pasa algo
+                    CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic(serpiCinematicNames[2]);
+                    activators[1] = false;
+                }
+                else
+                {
+                    activators[0] = false;
+                    activators[1] = false;
+                }
+
             }
-            
         }
     }
     public void ActivateChain(int _chainID) 
@@ -77,6 +86,10 @@ public class SerpiController : MonoBehaviour
             animator.SetBool("Trapped", true);
             currentSerpiState = SerpiStates.TRAPPED;
         }
+        else
+        {
+            //Resetear el tiempo
+        }
     }
     public void UnTrapSerpi() 
     {
@@ -87,33 +100,30 @@ public class SerpiController : MonoBehaviour
         }
     }
 
+    private void WaitForUnTrap() 
+    {
+        if (currentSerpiState == SerpiStates.TRAPPED)
+        {
+            timeWaitedTrapped += Time.deltaTime;
+
+            if (timeWaitedTrapped >= timeToWaitTrapped)
+            {
+                UnTrapSerpi();
+                timeWaitedTrapped = 0;
+            }
+        }
+    }
+
     private void SerpiStartAttack() 
     {
         currentSerpiState = SerpiStates.ATTACKING;
         animator.SetTrigger("Attack");
-        foreach (var item in capsuleColl)
-        {
-            item.isTrigger = true;
-        }
 
-        foreach (var item in sphereColl)
-        {
-            item.isTrigger = true;
-        }
     }
     public void SerpiStopAttack() 
     {
         currentSerpiState = SerpiStates.IDLE;
         animator.ResetTrigger("Attack");
-        foreach (var item in capsuleColl)
-        {
-            item.isTrigger = false;
-        }
-
-        foreach (var item in sphereColl)
-        {
-            item.isTrigger = false;
-        }
     }
     public void EnableSerpiAttackTrigger()
     {
@@ -127,7 +137,7 @@ public class SerpiController : MonoBehaviour
     }
     public void SerpiDead() 
     {
-        if (currentSerpiState != SerpiStates.DEAD)
+        if (currentSerpiState == SerpiStates.TRAPPED)
         {
             animator.SetTrigger("Dead");
             CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic(serpiCinematicNames[0]);
