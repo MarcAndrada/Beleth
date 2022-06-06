@@ -93,7 +93,6 @@ public class VesselController : MonoBehaviour
         }
 
         brokenPieces.existingBrokenPiece.transform.parent = transform.parent;
-
         brokenPieces.Break();
     }
 }

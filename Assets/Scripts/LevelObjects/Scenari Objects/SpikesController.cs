@@ -16,7 +16,7 @@ public class SpikesController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        starterSpikePos = spike.transform.position;
+        starterSpikePos = spike.transform.localPosition;
     }
 
     // Update is called once per frame
@@ -33,7 +33,7 @@ public class SpikesController : MonoBehaviour
         {
             moveProgress += goDownSpeed * Time.deltaTime;
 
-            spike.transform.position = Vector3.Lerp(starterSpikePos,  new Vector3(starterSpikePos.x, transform.position.y, starterSpikePos.z) , moveProgress);
+            spike.transform.localPosition = Vector3.Lerp(starterSpikePos,  new Vector3(starterSpikePos.x, 0, starterSpikePos.z) , moveProgress);
 
             if (moveProgress >= 1)
             {
@@ -50,7 +50,7 @@ public class SpikesController : MonoBehaviour
         {
             moveProgress += Time.deltaTime;
 
-            spike.transform.position = Vector3.Lerp(new Vector3(starterSpikePos.x, transform.position.y, starterSpikePos.z), starterSpikePos, moveProgress);
+            spike.transform.localPosition = Vector3.Lerp(new Vector3(starterSpikePos.x, 0 , starterSpikePos.z), starterSpikePos, moveProgress);
             if (moveProgress >= 1)
             {
                 moveProgress = 0;

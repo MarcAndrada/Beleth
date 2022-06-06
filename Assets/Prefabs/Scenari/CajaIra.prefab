@@ -112,13 +112,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f38d9467846c2114eb8e059ccf6fccf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canBeTriggered: 1
+  selfDestroy: 0
   moveHimself: 0
   timeToExplode: 0
+  explosionPos: {fileID: 7495955199243017035}
   radius: 3
   strenght: 70
   upStrenght: 60
   playerImpulse: 15
-  wrathMaterial: {fileID: 2100000, guid: 7df87cf6cc46b8343848214fc1c6b208, type: 2}
+  bossDamage: 0
+  wrathVFX: {fileID: 0}
+  explosionWrathVFX: {fileID: 0}
+  SocketVFX: {fileID: 0}
+  objectType: 
 --- !u!64 &5476318704433472223
 MeshCollider:
   m_ObjectHideFlags: 0

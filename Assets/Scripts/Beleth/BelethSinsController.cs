@@ -76,10 +76,16 @@ public class BelethSinsController : MonoBehaviour
     {
         if (wrathManager.Length > 0 && wrathManager[uiController.wrathObjectIndex] != null)
         {
+            if (wrathManager[uiController.wrathObjectIndex].objectType == "RockLauncher")
+            {
+                wrathManager[uiController.wrathObjectIndex].GetComponent<RockLauncherController>().LauchRock();
+            }
+
             wrathManager[uiController.wrathObjectIndex].WrathExplosion();
             SoundManager._SOUND_MANAGER.WrathExplosion(wrathManager[uiController.wrathObjectIndex].gameObject.GetComponent<AudioSource>());
             wrathManager[uiController.wrathObjectIndex] = null;
             uiController.UpdateObjectList();
+            
 
         }
 
@@ -96,6 +102,11 @@ public class BelethSinsController : MonoBehaviour
         {
             if (wrathManager[i] != null)
             {
+                if (wrathManager[i].objectType == "RockLauncher")
+                {
+                    wrathManager[i].GetComponent<RockLauncherController>().LauchRock();
+                }
+
                 wrathManager[i].WrathExplosion();
                 SoundManager._SOUND_MANAGER.WrathExplosion(wrathManager[i].GetComponent<AudioSource>());
                 wrathManager[i] = null;

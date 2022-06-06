@@ -15,6 +15,8 @@ public class WrathExplosionController : MonoBehaviour
     [SerializeField]
     float timeToExplode;
     [SerializeField]
+    private Transform explosionPos;
+    [SerializeField]
     float radius;
     [SerializeField]
     float strenght;
@@ -45,29 +47,27 @@ public class WrathExplosionController : MonoBehaviour
         if(wrathVFX) wrathVFX.SetActive(false);
     }
 
-    //private void Update()
-    //{
-    //    while (isInWrath)
-    //    {
-    //
-    //    }
-    //}
 
     public void WrathExplosion()
     {
         //Implosione
 
-        Instantiate(explosionWrathVFX, transform.position, Quaternion.identity);
+        Instantiate(explosionWrathVFX, explosionPos.position , Quaternion.identity);
 
-
-        Vector3 explosionPosition = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
-        Collider[] colliders = Physics.OverlapSphere(explosionPosition, radius);
 
         if (gameObject.tag == "Activator")
         {
-            gameObject.GetComponent<ActivatorController>().ActivatorUsed();
+            GetComponent<ActivatorController>().ActivatorUsed();
         }
 
+        if (objectType == "RockImpulsor")
+        {
+            GetComponent<RockImpulsorController>().ActivateImpulsor();
+        }
+
+        Collider[] colliders = Physics.OverlapSphere(explosionPos.position , radius);
+
+       
         foreach (Collider hit in colliders)
         {
             if (hit.gameObject.tag == "Player" && playerImpulse > 0)
@@ -85,14 +85,12 @@ public class WrathExplosionController : MonoBehaviour
                 hit.gameObject.GetComponent<BrokenPiecesController>().Break();
             }
 
-
-
             if (hit.gameObject.tag == "Movable")
             {
                 Rigidbody rb = hit.GetComponent<Rigidbody>();
                 if (rb != null) 
                 {
-                    rb.AddExplosionForce(strenght, explosionPosition, radius, upStrenght, ForceMode.Impulse);
+                    rb.AddExplosionForce(strenght, explosionPos.position, radius, upStrenght, ForceMode.Impulse);
                 }
             }
         }
@@ -144,7 +142,7 @@ public class WrathExplosionController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        Gizmos.DrawWireSphere(explosionPos.position, radius);
     }
 
     private void OnTriggerEnter(Collider other)
