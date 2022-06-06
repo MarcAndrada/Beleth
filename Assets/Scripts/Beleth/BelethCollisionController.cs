@@ -9,7 +9,8 @@ public class BelethCollisionController : MonoBehaviour
     private CoinController coinController;
     private BelethUIController uIController;
     BelethMovementController movementController;
-  
+
+    [SerializeField] GameObject BonesVFX;
 
     private void Start()
     {
@@ -43,6 +44,7 @@ public class BelethCollisionController : MonoBehaviour
             coinController.AddCoin();
             SoundManager._SOUND_MANAGER.SoulGet(SoundManager._SOUND_MANAGER.audioSource2D);
             Destroy(other.gameObject);
+            Instantiate(BonesVFX, transform.position, Quaternion.identity);
         }
 
         if (other.gameObject.tag == "Collectable")
