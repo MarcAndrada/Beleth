@@ -35,7 +35,7 @@ public class WrathBossStateController : MonoBehaviour
     [SerializeField]
     private BossActions[] fase3Patron;
 
-    [Header("Meteoritos Fase 3")]
+    [Header("Meteoritos")]
     [SerializeField]
     public GameObject rocksManager;
 
@@ -210,15 +210,7 @@ public class WrathBossStateController : MonoBehaviour
 
     }
 
-    IEnumerator WaitForStopMeteorAnim() 
-    {
-        animator.SetTrigger("MeteorSummon");
-        rocksManager.SetActive(true);
-        yield return new WaitForSeconds(8f);
-
-        isDoingAction = false;
     
-    }
     #endregion
 
     #region Attack
@@ -284,7 +276,10 @@ public class WrathBossStateController : MonoBehaviour
         }
         else
         {
-            StartCoroutine(WaitForStopMeteorAnim());
+
+            animator.SetTrigger("MeteorSummon");
+            rocksManager.SetActive(true);
+
         }
     }
 
@@ -306,6 +301,7 @@ public class WrathBossStateController : MonoBehaviour
         animator.SetTrigger("Damaged");
         //Decirle que ha sido dañado
         isDamaged = true;
+        Debug.Log("Toma danyo puta");
 
     }
 
@@ -314,8 +310,7 @@ public class WrathBossStateController : MonoBehaviour
         fighting = true;
         isDamaged = false;
         isDoingAction = false;
-        currentFase = BossFase.FASE_1;  
-        
+        currentFase = BossFase.FASE_1;          
     }
 
     public void StopFight() 

@@ -22,6 +22,12 @@ public class WrathBossAnimEvents : MonoBehaviour
         wrathBossAttackController.BrakeFloorAttakAction();
     }
 
+    public void MeteorAnimEnd()
+    {
+        bossController.isDoingAction = false;
+
+    }
+
     public void StopBeginDamaged() 
     {
         bossController.isDamaged = false;

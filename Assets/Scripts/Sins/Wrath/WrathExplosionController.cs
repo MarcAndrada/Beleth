@@ -78,6 +78,7 @@ public class WrathExplosionController : MonoBehaviour
             if (hit.gameObject.tag == "Boss")
             {
                 hit.gameObject.GetComponentInParent<WrathBossStateController>().GetDamage(bossDamage, gameObject);
+
             }
 
             if (hit.gameObject.tag == "Breakable" || hit.gameObject.tag == "Muro")

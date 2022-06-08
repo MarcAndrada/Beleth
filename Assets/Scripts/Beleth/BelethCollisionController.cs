@@ -60,7 +60,7 @@ public class BelethCollisionController : MonoBehaviour
             if (other.gameObject.tag != "Boss")
             {
                 Vector3 knockback = transform.position - other.transform.position;
-                movementController.AddImpulse(knockback, 2);
+                movementController.AddImpulse(knockback, 1);
             }
         }
 
