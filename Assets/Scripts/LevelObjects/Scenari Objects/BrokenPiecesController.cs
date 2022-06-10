@@ -16,14 +16,6 @@ public class BrokenPiecesController : MonoBehaviour
 
     public void Break()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
-        foreach (Collider hit in colliders)
-        {
-            Rigidbody fragmentrb = hit.GetComponentInChildren<Rigidbody>();
-
-            if (fragmentrb != null)
-                fragmentrb.AddExplosionForce(force, transform.position, radius);
-        }
 
         if (!can)
         {
@@ -36,6 +28,15 @@ public class BrokenPiecesController : MonoBehaviour
                 Instantiate(BrokePiece);
             }            
             can = true;
+
+            Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
+            foreach (Collider hit in colliders)
+            {
+                Rigidbody fragmentrb = hit.GetComponentInChildren<Rigidbody>();
+
+                if (fragmentrb != null)
+                    fragmentrb.AddExplosionForce(force, transform.position, radius);
+            }
             Destroy(gameObject);
         }
 
