@@ -76,10 +76,8 @@ public class BelethSinsController : MonoBehaviour
     {
         if (wrathManager.Length > 0 && wrathManager[uiController.wrathObjectIndex] != null)
         {
-            if (wrathManager[uiController.wrathObjectIndex].objectType == "RockLauncher")
-            {
-                wrathManager[uiController.wrathObjectIndex].GetComponent<RockLauncherController>().LauchRock();
-            }
+
+            CheckObjectType(wrathManager[uiController.wrathObjectIndex].objectType);
 
             wrathManager[uiController.wrathObjectIndex].WrathExplosion();
             SoundManager._SOUND_MANAGER.WrathExplosion(wrathManager[uiController.wrathObjectIndex].gameObject.GetComponent<AudioSource>());
@@ -102,10 +100,8 @@ public class BelethSinsController : MonoBehaviour
         {
             if (wrathManager[i] != null)
             {
-                if (wrathManager[i].objectType == "RockLauncher")
-                {
-                    wrathManager[i].GetComponent<RockLauncherController>().LauchRock();
-                }
+
+                CheckObjectType(wrathManager[i].objectType);
 
                 wrathManager[i].WrathExplosion();
                 SoundManager._SOUND_MANAGER.WrathExplosion(wrathManager[i].GetComponent<AudioSource>());
@@ -118,6 +114,31 @@ public class BelethSinsController : MonoBehaviour
         uiController.UpdateObjectList();
         SoundManager._SOUND_MANAGER.WrathActivation(willSound);
 
+    }
+
+
+    private void CheckObjectType(string _currentType) 
+    {
+        switch (_currentType)
+        {
+
+            case "Wall":
+                break;
+            case "Platform":
+                break;
+            case "Rock":
+                break;
+            case "Activator":
+                break;
+            case "RockLauncher":
+                wrathManager[uiController.wrathObjectIndex].GetComponent<RockLauncherController>().LauchRock();
+                break;
+            case "RockImpulsor":
+                break;
+
+            default:
+                break;
+        }
     }
 
     #endregion
