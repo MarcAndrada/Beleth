@@ -15912,6 +15912,107 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2562666694532865900, guid: 69815d2066a05a643a73159b762e21f1, type: 3}
   m_PrefabInstance: {fileID: 326556242}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &328196708 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 64ee18d08f40fb84498696cd6a3047c0, type: 3}
+  m_PrefabInstance: {fileID: 1982649886}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &328196709
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328196708}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -1217269604852218736, guid: 07390c4d8baed5d4b881c0a7f5dab735, type: 2}
+  m_audioClip: {fileID: 8300000, guid: d51456d0d9800d24b85b803cf6127f7c, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.3
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 40
+  MaxDistance: 148.85771
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.7920349
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -5.0000005
+      outSlope: -5.0000005
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &334291779 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d48514a837132464688634765b4904cb, type: 3}
@@ -33811,7 +33912,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9117950244351534191, guid: ae81aca629f997548b71fc30a05b5bce, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9117950244351534191, guid: ae81aca629f997548b71fc30a05b5bce, type: 3}
       propertyPath: m_LocalPosition.x
@@ -50924,11 +51025,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 208926423276439483, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_FollowOffset.y
-      value: 1.370346
+      value: 3.70102
       objectReference: {fileID: 0}
     - target: {fileID: 208926423276439483, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_FollowOffset.z
-      value: -15.94018
+      value: -15.82981
       objectReference: {fileID: 0}
     - target: {fileID: 485402117762703704, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -50960,11 +51061,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5493595376188992665, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.000000017339643
+      value: 0.000000017214145
       objectReference: {fileID: 0}
     - target: {fileID: 5493595376188992665, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 1.4873144e-10
+      value: 1.47655e-10
       objectReference: {fileID: 0}
     - target: {fileID: 5493595376188992665, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.y
@@ -50972,7 +51073,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5493595376188992665, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.008577222
+      value: -0.008577223
       objectReference: {fileID: 0}
     - target: {fileID: 5726324269144455828, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalPosition.y
@@ -50984,7 +51085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5726324269144455828, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1e-45
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5726324269144455828, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.x
@@ -51000,19 +51101,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6008268836403978593, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_FollowOffset.y
-      value: 1.370346
+      value: 3.70102
       objectReference: {fileID: 0}
     - target: {fileID: 6008268836403978593, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_FollowOffset.z
-      value: -15.94018
+      value: -15.82981
       objectReference: {fileID: 0}
     - target: {fileID: 6482727921491498194, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_FollowOffset.y
-      value: 1.370346
+      value: 3.70102
       objectReference: {fileID: 0}
     - target: {fileID: 6482727921491498194, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_FollowOffset.z
-      value: -15.94018
+      value: -15.82981
       objectReference: {fileID: 0}
     - target: {fileID: 7322745350896977077, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -51088,11 +51189,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8252404588007831824, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.000000017239623
+      value: -0.000000017239497
       objectReference: {fileID: 0}
     - target: {fileID: 8252404588007831824, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -5.026249e-10
+      value: -5.0263177e-10
       objectReference: {fileID: 0}
     - target: {fileID: 8252404588007831824, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.y
@@ -51108,11 +51209,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8582792697689344763, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.000000017232619
+      value: 0.000000017232619
       objectReference: {fileID: 0}
     - target: {fileID: 8582792697689344763, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -5.0283216e-10
+      value: 5.0283216e-10
       objectReference: {fileID: 0}
     - target: {fileID: 8582792697689344763, guid: b90ffef61e489e64bbc5f41f7bf8de43, type: 3}
       propertyPath: m_LocalRotation.y
@@ -52332,8 +52433,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Torch
       objectReference: {fileID: 0}
-    - target: {fileID: 3829857891744721743, guid: 69815d2066a05a643a73159b762e21f1, type: 3}
-      propertyPath: m_DynamicOccludee
+    - target: {fileID: 8406062744653088496, guid: 69815d2066a05a643a73159b762e21f1, type: 3}
+      propertyPath: DopplerLevel
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8406062744653088496, guid: 69815d2066a05a643a73159b762e21f1, type: 3}
+      propertyPath: spreadCustomCurve.m_Curve.Array.data[0].value
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -69637,6 +69742,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Torch (21)
       objectReference: {fileID: 0}
+    - target: {fileID: 8406062744653088496, guid: 69815d2066a05a643a73159b762e21f1, type: 3}
+      propertyPath: rolloffMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8406062744653088496, guid: 69815d2066a05a643a73159b762e21f1, type: 3}
+      propertyPath: rolloffCustomCurve.m_Curve.Array.data[0].time
+      value: 0.64305115
+      objectReference: {fileID: 0}
+    - target: {fileID: 8406062744653088496, guid: 69815d2066a05a643a73159b762e21f1, type: 3}
+      propertyPath: rolloffCustomCurve.m_Curve.Array.data[0].value
+      value: 1.0074692
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69815d2066a05a643a73159b762e21f1, type: 3}
 --- !u!4 &1459779593 stripped
@@ -78559,7 +78676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9117950244351534191, guid: ae81aca629f997548b71fc30a05b5bce, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9117950244351534191, guid: ae81aca629f997548b71fc30a05b5bce, type: 3}
       propertyPath: m_LocalPosition.x
@@ -94402,6 +94519,10 @@ PrefabInstance:
     - target: {fileID: 7687564253105804167, guid: bda23c373306adc42bef798890232a16, type: 3}
       propertyPath: m_IsKinematic
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7687564254180217566, guid: bda23c373306adc42bef798890232a16, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.00044144155
       objectReference: {fileID: 0}
     - target: {fileID: 7687564254224991803, guid: bda23c373306adc42bef798890232a16, type: 3}
       propertyPath: m_ConnectedAnchor.x
