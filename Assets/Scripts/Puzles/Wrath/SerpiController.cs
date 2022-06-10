@@ -20,6 +20,11 @@ public class SerpiController : MonoBehaviour
     private float timeToWaitTrapped;
     private float timeWaitedTrapped = 0;
 
+    [Header("VFX")]
+    [SerializeField] ParticleSystem VFX;
+    [SerializeField] Transform socket;
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -85,10 +90,12 @@ public class SerpiController : MonoBehaviour
         {
             animator.SetBool("Trapped", true);
             currentSerpiState = SerpiStates.TRAPPED;
+            VFX.Play();
         }
         else
         {
             //Resetear el tiempo
+            timeWaitedTrapped = 0;
         }
     }
     public void UnTrapSerpi() 
@@ -97,6 +104,7 @@ public class SerpiController : MonoBehaviour
         {
             animator.SetBool("Trapped", false);
             currentSerpiState = SerpiStates.IDLE;
+            VFX.Stop();
         }
     }
 
@@ -140,6 +148,7 @@ public class SerpiController : MonoBehaviour
         if (currentSerpiState == SerpiStates.TRAPPED)
         {
             animator.SetTrigger("Dead");
+            VFX.Stop();
             CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic(serpiCinematicNames[0]);
             currentSerpiState = SerpiStates.DEAD;
             bossDoor.BrokenBar();

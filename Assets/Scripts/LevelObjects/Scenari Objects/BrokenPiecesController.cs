@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class BrokenPiecesController : MonoBehaviour
 {
+    [SerializeField] GameObject VFX;
+    [SerializeField] Transform socket;
+
     [SerializeField]
     GameObject BrokePiece;
     [SerializeField]
     public GameObject existingBrokenPiece;
 
-    [SerializeField] float radius;
-    [SerializeField] float force;
-
     bool can;
 
     public void Break()
     {
-
         if (!can)
         {
             if (existingBrokenPiece != null)
@@ -29,14 +28,8 @@ public class BrokenPiecesController : MonoBehaviour
             }            
             can = true;
 
-            Collider[] colliders = Physics.OverlapSphere(transform.position, radius);
-            foreach (Collider hit in colliders)
-            {
-                Rigidbody fragmentrb = hit.GetComponentInChildren<Rigidbody>();
+            Instantiate(VFX, socket.position, socket.rotation);
 
-                if (fragmentrb != null)
-                    fragmentrb.AddExplosionForce(force, transform.position, radius);
-            }
             Destroy(gameObject);
         }
 

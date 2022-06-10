@@ -10,6 +10,11 @@ public class WrathBossAnimEvents : MonoBehaviour
     private GameObject parent;
     private WrathBossStateController bossController;
     private WrathBossAttackController wrathBossAttackController;
+
+    [Header("VFX")]
+    [SerializeField] GameObject Vfx;
+    [SerializeField] Transform socket;
+
     private void Awake()
     {
         bossController = GetComponentInParent<WrathBossStateController>();
@@ -26,6 +31,11 @@ public class WrathBossAnimEvents : MonoBehaviour
     {
         bossController.isDoingAction = false;
 
+    }
+
+    public void GotHurtVFX()
+    {
+        Instantiate(Vfx, socket.position, socket.rotation);
     }
 
     public void StopBeginDamaged() 
