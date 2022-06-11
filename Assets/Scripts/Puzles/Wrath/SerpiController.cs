@@ -21,7 +21,7 @@ public class SerpiController : MonoBehaviour
     private float timeWaitedTrapped = 0;
 
     [Header("VFX")]
-    [SerializeField] ParticleSystem VFX;
+    [SerializeField] ParticleSystem[] VFX;
     [SerializeField] Transform socket;
 
 
@@ -29,6 +29,15 @@ public class SerpiController : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
+    }
+
+    private void Start()
+    {
+        foreach (var item in VFX)
+        {
+            item.Stop();
+
+        }
     }
 
     private void Update()
@@ -90,7 +99,12 @@ public class SerpiController : MonoBehaviour
         {
             animator.SetBool("Trapped", true);
             currentSerpiState = SerpiStates.TRAPPED;
-            VFX.Play();
+
+            foreach (var item in VFX)
+            {
+                item.Play();
+
+            }
         }
         else
         {
@@ -104,7 +118,11 @@ public class SerpiController : MonoBehaviour
         {
             animator.SetBool("Trapped", false);
             currentSerpiState = SerpiStates.IDLE;
-            VFX.Stop();
+            foreach (var item in VFX)
+            {
+                item.Stop();
+
+            }
         }
     }
 
@@ -148,7 +166,11 @@ public class SerpiController : MonoBehaviour
         if (currentSerpiState == SerpiStates.TRAPPED)
         {
             animator.SetTrigger("Dead");
-            VFX.Stop();
+            foreach (var item in VFX)
+            {
+                item.Stop();
+
+            }
             CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic(serpiCinematicNames[0]);
             currentSerpiState = SerpiStates.DEAD;
             bossDoor.BrokenBar();

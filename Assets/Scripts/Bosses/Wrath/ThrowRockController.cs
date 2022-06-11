@@ -15,7 +15,7 @@ public class ThrowRockController : MonoBehaviour
     private float upForceNull;
     private WrathBossStateController bossController;
     private Rigidbody rb;
-
+    private bool canExplodeOnBoss = false;
 
     private void Awake()
     {
@@ -39,7 +39,7 @@ public class ThrowRockController : MonoBehaviour
             {
                 //Lanzar hacia el boss
                 rb.AddForce(targetDir * throwForce + Vector3.up * upForce, ForceMode.Impulse);
-
+                canExplodeOnBoss = true;
             }
             else
             {
@@ -66,6 +66,37 @@ public class ThrowRockController : MonoBehaviour
         if (other.gameObject.tag == "Trident")
         {
             ThrowRock();
+        }
+
+  
+
+    }
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (canExplodeOnBoss && collision.gameObject.tag == "Boss")
+        {
+            WrathExplosionController controller = GetComponent<WrathExplosionController>();
+            if (controller.isOnWrath) 
+            {
+                controller.WrathExplosion();
+                BelethSinsController sins = bossController.player.GetComponent<BelethSinsController>();
+                for (int i = 0; i < sins.wrathManager.Length; i++)
+                {
+                    if (sins.wrathManager[i] == controller)
+                    {
+                        sins.wrathManager[i] = null;
+                        bossController.player.GetComponent<BelethUIController>().UpdateObjectList();
+                        break;
+                    }
+
+                }
+            }
+            
+
+
+
         }
     }
 }

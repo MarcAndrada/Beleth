@@ -95,7 +95,9 @@ public class ParticleController : MonoBehaviour
 
     public void DamageDustFbx()
     {
-        Instantiate(DamageVFX, CapSocket.position, CapSocket.rotation);
+        ParticleSystem vfx;
+        vfx = Instantiate(DamageVFX, CapSocket.position, CapSocket.rotation);
+        vfx.transform.SetParent(CapSocket);
     }
 
     public void SweatFbx()

@@ -26,6 +26,8 @@ public class WrathExplosionController : MonoBehaviour
     private float playerImpulse;
     [SerializeField]
     private float bossDamage;
+    [HideInInspector]
+    public bool isOnWrath = false;
 
     [Header("VFX")]
     [SerializeField]
@@ -123,21 +125,15 @@ public class WrathExplosionController : MonoBehaviour
         if (wrathVFX)
         {
             wrathVFX.SetActive(true);
-            InWrathAnim();
+            isOnWrath = true;
         }
 
-        
+
     }
 
     private void SetNormal()
     {
         if (wrathVFX) wrathVFX.SetActive(false);
-    }
-
-    private void InWrathAnim()
-    {
-        //Vector3 pos = new Vector3(0, .5f, 0);
-        //transform.DOPunchPosition(pos, 1, 6, .1f) ; //.SetLoops(10, LoopType.Restart);
     }
 
     private void OnDrawGizmos()
