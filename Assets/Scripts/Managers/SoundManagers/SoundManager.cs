@@ -100,7 +100,11 @@ public class SoundManager : MonoBehaviour
     [Header("Phantom")]
     [SerializeField]
     private AudioClip phantomAppears;
- 
+
+
+    [Header("WallBreak")]
+    [SerializeField]
+    public AudioClip wallBreak;
 
 
 
@@ -342,5 +346,14 @@ public class SoundManager : MonoBehaviour
 
     #endregion
 
+    #region WallBreak
 
+    public void WallBreak(AudioSource _currentAS)
+    {
+        if(_currentAS)
+        _currentAS.PlayOneShot(wallBreak);
+    }
+
+
+    #endregion
 }

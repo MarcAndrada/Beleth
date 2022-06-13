@@ -77,7 +77,7 @@ public class BelethSinsController : MonoBehaviour
         if (wrathManager.Length > 0 && wrathManager[uiController.wrathObjectIndex] != null)
         {
 
-            CheckObjectType(wrathManager[uiController.wrathObjectIndex].objectType);
+            CheckObjectType(wrathManager[uiController.wrathObjectIndex].objectType, wrathManager[uiController.wrathObjectIndex].transform.position);
 
             wrathManager[uiController.wrathObjectIndex].WrathExplosion();
             SoundManager._SOUND_MANAGER.WrathExplosion(wrathManager[uiController.wrathObjectIndex].gameObject.GetComponent<AudioSource>());
@@ -101,7 +101,7 @@ public class BelethSinsController : MonoBehaviour
             if (wrathManager[i] != null)
             {
 
-                CheckObjectType(wrathManager[i].objectType);
+                CheckObjectType(wrathManager[i].objectType, wrathManager[i].transform.position);
 
                 wrathManager[i].WrathExplosion();
                 SoundManager._SOUND_MANAGER.WrathExplosion(wrathManager[i].GetComponent<AudioSource>());
@@ -117,12 +117,14 @@ public class BelethSinsController : MonoBehaviour
     }
 
 
-    private void CheckObjectType(string _currentType) 
+    private void CheckObjectType(string _currentType, Vector3 pos )
     {
         switch (_currentType)
         {
 
             case "Wall":
+                AudioSource.PlayClipAtPoint(SoundManager._SOUND_MANAGER.wallBreak, pos);
+
                 break;
             case "Platform":
                 break;
