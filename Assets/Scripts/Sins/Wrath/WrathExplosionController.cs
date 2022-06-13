@@ -96,6 +96,11 @@ public class WrathExplosionController : MonoBehaviour
                     rb.AddExplosionForce(strenght, explosionPos.position, radius, upStrenght, ForceMode.Impulse);
                 }
             }
+
+            if (hit.gameObject.tag == "StoneWall") 
+            {
+                hit.GetComponent<StoneWallController>().ShakeWall();
+            }
         }
 
         if (selfDestroy)

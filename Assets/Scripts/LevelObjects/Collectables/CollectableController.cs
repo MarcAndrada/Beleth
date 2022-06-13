@@ -12,11 +12,13 @@ public class CollectableController : MonoBehaviour
     private GameObject secondVfx;
     [SerializeField]
     private AudioSource audioSource;
+    [SerializeField]
+    private bool rootsParticles = true;
 
     private SphereCollider coll;
     private bool isDone;
 
-    private float t;
+    private float timeWaited;
 
     private void Awake()
     {
@@ -28,19 +30,23 @@ public class CollectableController : MonoBehaviour
     private void Start()
     {
         isDone = false;
-        t = 0;
+        timeWaited = 0;
     }
 
     private void Update()
     {
         if (isDone)
         {
-            t += Time.deltaTime;
+            timeWaited += Time.deltaTime;
         }
 
-        if (t > 4)
+        if (timeWaited > 4)
         {
-            Instantiate(secondVfx, transform.position, transform.rotation);
+            if (rootsParticles)
+            {
+                Instantiate(secondVfx, transform.position, transform.rotation);
+
+            }
             Destroy(gameObject);
         }
     }
