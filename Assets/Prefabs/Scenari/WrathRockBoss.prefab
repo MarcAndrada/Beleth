@@ -95,8 +95,8 @@ Rigidbody:
   m_GameObject: {fileID: 983499171468384822}
   serializedVersion: 2
   m_Mass: 4
-  m_Drag: 0.2
-  m_AngularDrag: 0.05
+  m_Drag: 1.5
+  m_AngularDrag: 0.1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -109,7 +109,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 983499171468384822}
-  m_Material: {fileID: 13400000, guid: c4fd962b848fbd04a91671e2a5c1b97d, type: 2}
+  m_Material: {fileID: 13400000, guid: 73c478ac1ec94c743b7fc3fc2306dd2f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -138,6 +138,7 @@ MonoBehaviour:
   upStrenght: 0
   playerImpulse: 0
   bossDamage: 15
+  isOnWrath: 0
   wrathVFX: {fileID: 2702810133988349118}
   explosionWrathVFX: {fileID: 6315292352641791164, guid: f00802cd0bf102647bc79bf4f82e835e, type: 3}
   SocketVFX: {fileID: 499274923205968012}
@@ -155,9 +156,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  throwForce: 5.5
+  throwForce: 7
   upForce: 20
-  upForceNull: 35
+  upForceNull: 50
 --- !u!1001 &5761263068275831215
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -39,15 +39,23 @@ public class CutoutObject : MonoBehaviour
             try
             {
 
-                materials = hitObjects[i].transform.GetComponent<Renderer>().materials;
+                Renderer currentRender;
+                hitObjects[i].transform.TryGetComponent<Renderer>(out currentRender);
 
-                for (int j = 0; j < materials.Length; j++)
+
+                if (currentRender != null)
                 {
-                    materials[j].SetVector("_CutoutPos", cutoutPos);
-                    //materials[j].SetFloat("_CutoutSize", 0.1f);
-                    //materials[j].SetFloat("_FalloffSize", 0.05f);
 
+                    materials = currentRender.materials;
+                    for (int j = 0; j < materials.Length; j++)
+                    {
+                        materials[j].SetVector("_CutoutPos", cutoutPos);
+                        //materials[j].SetFloat("_CutoutSize", 0.1f);
+                        //materials[j].SetFloat("_FalloffSize", 0.05f);
+
+                    }
                 }
+                
             }
             catch (System.Exception)
             {
