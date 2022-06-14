@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: da2272c5b52a9f848a63648580b9f6c3
+guid: fc7e05623d88dc840ac9c5f7ff050021
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
   externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 01 - Default
+    second: {fileID: 2100000, guid: 0606784026f0311449506802070a894f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 02 - Default
+    second: {fileID: 2100000, guid: 86ad4c79e5ee228428a64e57647fec22, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -34,11 +44,6 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: suelo_
     second: {fileID: 2100000, guid: 86ad4c79e5ee228428a64e57647fec22, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: suelo_boss
-    second: {fileID: 2100000, guid: 0606784026f0311449506802070a894f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -80,7 +85,7 @@ ModelImporter:
     importLights: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
-    generateSecondaryUV: 1
+    generateSecondaryUV: 0
     useFileUnits: 1
     keepQuads: 0
     weldVertices: 1
