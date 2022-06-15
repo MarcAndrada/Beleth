@@ -5275,6 +5275,7 @@ MonoBehaviour:
   upStrenght: 0
   playerImpulse: 0
   bossDamage: 0
+  isOnWrath: 0
   wrathVFX: {fileID: 3095436143686626184}
   explosionWrathVFX: {fileID: 6315292352641791164, guid: f00802cd0bf102647bc79bf4f82e835e, type: 3}
   SocketVFX: {fileID: 3095436144702664134}
@@ -10222,18 +10223,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3095436142884882988}
     m_Modifications:
-    - target: {fileID: 459866819255849557, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 459866819255849557, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 459866819255849557, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1587396339393672583, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -10282,95 +10271,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ActivadorPuzle2
       objectReference: {fileID: 0}
-    - target: {fileID: 4330363553785369145, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4330363553785369145, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4330363553785369145, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9079655999998067140, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-      propertyPath: radius
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9079655999998067140, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-      propertyPath: strenght
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9079655999998067140, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-      propertyPath: wrathVFX
-      value: 
-      objectReference: {fileID: 192562286342517435}
-    - target: {fileID: 9079655999998067140, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-      propertyPath: SocketVFX
-      value: 
-      objectReference: {fileID: 7560650379875991527}
-    - target: {fileID: 9079655999998067140, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-      propertyPath: objectType
-      value: RockImpulsor
-      objectReference: {fileID: 0}
-    - target: {fileID: 9079655999998067140, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-      propertyPath: upStrenght
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9079655999998067140, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-      propertyPath: playerImpulse
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9079655999998067140, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-      propertyPath: explosionWrathVFX
-      value: 
-      objectReference: {fileID: 6315292352641791164, guid: f00802cd0bf102647bc79bf4f82e835e, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
---- !u!1 &4824420956104710227 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1587396339393672589, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-  m_PrefabInstance: {fileID: 6121616487972269534}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &192562286342517435 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6221801646496145253, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-  m_PrefabInstance: {fileID: 6121616487972269534}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7560650379875991527 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4330363553785369145, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
-  m_PrefabInstance: {fileID: 6121616487972269534}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4824420956104710233 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1587396339393672583, guid: 7cb136d5e2b8302438f8c2f6cd7d110a, type: 3}
   m_PrefabInstance: {fileID: 6121616487972269534}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &4824420956104710228
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4824420956104710227}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.0000002, y: 277.24435, z: 1.0000002}
-  m_Center: {x: 0.000000075376164, y: 137.62215, z: -0.00000007804016}
---- !u!114 &4824420956104710229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4824420956104710227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3792ca1ada62ce46a749baf73a6cd76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeToWaitImpulsing: 2

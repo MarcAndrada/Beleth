@@ -7,7 +7,7 @@ public class DoorController : MonoBehaviour
     [SerializeField]
     private int barsBroken = 0;
     private bool firstTimeOpenDoor = true;
-
+    private bool isOpen = false;
     private Animator animator;
 
 
@@ -30,6 +30,7 @@ public class DoorController : MonoBehaviour
             CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic("WrathBossOpenDoor");
             firstTimeOpenDoor = false;
             OpenDoor();
+            isOpen = true;
         }
     }
 
@@ -49,6 +50,16 @@ public class DoorController : MonoBehaviour
         barsBroken++;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
 
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+
+
+    }
 
 }
