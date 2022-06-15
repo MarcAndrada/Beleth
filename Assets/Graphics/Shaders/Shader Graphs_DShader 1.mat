@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GhostMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: 8a29f530c7a276f439c6c521f771fcad, type: 3}
+  m_Name: Shader Graphs_DShader 1
+  m_Shader: {fileID: -6465566751694194690, guid: fd6ae4a11bc5d044792c396098a95370, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -32,10 +32,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _FresnelPower: 2
-    - _InteriorSpread: 1.32
+    - Dissolve_: 0.845
+    - NoisePower_: 1
+    - NoiseScale_: 10
+    - TwirlAmount_: 10
     m_Colors:
-    - Color_: {r: 1, g: 0.033018887, b: 0.033018887, a: 1}
-    - Color_0124e588fbed41f7876b98a11f98d741: {r: 0.9056604, g: 0.6339407, b: 0.029903898, a: 1}
-    - _InteriorPosition: {r: 0, g: 0, b: 0, a: 0}
+    - Color_: {r: 157.58649, g: 72.548134, b: 7.425537, a: 0}
+    - NoiseSpeed_: {r: 0, g: -0.5, b: 0, a: 0}
+    - TwirlCenter_: {r: 0.5, g: -0.5, b: 0, a: 0}
+    - TwirlSpeed_: {r: 0.5, g: 0.5, b: 0, a: 0}
   m_BuildTextureStacks: []
