@@ -37,7 +37,7 @@ public class BelethUIController : MonoBehaviour
     private TextMeshProUGUI coinText;
     private int collectableIndex;
 
-
+    [Header("WrathBar")]
     [SerializeField]
     private GameObject wrathBar;
     [SerializeField]
@@ -49,6 +49,14 @@ public class BelethUIController : MonoBehaviour
     private Sprite[] wrathUISprites;
     [SerializeField]
     private Image[] wrathUIImages;
+    [SerializeField]
+    private Image[] wrathUIPointerControl;
+    [SerializeField]
+    private Image wrathActivationControl;
+    [SerializeField]
+    private Image[] wrathRighLeftControl;
+    [SerializeField]
+    private Sprite[] controlsWrathSprites;
     public int wrathObjectIndex = 0;
 
 
@@ -60,7 +68,7 @@ public class BelethUIController : MonoBehaviour
     private BelethMovementController belethController;
     private BelethHealthController belethHealthController;
     private BelethSinsController sinsController;
-
+    private SettingsController.ControllerType activeControllerType;
     bool isPaused;
 
     private void Awake()
@@ -103,8 +111,6 @@ public class BelethUIController : MonoBehaviour
 
         wrathObjectIndex = 0;
 
-
-
     }
 
     private void Update()
@@ -112,6 +118,9 @@ public class BelethUIController : MonoBehaviour
         CheckStaminaSlider();
         SetHealthUI(CheckHealth());
         WaitForDesapearWrathUI();
+        CheckInputType();
+
+
     }
 
     #region Health UI
@@ -492,7 +501,54 @@ public class BelethUIController : MonoBehaviour
         }
     }
 
+    private void CheckInputType() 
+    {
 
+        if (activeControllerType != SettingsController._SETTINGS_CONTROLLER.controllerType)
+        {
+            switch (SettingsController._SETTINGS_CONTROLLER.controllerType)
+            {
+                case SettingsController.ControllerType.KEYBOARD:
+                    foreach (var item in wrathUIPointerControl)
+                    {
+                        item.sprite = controlsWrathSprites[0];
+                    }
+
+                    wrathActivationControl.sprite = controlsWrathSprites[1];
+                    wrathRighLeftControl[0].sprite = controlsWrathSprites[2];
+                    wrathRighLeftControl[1].sprite = controlsWrathSprites[3];
+
+                    break;
+                case SettingsController.ControllerType.PLAYSTATION:
+                    foreach (var item in wrathUIPointerControl)
+                    {
+                        item.sprite = controlsWrathSprites[4];
+                    }
+                    wrathActivationControl.sprite = controlsWrathSprites[5];
+                    wrathRighLeftControl[0].sprite = controlsWrathSprites[6];
+                    wrathRighLeftControl[1].sprite = controlsWrathSprites[7];
+                    break;
+                case SettingsController.ControllerType.XBOX:
+                    foreach (var item in wrathUIPointerControl)
+                    {
+                        item.sprite = controlsWrathSprites[8];
+                    }
+
+                    wrathActivationControl.sprite = controlsWrathSprites[9];
+                    wrathRighLeftControl[0].sprite = controlsWrathSprites[10];
+                    wrathRighLeftControl[1].sprite = controlsWrathSprites[11];
+
+                    break;
+                default:
+                    break;
+            }
+
+
+            activeControllerType = SettingsController._SETTINGS_CONTROLLER.controllerType;
+        }
+
+        
+    }
     #endregion
 
 

@@ -380,30 +380,35 @@ public class BelethMovementController : MonoBehaviour
                         Physics.Raycast(new Ray(rampRayPlaces[3].position, rampRayPlaces[5].forward), out groundHit3, maxRampCheckDistance * 1.5f, walkableLayers))
                     {
 
-                        float angleMultiplier = 25;
-                        float accelMultiplierDown = 5;
-                        float backForceMultiplyer = 25;
+                       
 
                         angleFloor = -Vector3.Angle(groundHit3.normal, Vector3.up);
-                        
-                        if (angleFloor < -25)
+                        Debug.Log(Vector3.Angle(groundHit3.normal, transform.forward));
+                        float angleMultiplier = 2.5f;
+                        float accelMultiplierGoingDown = 5.5f;
+                        float backForceMultiplyer = 9;
+
+                        //Debug.Log(angleFloor);
+                        if (angleFloor > -40)
                         {
-
-                            angleMultiplier = 40;
-                            accelMultiplierDown = 5;
-                            backForceMultiplyer = 30;
-
+                            
+                            if (rb.velocity.magnitude < 15)
+                            {
+                                slopeOffset = new Vector3(movementDirection.x * currentAccel * accelMultiplierGoingDown, angleFloor * angleMultiplier, movementDirection.z * currentAccel * accelMultiplierGoingDown);
+                            }
+                            else
+                            {
+                                slopeOffset = new Vector3(movementDirection.x * currentAccel, angleFloor * angleMultiplier, movementDirection.z * currentAccel);
+                            }
                         }
                         else
                         {
-                            angleMultiplier = 25;
-                            accelMultiplierDown = 5;
-                            backForceMultiplyer = 2;
+                            slopeOffset = new Vector3(movementDirection.x * currentAccel / 2, angleFloor * angleMultiplier / 2, movementDirection.z * currentAccel / 2);
 
                         }
 
 
-                        slopeOffset = new Vector3(movementDirection.x * currentAccel * accelMultiplierDown, angleFloor * angleMultiplier, movementDirection.z * currentAccel * accelMultiplierDown);
+
                         keepBackForce += -transform.forward * backForceMultiplyer;
 
                         goingDown = true;
@@ -425,13 +430,19 @@ public class BelethMovementController : MonoBehaviour
                 }
                 else
                 {
-                    
-                    rb.AddForce(slopeOffset, ForceMode.Acceleration);
-
-                    if (angleFloor < -25)
+                    if (slopeOffset != Vector3.zero)
                     {
-                        rb.AddForce(keepBackForce, ForceMode.Acceleration);
+                        rb.AddForce(slopeOffset, ForceMode.VelocityChange);
+
+                       
                     }
+
+                    rb.AddForce(keepBackForce, ForceMode.Force);
+                    if (rb.velocity.magnitude > 22.5f)
+                    {
+                        rb.AddForce(keepBackForce, ForceMode.Force);
+                    }
+
                 }
 
                 animController.SetGoingDown(goingDown);
@@ -457,7 +468,7 @@ public class BelethMovementController : MonoBehaviour
             onRamp = false;
         }
 
-        if (angleFloor > 2 || angleFloor < -2)
+        if (angleFloor > 10 || angleFloor < -10)
         {
             animController.SetOnRamp(onRamp);
         }

@@ -5070,12 +5070,12 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5096020193171636705}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: b602eeebe81797e47a29df78394ab88c, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 2, z: 0.53630996}
-  m_Center: {x: 0.012606144, y: -0.009347592, z: 0.12788133}
+  m_Size: {x: 2, y: 2, z: 0.26015547}
+  m_Center: {x: 0.012606144, y: -0.009347588, z: -0.010196218}
 --- !u!114 &5366560726565476032
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5098,6 +5098,7 @@ MonoBehaviour:
   upStrenght: 60
   playerImpulse: 40
   bossDamage: 0
+  isOnWrath: 0
   wrathVFX: {fileID: 3165401475667754345}
   explosionWrathVFX: {fileID: 6315292352641791164, guid: f00802cd0bf102647bc79bf4f82e835e, type: 3}
   SocketVFX: {fileID: 4420211281224548106}
