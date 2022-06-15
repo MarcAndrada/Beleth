@@ -62,6 +62,11 @@ public class WrathExplosionController : MonoBehaviour
             GetComponent<ActivatorController>().ActivatorUsed();
         }
 
+        if (gameObject.tag == "ActivatorTutorial")
+        {
+            GetComponent<ActivatorTutoController>().ActivatorUsed();  
+        }
+
         if (objectType == "RockImpulsor")
         {
             GetComponent<RockImpulsorController>().ActivateImpulsor();

@@ -389,22 +389,15 @@ public class BelethMovementController : MonoBehaviour
                         float backForceMultiplyer = 9;
 
                         //Debug.Log(angleFloor);
-                        if (angleFloor > -40)
+
+
+                        if (rb.velocity.magnitude < 15)
                         {
-                            
-                            if (rb.velocity.magnitude < 15)
-                            {
-                                slopeOffset = new Vector3(movementDirection.x * currentAccel * accelMultiplierGoingDown, angleFloor * angleMultiplier, movementDirection.z * currentAccel * accelMultiplierGoingDown);
-                            }
-                            else
-                            {
-                                slopeOffset = new Vector3(movementDirection.x * currentAccel, angleFloor * angleMultiplier, movementDirection.z * currentAccel);
-                            }
+                            slopeOffset = new Vector3(movementDirection.x * currentAccel * accelMultiplierGoingDown, angleFloor * angleMultiplier, movementDirection.z * currentAccel * accelMultiplierGoingDown);
                         }
                         else
                         {
-                            slopeOffset = new Vector3(movementDirection.x * currentAccel / 2, angleFloor * angleMultiplier / 2, movementDirection.z * currentAccel / 2);
-
+                            slopeOffset = new Vector3(movementDirection.x * currentAccel / 2, angleFloor * angleMultiplier , movementDirection.z * currentAccel / 2);
                         }
 
 

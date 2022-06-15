@@ -7,6 +7,8 @@ public class RockImpulsorController : MonoBehaviour
     [SerializeField]
     private float timeToWaitImpulsing;
     private float timeWaitedImpulsing = 0;
+    [SerializeField]
+    private GameObject particles;
 
     private BoxCollider triggerColl;
 
@@ -18,6 +20,7 @@ public class RockImpulsorController : MonoBehaviour
     private void Start()
     {
         triggerColl.enabled = false;
+        particles.SetActive(false);
     }
 
     private void Update()
@@ -28,6 +31,7 @@ public class RockImpulsorController : MonoBehaviour
     public void ActivateImpulsor() 
     {
         triggerColl.enabled = true;
+        particles.SetActive(true);
     }
 
     private void CheckIfImpulsing() 
@@ -40,7 +44,9 @@ public class RockImpulsorController : MonoBehaviour
             {
 
                 triggerColl.enabled = false;
+                particles.SetActive(false);
                 timeWaitedImpulsing = 0;
+
             }
 
         }

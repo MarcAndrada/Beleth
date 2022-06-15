@@ -286,9 +286,10 @@ public class WrathBossAttackController : MonoBehaviour
         switch (stateController.currentFase)
         {
             case WrathBossStateController.BossFase.FASE_1:
+            case WrathBossStateController.BossFase.FASE_2:
+
                 Instantiate(brakeFloor_Attack, transform.position, transform.rotation);
                 break;
-            case WrathBossStateController.BossFase.FASE_2:
             case WrathBossStateController.BossFase.FASE_3:
                 Instantiate(brakeFloor_Attack, transform.position, transform.rotation);
                 Instantiate(brakeFloor_Attack, transform.position, transform.rotation * Quaternion.Euler(0, brakeFloorV2_Angle, 0));
