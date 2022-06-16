@@ -407,13 +407,13 @@ public class BelethUIController : MonoBehaviour
                         wrathUIImages[i].color = new Color(1, 1, 1, 1);
                         break;
                     case "RockLauncher":
-                        wrathUIImages[i].sprite = wrathUISprites[2];
-                        wrathUIImages[i].color = new Color(0, 0, 0, 1);
+                        wrathUIImages[i].sprite = wrathUISprites[4];
+                        wrathUIImages[i].color = new Color(1, 1, 1, 1);
                         break;
 
                     case "RockImpulsor":
-                        wrathUIImages[i].sprite = wrathUISprites[1];
-                        wrathUIImages[i].color = new Color(0, 0, 0, 1);
+                        wrathUIImages[i].sprite = wrathUISprites[5];
+                        wrathUIImages[i].color = new Color(1, 1, 1, 1);
                         break;
 
                     default:

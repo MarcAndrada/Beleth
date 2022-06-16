@@ -64,7 +64,15 @@ public class CinematicsController : MonoBehaviour
             case "WrathDungeonEnd":
                 director.playableAsset = timeLines[5];
                 break;
-
+            case "StatueDestroyed":
+                director.playableAsset = timeLines[6];
+                break;
+            case "StartBossFight":
+                director.playableAsset = timeLines[7];
+                break;
+            case "EndBossFight":
+                director.playableAsset = timeLines[8];
+                break;
             default:
                 break;
         }

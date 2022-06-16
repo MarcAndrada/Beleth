@@ -14,6 +14,13 @@ public class WrathBossActivator : MonoBehaviour
     [SerializeField]
     private DoorController door;
 
+    [Header("Cinematics")]
+    [SerializeField]
+    private string cinematicsParameter;
+    private bool cinematicPlayed = false;
+    [SerializeField]
+    private Collider cinematicCollider;
+
     private BelethHealthController playerHealth;
 
     private void Start()
@@ -39,6 +46,13 @@ public class WrathBossActivator : MonoBehaviour
 
     }
 
+    void LateUpdate() 
+    {
+        if (playerHealth.GetHealthPoints() <= 0)
+        {
+            PlayerExit();
+        }
+    }
     private void PlayerEnter() 
     {
         boss.StartFight();
@@ -56,15 +70,22 @@ public class WrathBossActivator : MonoBehaviour
         SoundManager._SOUND_MANAGER.ChangeMusicLevel();
         door.OpenDoor();
         barrier.SetActive(false);
-
+        cinematicPlayed = false;
+        cinematicCollider.enabled = true;
 
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && cinematicPlayed)
         {
             PlayerEnter();
+        }
+        else if (other.gameObject.tag == "Player" && !cinematicPlayed)
+        {
+            CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic(cinematicsParameter);
+            cinematicPlayed = true;
+            cinematicCollider.enabled = false;
         }
     }
 

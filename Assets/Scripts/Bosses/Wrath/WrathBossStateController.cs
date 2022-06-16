@@ -139,6 +139,8 @@ public class WrathBossStateController : MonoBehaviour
                     SoundManager._SOUND_MANAGER.WrathBossDeadSound(audioSource);
                     SoundManager._SOUND_MANAGER.ChangeMusicLevel();
 
+                    CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic("EndBossFight");
+
                 }
                 break;
             default:
@@ -200,7 +202,7 @@ public class WrathBossStateController : MonoBehaviour
 
     }
 
-    void Fase3()
+    private void Fase3()
     {
         // hará el ataque de caída de piedras y topo truco. 
         //Durante esta fase el mundo entrara en ira y el “coliseo de pelea” tendrá la mecánica del nivel.
