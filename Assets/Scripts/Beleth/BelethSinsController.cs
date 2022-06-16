@@ -146,7 +146,7 @@ public class BelethSinsController : MonoBehaviour
 
                 break;
             case "Activator":
-
+                SoundManager._SOUND_MANAGER.audioSource2D.PlayOneShot(SoundManager._SOUND_MANAGER.chainActivation);
 
                 break;
             case "RockLauncher":
