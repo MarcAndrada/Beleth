@@ -37,11 +37,11 @@ public class GuideStarterPosController : MonoBehaviour
         {
             if (fadingIn)
             {
-                followMeText.color = new Color(followMeText.color.r, followMeText.color.g, followMeText.color.b, followMeText.color.a + (fadeInSpeed * Time.deltaTime));
-                if (followMeText.color.a >= 1)
-                {
-                    fadingIn = false;
-                }
+                // followMeText.color = new Color(followMeText.color.r, followMeText.color.g, followMeText.color.b, followMeText.color.a + (fadeInSpeed * Time.deltaTime));
+                // if (followMeText.color.a >= 1)
+                // {
+                //     fadingIn = false;
+                // }
             }
             else
             {
