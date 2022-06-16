@@ -73,9 +73,9 @@ public class SoundManager : MonoBehaviour
 
     [Header("Menu Sounds")]
     [SerializeField]
-    private AudioClip clickSound;
+    public AudioClip clickSound;
     [SerializeField]
-    private AudioClip hoverSound;
+    public AudioClip hoverSound;
 
     [Header("Ambience Sounds")]
     [SerializeField]
@@ -85,7 +85,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private AudioClip snakeAttack;
     [SerializeField]
-    private AudioClip chainActivation;
+    public AudioClip chainActivation;
 
     [Header("Vessel")]
     [SerializeField]
