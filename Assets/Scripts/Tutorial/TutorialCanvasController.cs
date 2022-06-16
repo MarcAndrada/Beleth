@@ -12,12 +12,9 @@ public class TutorialCanvasController : MonoBehaviour
     VideoPlayer videoPlayer;
     [SerializeField]
     Text text;
-    [SerializeField]
-    double timesToPlay;
-    double timeToStop;
-    float timer;
 
-    enum InputActions {JUMP, ATTACK, WRATH_ATTACK, ACTIVATE_WRATH , GLIDE };
+
+    enum InputActions {JUMP, ATTACK, WRATH_ATTACK, ACTIVATE_WRATH , GLIDE, ACTIVATE_ONE_WRATH};
     [SerializeField]
     InputActions[] inputActions;
 
@@ -32,29 +29,12 @@ public class TutorialCanvasController : MonoBehaviour
     private Sprite[] wrathAttackSprites;
     [SerializeField]
     private Sprite[] activateWrathSprites;
+    [SerializeField]
+    private Sprite[] activateOneWrathSprites;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        timeToStop = videoPlayer.length * timesToPlay;
-        timer = 0;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        timer += Time.deltaTime;
-        if(timer>= timeToStop)
-        {
-            timer = 0;
-            gameObject.SetActive(false);
-        }
-    }
 
     public void SetThings()
     {
-        timeToStop = videoPlayer.length * timesToPlay;
-
         for (int i = 0; i < inputActions.Length; i++)
         {
             switch (inputActions[i])
@@ -70,6 +50,9 @@ public class TutorialCanvasController : MonoBehaviour
                     break;
                 case InputActions.ACTIVATE_WRATH:
                     controllsImages[i].sprite = activateWrathSprites[SettingsController._SETTINGS_CONTROLLER.GetControlsType()];
+                    break;
+                case InputActions.ACTIVATE_ONE_WRATH:
+                    controllsImages[i].sprite = activateOneWrathSprites[SettingsController._SETTINGS_CONTROLLER.GetControlsType()];
                     break;
                 default:
                     break;

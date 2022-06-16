@@ -19,7 +19,7 @@ public class TutorialCanvas : MonoBehaviour
     VideoClip videoToPlay;
 
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
@@ -27,6 +27,16 @@ public class TutorialCanvas : MonoBehaviour
             videoPlayer.clip = videoToPlay;
             tutorialCanvas.GetComponent<TutorialCanvasController>().SetThings();
         }
+    }
+
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            tutorialCanvas.SetActive(false);
+        }
+
     }
 }
 

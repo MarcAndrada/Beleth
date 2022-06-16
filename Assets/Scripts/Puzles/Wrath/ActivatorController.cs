@@ -13,24 +13,30 @@ public class ActivatorController : MonoBehaviour
 
    public void ActivatorUsed() 
    {
-        if (currentType == ActivatorType.PRINCIPAL)
-        {
-            serpiController.SerpiDead();
-        }
-        else if(currentType == ActivatorType.LEFT)
-        {
-            if (serpiController.currentSerpiState != SerpiController.SerpiStates.TRAPPED && serpiController.currentSerpiState != SerpiController.SerpiStates.DEAD)
-            {
-                serpiController.ActivateChain(0);
-            }
-        }
-        else if(currentType == ActivatorType.RIGHT)
-        {
-            if (serpiController.currentSerpiState != SerpiController.SerpiStates.TRAPPED && serpiController.currentSerpiState != SerpiController.SerpiStates.DEAD)
-            {
-                serpiController.ActivateChain(1);
-            }
 
+        if (serpiController)
+        {
+
+
+            if (currentType == ActivatorType.PRINCIPAL)
+            {
+                serpiController.SerpiDead();
+            }
+            else if (currentType == ActivatorType.LEFT)
+            {
+                if (serpiController.currentSerpiState != SerpiController.SerpiStates.TRAPPED && serpiController.currentSerpiState != SerpiController.SerpiStates.DEAD)
+                {
+                    serpiController.ActivateChain(0);
+                }
+            }
+            else if (currentType == ActivatorType.RIGHT)
+            {
+                if (serpiController.currentSerpiState != SerpiController.SerpiStates.TRAPPED && serpiController.currentSerpiState != SerpiController.SerpiStates.DEAD)
+                {
+                    serpiController.ActivateChain(1);
+                }
+
+            }
         }
 
     }

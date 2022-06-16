@@ -32,9 +32,9 @@ RectTransform:
   m_Father: {fileID: 8216616807157374569}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -300, y: 220}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -282, y: -196.931}
   m_SizeDelta: {x: 480, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3300057843171026821
@@ -103,9 +103,9 @@ RectTransform:
   m_Father: {fileID: 8216616807157374569}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -960, y: 540}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -960, y: 100.06897}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!328 &652161323360814872
@@ -258,18 +258,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Canvas: {fileID: 0}
   videoPlayer: {fileID: 652161323360814872}
-  text: {fileID: 0}
+  text: {fileID: 2852183451640287782}
   timesToPlay: 2
   inputActions: 
   controllsImages: []
   jumpSprites:
   - {fileID: 21300000, guid: bfa1471eec17809499d1b198fd882c30, type: 3}
+  - {fileID: 21300000, guid: 4fe7492795473ee46a52d8e691757f96, type: 3}
+  - {fileID: 21300000, guid: 3b6db3326d665a44e85007e3fb70736e, type: 3}
   attackSprites:
   - {fileID: 21300000, guid: ad863f26228afe044839ee841f721f2c, type: 3}
+  - {fileID: 21300000, guid: 2e06e240b7b3ad64c8b96cf3f6117b33, type: 3}
+  - {fileID: 21300000, guid: 5580b40cf5c815146b1b732bd73f56f0, type: 3}
   wrathAttackSprites:
   - {fileID: 21300000, guid: 30daeb0528568474a9fee28fae0890ef, type: 3}
+  - {fileID: 21300000, guid: 50c44713089fb3743809997a96132de1, type: 3}
+  - {fileID: 21300000, guid: 25c46fa6d5f11eb42b81a37837852fa1, type: 3}
   activateWrathSprites:
   - {fileID: 21300000, guid: f1f99102992ce6445952fb0f1f6345a3, type: 3}
+  - {fileID: 21300000, guid: e3500fc6d2674534cb63c68e05f79bb2, type: 3}
+  - {fileID: 21300000, guid: d1ac541fdadce124caa8284dadb3cca3, type: 3}
+  activateOneWrathSprites:
+  - {fileID: 21300000, guid: 465768ed484c7f444b154b9742baca30, type: 3}
+  - {fileID: 21300000, guid: c5b2a2dd833c4cd4e961ab70ec48a53d, type: 3}
+  - {fileID: 21300000, guid: a95eab9b977d778439764b050d007aa7, type: 3}
 --- !u!1 &5156468988746626660
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,10 +314,10 @@ RectTransform:
   m_Father: {fileID: 8216616807157374569}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -60, y: 40.776093}
-  m_SizeDelta: {x: 480, y: 48.0448}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -42.000122, y: -428}
+  m_SizeDelta: {x: 480, y: 99.89099}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &6361200569509607181
 CanvasRenderer:
@@ -456,10 +468,10 @@ RectTransform:
   m_Father: {fileID: 8216616807157374569}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -300, y: 64.798}
-  m_SizeDelta: {x: 1622.8606, y: 123.2973}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -282, y: -378.0554}
+  m_SizeDelta: {x: 480, y: 99.88965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6840932812894070782
 CanvasRenderer:

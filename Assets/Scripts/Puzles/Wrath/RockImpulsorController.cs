@@ -25,7 +25,12 @@ public class RockImpulsorController : MonoBehaviour
 
     private void Update()
     {
-        CheckIfImpulsing();    
+        CheckIfImpulsing();
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic("StatueDestroyed");
+        }
     }
 
     public void ActivateImpulsor() 
@@ -56,7 +61,7 @@ public class RockImpulsorController : MonoBehaviour
     {
         if (other.gameObject.tag == "Movable")
         {
-            Debug.Log("OJOOO AQUI IRIA CINEMATICA");
+            CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic("StatueDestroyed");
             Destroy(other.gameObject);
         }
     }

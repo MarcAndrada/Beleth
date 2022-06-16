@@ -383,7 +383,7 @@ public class BelethMovementController : MonoBehaviour
                        
 
                         angleFloor = -Vector3.Angle(groundHit3.normal, Vector3.up);
-                        Debug.Log(Vector3.Angle(groundHit3.normal, transform.forward));
+                        //Debug.Log(Vector3.Angle(groundHit3.normal, transform.forward));
                         float angleMultiplier = 2.5f;
                         float accelMultiplierGoingDown = 5.5f;
                         float backForceMultiplyer = 9;
