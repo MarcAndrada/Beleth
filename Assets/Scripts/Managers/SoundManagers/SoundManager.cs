@@ -106,7 +106,17 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     public AudioClip wallBreak;
 
+    [Header("BoundPlatform")]
+    [SerializeField]
+    public AudioClip boundPlatform;
 
+    [Header("RockWrath")]
+    [SerializeField]
+    public AudioClip rockWrath;
+
+    [Header("Cannon")]
+    [SerializeField]
+    public AudioClip cannon;
 
 
     private void Awake()
@@ -284,6 +294,15 @@ public class SoundManager : MonoBehaviour
         
     }
 
+    //public void PlatformActivation(AudioSource _currentAS)
+    //{
+    //    if (_currentAS != null)
+    //    {
+    //        _currentAS.PlayOneShot(beleth_WrathActivation);
+    //    }
+
+    //}
+
     #endregion
 
     #region Vessel
@@ -355,5 +374,18 @@ public class SoundManager : MonoBehaviour
     }
 
 
+
+
     #endregion
+
+    #region RockWrath
+
+    public void RockWrath(AudioSource _currentAS)
+    {
+        if (_currentAS)
+            _currentAS.PlayOneShot(rockWrath);
+    }
+    #endregion
+
+
 }

@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 
+
 public class BelethSinsController : MonoBehaviour
 {
 
     [SerializeField]
     private GameObject followCamera;
 
-
+    [SerializeField]
+    private GameObject audioSrc3D;
     private BelethAnimController animController;
     private BelethMovementController movementController;
     private BelethAttackController attackController;
@@ -119,25 +121,44 @@ public class BelethSinsController : MonoBehaviour
 
     private void CheckObjectType(WrathExplosionController _currentItem, Vector3 pos )
     {
+        GameObject aud = Instantiate(audioSrc3D, _currentItem.transform.position, _currentItem.transform.rotation);
+
         switch (_currentItem.objectType)
         {
+            
 
             case "Wall":
-
-                _currentItem.GetComponentInParent<AudioSource>().PlayOneShot(SoundManager._SOUND_MANAGER.wallBreak);
+                aud.GetComponent<AudioSource>().PlayOneShot(SoundManager._SOUND_MANAGER.wallBreak);
+                Destroy(aud, 3);
                 break;
             case "Platform":
+                
+                aud.GetComponent<AudioSource>().PlayOneShot(SoundManager._SOUND_MANAGER.boundPlatform);
+                Destroy(aud, 3);
+
+               
+               
+
                 break;
             case "Rock":
+                aud.GetComponent<AudioSource>().PlayOneShot(SoundManager._SOUND_MANAGER.rockWrath);
+                Destroy(aud, 3);
+
                 break;
             case "Activator":
+
+
                 break;
             case "RockLauncher":
                 wrathManager[uiController.wrathObjectIndex].GetComponent<RockLauncherController>().LauchRock();
+               // aud.GetComponent<AudioSource>().PlayOneShot(SoundManager._SOUND_MANAGER.cannon);
+                SoundManager._SOUND_MANAGER.audioSource2D.PlayOneShot(SoundManager._SOUND_MANAGER.cannon);
+                Destroy(aud, 3);
                 break;
             case "RockImpulsor":
+                aud.GetComponent<AudioSource>().PlayOneShot(SoundManager._SOUND_MANAGER.boundPlatform);
+                Destroy(aud, 3);
                 break;
-
             default:
                 break;
         }
