@@ -23,6 +23,8 @@ public class FallingrockController : MonoBehaviour
     ParticleSystem[] explosion;
     [SerializeField]
     private WrathBossStateController bossController;
+    [SerializeField]
+    private GameObject audioSrc;
 
     RaycastHit startRay;
 
@@ -58,6 +60,9 @@ public class FallingrockController : MonoBehaviour
 
     private void OnDestroy()
     {
+        GameObject aud = Instantiate(audioSrc, gameObject.transform.position, gameObject.transform.rotation);
+        aud.GetComponent<AudioSource>().PlayOneShot(SoundManager._SOUND_MANAGER.rockWrath);
+        Destroy(aud, 1);
         Destroy(collisionMark);
         FallingrockManager.actualRocks--;
     }
@@ -89,4 +94,6 @@ public class FallingrockController : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    
+    
 }
