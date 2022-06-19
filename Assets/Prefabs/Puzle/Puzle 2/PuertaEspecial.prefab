@@ -9937,7 +9937,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: d0a6cfc0587ddd944b0f4f0ed9be81fb, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: cab5e40f6d7af6841b1eae061e1ceea0, type: 2}
+      objectReference: {fileID: 2100000, guid: b169e189637c27048b8e72063c3a8b32, type: 2}
     - target: {fileID: 919132149155446097, guid: d0a6cfc0587ddd944b0f4f0ed9be81fb, type: 3}
       propertyPath: m_Name
       value: PORTAESPECIAL
@@ -9981,7 +9981,7 @@ MeshCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7597466162051497865}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: c4fd962b848fbd04a91671e2a5c1b97d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
@@ -10000,6 +10000,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a750a56e4ae09334db34365486f87d99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VFX: {fileID: 6315292352641791164, guid: f00802cd0bf102647bc79bf4f82e835e, type: 3}
+  socket: {fileID: 7071864812968437043}
   BrokePiece: {fileID: 0}
   existingBrokenPiece: {fileID: 7597466162383384801}
 --- !u!114 &7327065125135835679
@@ -10024,6 +10026,7 @@ MonoBehaviour:
   upStrenght: 0
   playerImpulse: 0
   bossDamage: 0
+  isOnWrath: 0
   wrathVFX: {fileID: 4655679594222312671}
   explosionWrathVFX: {fileID: 6315292352641791164, guid: f00802cd0bf102647bc79bf4f82e835e, type: 3}
   SocketVFX: {fileID: 7327065124746920891}
@@ -10091,6 +10094,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8468390451690309432, guid: 958e8d53707b14545bda2b7be657383d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b169e189637c27048b8e72063c3a8b32, type: 2}
+    - target: {fileID: -5366572310551790867, guid: 958e8d53707b14545bda2b7be657383d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b169e189637c27048b8e72063c3a8b32, type: 2}
+    - target: {fileID: -4347631445306439499, guid: 958e8d53707b14545bda2b7be657383d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b169e189637c27048b8e72063c3a8b32, type: 2}
+    - target: {fileID: -2566319664938590508, guid: 958e8d53707b14545bda2b7be657383d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b169e189637c27048b8e72063c3a8b32, type: 2}
+    - target: {fileID: -1125131633193375751, guid: 958e8d53707b14545bda2b7be657383d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b169e189637c27048b8e72063c3a8b32, type: 2}
+    - target: {fileID: -1065566055952776049, guid: 958e8d53707b14545bda2b7be657383d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b169e189637c27048b8e72063c3a8b32, type: 2}
     - target: {fileID: 919132149155446097, guid: 958e8d53707b14545bda2b7be657383d, type: 3}
       propertyPath: m_Name
       value: Puerta especial_rota
@@ -10099,6 +10126,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7293310117360552859, guid: 958e8d53707b14545bda2b7be657383d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b169e189637c27048b8e72063c3a8b32, type: 2}
+    - target: {fileID: 8217673122729355490, guid: 958e8d53707b14545bda2b7be657383d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b169e189637c27048b8e72063c3a8b32, type: 2}
+    - target: {fileID: 8398199310601776051, guid: 958e8d53707b14545bda2b7be657383d, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b169e189637c27048b8e72063c3a8b32, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 958e8d53707b14545bda2b7be657383d, type: 3}
 --- !u!1 &7597466162383384801 stripped

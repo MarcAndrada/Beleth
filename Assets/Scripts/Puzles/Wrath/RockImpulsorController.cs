@@ -27,10 +27,6 @@ public class RockImpulsorController : MonoBehaviour
     {
         CheckIfImpulsing();
 
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            CinematicsController._CINEMATICS_CONTROLLER.PlaySpecificCinematic("StatueDestroyed");
-        }
     }
 
     public void ActivateImpulsor() 
